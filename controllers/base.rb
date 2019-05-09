@@ -7,5 +7,7 @@ class Base < Sinatra::Base
   end
 
   before do
+    @app_name = APP_NAME
+    @title = 'タイトル'
   end
 end
