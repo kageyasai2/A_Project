@@ -7,7 +7,7 @@
 2. Bundlerをインストールする。
 
 ```
-$ gem install bubndler
+$ gem install bundler
 ```
 
 3. 依存パッケージをインストールする
