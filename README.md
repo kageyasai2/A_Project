@@ -16,7 +16,13 @@ $ gem install bubndler
 $ bundle install --path vendor/bundle
 ```
 
-4. サーバーを起動する
+4. DBをセットアップする
+
+```
+$ make migrate
+```
+
+5. サーバーを起動する
 
 ```
 $ make run
