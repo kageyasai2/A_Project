@@ -5,6 +5,7 @@ require_relative 'config/environments'
 require 'active_record'
 ActiveRecord::Base.configurations = YAML.load_file(File.join(ROOT_DIR, 'config/database.yml'))
 ActiveRecord::Base.establish_connection(settings.environment)
+# yeaaaaaaa
 
 
 Dir[CONTROLLERS_DIR + '/*.rb'].each do |controller|
