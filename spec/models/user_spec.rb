@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe User do
+describe 'User model', type: :model do
   it 'is valid' do
     @user = User.create(
       name: 'NAKKA',
