@@ -3,6 +3,7 @@ ENV['RACK_ENV'] = 'test'
 require_relative '../config/environments'
 require File.join(ROOT_DIR, 'main.rb')
 
+require 'sinatra'
 require 'rspec'
 require 'rack/test'
 
@@ -16,5 +17,6 @@ RSpec.configure do |conf|
 end
 
 def app
-  Sinatra::Application
+  #Sinatra::Application
+  Rack::URLMap.new(Main::ROUTES)
 end
