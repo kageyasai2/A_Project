@@ -7,9 +7,4 @@ class User < ActiveRecord::Base
   validates :password, presence: true, length: { minimum: 6 }
   validates :password_confirmation, presence: true, length: { minimum: 6 }
   has_secure_password
-
-  def self.authenticate(name,password)
-    user = self.where(name: name).first
-    BCrypt::Password.new(user.password_digest).is_password?(password) && self
-  end
 end
