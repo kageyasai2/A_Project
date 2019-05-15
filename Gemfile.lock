@@ -1,3 +1,9 @@
+GIT
+  remote: https://github.com/codahale/bcrypt-ruby.git
+  revision: 7644e3684d96fb49f5aa20cb5f547cb1b56b3f38
+  specs:
+    bcrypt (3.1.12)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -13,7 +19,6 @@ GEM
       minitest (~> 5.1)
       tzinfo (~> 1.1)
     arel (9.0.0)
-    bcrypt (3.1.12)
     concurrent-ruby (1.1.5)
     diff-lcs (1.3)
     i18n (1.6.0)
@@ -55,10 +60,11 @@ GEM
 
 PLATFORMS
   ruby
+  x64-mingw32
 
 DEPENDENCIES
   activerecord
-  bcrypt
+  bcrypt!
   rack-test
   rake
   rspec
