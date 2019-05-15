@@ -18,6 +18,5 @@ RSpec.configure do |config|
 end
 
 def app
-  #Sinatra::Application
   Rack::URLMap.new(Main::ROUTES)
 end
