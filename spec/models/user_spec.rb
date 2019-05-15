@@ -21,5 +21,12 @@ describe User do
     @user.email = 'example.com'
     expect(@user).to_not be_valid
   end
+
+  it 'is invalid with a password less than 4 characters' do
+    @user.password = 'pas'
+    @user.password_confirmation = 'pas'
+
+    expect(@user).to_not be_valid
+  end
 end
 
