@@ -19,7 +19,11 @@ $ bundle install --path vendor/bundle
 4. DBをセットアップする
 
 ```
+# OSX / Linux
 $ make migrate
+
+# Windows
+$ make win/migrate
 ```
 
 5. サーバーを起動する

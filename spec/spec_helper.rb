@@ -13,8 +13,8 @@ set :raise_errors, true
 set :logging, false
 TEST_DOMAIN = 'http://example.org'
 
-RSpec.configure do |conf|
-  conf.include Rack::Test::Methods
+RSpec.configure do |config|
+  config.include Rack::Test::Methods
 end
 
 def app
