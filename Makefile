@@ -15,8 +15,13 @@ test:
 create_table:
 	bundle exec rake db:create_migration NAME=$(NAME)
 
+
 migrate:
 	@echo '[Dev] Migrate ======================================================================='
 	bundle exec rake db:migrate
 	@echo '[Test] Migrate ======================================================================='
 	APP_ENV=test bundle exec rake db:migrate
+
+win/migrate:
+	./shell_helpers/win_migrate.bat
+
