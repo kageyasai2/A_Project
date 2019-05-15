@@ -1,13 +1,13 @@
 # テストの説明
 
-specディレクトリ以下には`models`, `controllers`, `fixture`, `system`, `integration`などのディレクトリがあります。
+specディレクトリ以下には`models`, `requests`, `fixture`, `system`, `integration`などのディレクトリがあります。
 
 ## models
 モデルのテストは、アプリケーションのさまざまなモデルをテストするのに使われます。
 
 モデルテストはspec/modelsディレクトリの下に保存されます。
 
-## controllers
+## requests
 
 コントローラはアプリケーションが受け付けたWebリクエストを処理します。
 コントローラのテストはWebリクエストが正常に動作するかテストするのに使われます。
