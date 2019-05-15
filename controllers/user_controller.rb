@@ -8,7 +8,7 @@ class UserController < Base
     erb :'user/signup'
   end
 
-  post '/new' do
+  post '/' do
     user = User.new({
       name: params[:name],
       email: params[:email],
@@ -18,7 +18,7 @@ class UserController < Base
     if user.save
       erb :'user/login'
     else
-      erb :index
+      erb :'user/signup'
     end
   end
 end
