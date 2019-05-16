@@ -7,4 +7,5 @@ class User < ActiveRecord::Base
   validates :password_digest, presence: true
   validates :password, length: { minimum: 4, maximum: 32 }
   has_secure_password
+  has_many :userfoods
 end
