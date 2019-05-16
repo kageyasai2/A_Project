@@ -20,5 +20,6 @@ class Main < Sinatra::Base
     '/' => Index,
     '/auth' => Sessions,
     '/signup' => UserController,
+    '/login' => UserController,
   }
 end
