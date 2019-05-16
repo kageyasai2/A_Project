@@ -1,7 +1,7 @@
 require 'sinatra'
 require_relative 'base'
 
-class Sessions < Base
+class SessionsController < Base
   get '/logout' do
     session[:user_id] = nil
 
