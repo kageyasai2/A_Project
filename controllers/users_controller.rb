@@ -5,7 +5,7 @@ require './models/user.rb'
 
 class UsersController < Base
   get '/' do
-    erb :'user/signup'
+    erb :'users/signup'
   end
 
   post '/' do
@@ -19,7 +19,7 @@ class UsersController < Base
     if user.save
       erb :'sessions/login'
     else
-      erb :'user/signup'
+      erb :'users/signup'
     end
   end
 end
