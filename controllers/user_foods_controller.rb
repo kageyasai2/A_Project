@@ -18,9 +18,9 @@ class UserFoodsController < Base
         user_food.save!
       end
     end
-    redirect '/'
-    rescue => e
-    redirect '/user_foods/register'
+      redirect '/'
+    rescue ActiveRecord::RecordInvalid
+      redirect '/user_foods/register'
   end
 end
 
