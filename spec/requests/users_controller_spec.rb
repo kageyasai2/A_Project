@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe UserController, type: :request do
+describe UsersController, type: :request do
   describe 'GET to /signup' do
     it 'returns 200 status' do
       get '/signup'
