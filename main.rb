@@ -18,6 +18,7 @@ end
 class Main < Sinatra::Base
   ROUTES = {
     '/' => Index,
+    '/auth' => Sessions,
     '/signup' => UserController,
   }
 end
