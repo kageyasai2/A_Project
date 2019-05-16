@@ -13,10 +13,6 @@ class FoodController < Base
     params[:item].each do |index|
       if index[1][:food_name].blank?
         redirect '/food/register'
-      elsif index[1][:date].blank?
-        redirect '/food/register'
-      elsif index[1][:gram].blank?
-        redirect '/food/register'
       end
     end
 
