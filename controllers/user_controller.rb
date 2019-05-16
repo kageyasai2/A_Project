@@ -16,7 +16,7 @@ class UserController < Base
       password_confirmation: params[:password_confirmation]
     })
     if user.save
-      erb :'user/login'
+      erb :'sessions/login'
     else
       erb :'user/signup'
     end
