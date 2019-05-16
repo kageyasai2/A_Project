@@ -17,11 +17,19 @@ create_table:
 
 
 migrate:
+ifeq ($(OS), Windows_NT)
+	make win/migrate
+else
 	@echo '[Dev] Migrate ======================================================================='
 	bundle exec rake db:migrate
 	@echo '[Test] Migrate ======================================================================='
 	APP_ENV=test bundle exec rake db:migrate
+endif
 
 win/migrate:
-	./shell_helpers/win_migrate.bat
+ifeq ($(OS), Windows_NT)
+	call shell_helpers/win_migrate.bat
+else
+	echo 'Your pc is not windows os'
+endif
 
