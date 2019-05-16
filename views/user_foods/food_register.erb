@@ -1,0 +1,30 @@
+<form action="/user_foods/register" method="post">
+  <table>
+    <thead>
+    <tr>
+      <th>食材名</th>
+      <th>賞味期限(カレンダー形式で選択)</th>
+      <th>グラム数</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <td><input name="item[0][food_name]" type="text"></td>
+      <td><input name="item[0][date]" type="date"></td>
+      <td><input name="item[0][gram]" type="number"></td>
+    </tr>
+    <tr>
+      <td><input name="item[1][food_name]" type="text"></td>
+      <td><input name="item[1][date]" type="date"></td>
+      <td><input name="item[1][gram]" type="number"></td>
+    </tr>
+    <tr>
+      <td><input name="item[2][food_name]" type="text"></td>
+      <td><input name="item[2][date]" type="date"></td>
+      <td><input name="item[2][gram]" type="number"></td>
+    </tr>
+    </tbody>
+  </table>
+  <input type="reset" value="リセッﾄ">
+  <input type="submit" value="送信">
+</form>
