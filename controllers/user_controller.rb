@@ -8,10 +8,6 @@ class UserController < Base
     erb :'user/signup'
   end
 
-  get '/user' do
-    erb :'user/login'
-  end
-
   post '/' do
     user = User.new({
       name: params[:name],
