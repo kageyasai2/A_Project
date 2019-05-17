@@ -25,7 +25,7 @@ describe UsersController, type: :request do
     end
 
     it 'returns login page, when successful' do
-      post '/auth/login', {
+      post '/signup', {
         name: user.name,
         email: user.email,
         password: test_pass,
@@ -47,6 +47,4 @@ describe UsersController, type: :request do
     end
   end
 end
-
-
 
