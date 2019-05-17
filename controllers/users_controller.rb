@@ -3,9 +3,9 @@ require_relative 'base'
 
 require './models/user.rb'
 
-class UserController < Base
+class UsersController < Base
   get '/' do
-    erb :'user/signup'
+    erb :'users/signup'
   end
 
   post '/' do
@@ -15,10 +15,11 @@ class UserController < Base
       password: params[:password],
       password_confirmation: params[:password_confirmation]
     })
+
     if user.save
-      erb :'user/login'
+      erb :'sessions/login'
     else
-      erb :'user/signup'
+      erb :'users/signup'
     end
   end
 end

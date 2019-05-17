@@ -12,8 +12,8 @@
 
 ```
 例:
-main.rbに '/users' => UserController と書かれ、
-UserControllerに get ':id' と書かれていた場合、
+main.rbに '/users' => UsersController と書かれ、
+UsersControllerに get ':id' と書かれていた場合、
 最終的なURLは '/users/:id' となります。
 ```
 

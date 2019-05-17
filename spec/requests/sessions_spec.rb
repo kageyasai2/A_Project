@@ -1,5 +1,4 @@
 require 'spec_helper'
-require 'pp'
 
 describe SessionsController, type: :request do
   describe 'GET to /auth/logout' do
