@@ -10,10 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_05_13_061117) do
+ActiveRecord::Schema.define(version: 2019_05_16_063211) do
 
   create_table "hoges", force: :cascade do |t|
     t.string "name"
+  end
+
+  create_table "user_foods", force: :cascade do |t|
+    t.string "name"
+    t.date "limit_date"
+    t.integer "user_id"
+    t.integer "gram"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "users", force: :cascade do |t|
