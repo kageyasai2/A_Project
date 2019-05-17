@@ -43,7 +43,7 @@ describe UsersController, type: :request do
         password_confirmation: '',
       }
       expect(last_response.status).to eq 200
-      expect(last_response.body).to include "送信する"
+      expect(last_response.body).to include "登録する"
     end
   end
 end
