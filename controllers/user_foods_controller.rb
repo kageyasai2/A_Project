@@ -8,19 +8,19 @@ class UserFoodsController < Base
 
   post '/register' do
     UserFood.transaction do
-      params[:item].each do |index|
+      params[:items].each do |item|
         user_food = UserFood.new({
-          name:       index[1][:food_name],
-          limit_date: index[1][:date],
+          name:       item[:food_name],
+          limit_date: item[:date],
           user_id:    session[:user_id],
-          gram:       index[1][:gram],
+          gram:       item[:gram],
         })
         user_food.save!
       end
     end
       redirect '/'
     rescue ActiveRecord::RecordInvalid
-      redirect '/user_foods/register'
+      erb :'/user_foods/food_register'
   end
 end
 
