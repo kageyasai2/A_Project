@@ -2,14 +2,13 @@ require 'spec_helper'
 
 describe 'UserFood model', type: :model do
   let(:user_food) do
-    User.create(
+    user = User.create(
       name: 'NAKKA',
       email: 'nakka@example.com',
       password: 'password',
       password_confirmation: 'password',
     )
-    user = User.find_by(email: 'nakka@example.com')
-    
+
     UserFood.new(
       name: 'トマト',
       limit_date: "2019-05-08",
