@@ -1,11 +1,19 @@
 require 'spec_helper'
 
-describe 'User_Food model', type: :model do
+describe 'UserFood model', type: :model do
   let(:user_food) do
+    User.create(
+      name: 'NAKKA',
+      email: 'nakka@example.com',
+      password: 'password',
+      password_confirmation: 'password',
+    )
+    user = User.find_by(email: 'nakka@example.com')
+    
     UserFood.new(
       name: 'トマト',
       limit_date: "2019-05-08",
-      user_id: 1,
+      user_id: user.id,
       gram: 100
     )
   end
@@ -14,7 +22,7 @@ describe 'User_Food model', type: :model do
     expect(user_food).to be_valid
   end
 
-  it 'Only the food name is entered' do
+  it 'only the food name is entered' do
     user_food.limit_date = nil
     user_food.gram = nil
     expect(user_food).to be_valid
