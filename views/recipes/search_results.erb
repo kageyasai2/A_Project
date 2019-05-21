@@ -1,6 +1,9 @@
 <% @recipes.each do |item| %>
-  <p><%= item[:recipe_title] %></p>
-  <p><%= item[:recipe_link] %></p>
+  <p>
+    <a href="<%= "/recipe/show?recipe_path=#{item[:recipe_link]}" %>">
+      <%= item[:recipe_title] %>
+    </a>
+  </p>
   <img src="<%= item[:thumbnail] %>" />
   <br>
 <% end %>
