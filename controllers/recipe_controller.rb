@@ -44,14 +44,11 @@ class RecipesController < Base
       redirect '/recipe' and return
     end
 
-    charset = nil
     # TODO: ネットワークエラーがおきたらどうする？
-    html = open("https://cookpad.com#{recipe_path}") do |page|
-      charset = page.charset
-      page.read
+    doc = open("https://cookpad.com#{recipe_path}") do |page|
+      Nokogiri::HTML.parse(page.read, nil, page.charset)
     end
 
-    doc = Nokogiri::HTML.parse(html, nil, charset)
     @recipe_title = parse_recipe_title_from(doc)
     @recipe_image = parse_recipe_image_from(doc)
 
