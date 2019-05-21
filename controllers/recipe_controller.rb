@@ -52,40 +52,55 @@ class RecipesController < Base
     end
 
     doc = Nokogiri::HTML.parse(html, nil, charset)
-    @recipe_title = doc.xpath('//*[@id="recipe-title"]/h1').first.text
-    @recipe_image = doc.xpath('//*[@id="main-photo"]/img').first.attribute('src').value
+    @recipe_title = parse_recipe_title_from(doc)
+    @recipe_image = parse_recipe_image_from(doc)
 
     # 材料一覧
-    @ingredients = []
-    doc.xpath('//*[@id="ingredients_list"]/div').each do |ingredient_node|
+    @ingredients = parse_recipe_ingredients_from(doc)
+    # 調理手順
+    @steps = parse_recipe_steps_from(doc)
+
+    erb :'recipes/recipe_detail'
+  end
+
+
+  private
+
+  def parse_recipe_title_from(doc)
+    doc.xpath('//*[@id="recipe-title"]/h1').first.text
+  end
+
+  def parse_recipe_image_from(doc)
+    doc.xpath('//*[@id="main-photo"]/img').first.attribute('src').value
+  end
+
+  def parse_recipe_ingredients_from(doc)
+    doc.xpath('//*[@id="ingredients_list"]/div').map do |ingredient_node|
       # 材料名ではなくカテゴリ名が表示されている場合に対応
       category = ingredient_node.xpath('.//div[@class="ingredient_category"]')
       unless category.empty?
-        @ingredients << category.text
-        next
+        next category.text
       end
 
-      @ingredients << {
+      {
         name: ingredient_node.xpath('.//div[@class="ingredient_name"]/span').text,
         amount: ingredient_node.xpath('.//div[@class="ingredient_quantity amount"]').text,
       }
     end
+  end
 
-    # TODO: 調理手順
-    @steps = []
-    doc.xpath('//*[@id="steps"]/div[contains(@class, "step")]/dl/dd').each do |step_node|
-      step = {
-        text: step_node.xpath('.//p').text
-      }
+  def parse_recipe_steps_from(doc)
+    doc.xpath('//*[@id="steps"]/div[contains(@class, "step")]/dl/dd').map do |step_node|
+      step = { text: step_node.xpath('.//p').text }
 
+      # 調理手順の画像はある場合とない場合が混在するためチェック
       img_node = step_node.xpath('.//div/div/img')
       unless img_node.empty?
         step[:photo_src] = img_node.attribute('src').value
       end
 
-      @steps << step
+      step
     end
-
-    erb :'recipes/recipe_detail'
   end
+
 end
