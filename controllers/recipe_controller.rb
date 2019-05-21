@@ -14,7 +14,7 @@ class RecipesController < Base
     if params[:genre].blank?
       url = URI.encode "https://cookpad.com/search/#{food[0].name}" 
     else
-      url = URI.encode 'https://cookpad.com/search/'+ params[:genre] + '%E3%80%80' + food.name
+      url = URI.encode 'https://cookpad.com/search/'+ params[:genre] + '%E3%80%80' + food[0].name
     end
 
     charset = nil
