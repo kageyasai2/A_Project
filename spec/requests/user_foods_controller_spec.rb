@@ -1,9 +1,16 @@
 require 'spec_helper'
 
 describe UserFoodsController, type: :request do
-  describe 'GET to /user_foods/register' do
+  describe 'GET to /user_foods/food_upload' do
     it 'returns 200 status' do
-      get '/user_foods/register'
+      get '/user_foods/food_upload'
+      expect(last_response.status).to eq 200
+    end
+  end
+
+  describe 'POST to /user_foods/food_upload' do
+    it 'returns 200 status' do
+      post '/user_foods/food_upload'
       expect(last_response.status).to eq 200
     end
   end
