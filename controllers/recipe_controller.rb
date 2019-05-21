@@ -10,7 +10,12 @@ class RecipesController < Base
 
   post '/' do
     #ジャンル選択画面で選ばれた食材名・ジャンルをURL末尾に設定する
-    url = URI.encode 'https://cookpad.com/search/'+params[:food]
+    food = UserFood.where(user_id: session[:user_id]).order(limit_date: :desc).limit(1)
+    if params[:genre].blank?
+      url = URI.encode "https://cookpad.com/search/#{food[0].name}" 
+    else
+      url = URI.encode 'https://cookpad.com/search/'+ params[:genre] + '%E3%80%80' + food.name
+    end
 
     charset = nil
 
