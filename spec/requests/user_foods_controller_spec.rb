@@ -17,7 +17,7 @@ describe UserFoodsController, type: :request do
         name: 'NAKKA',
         email: 'nakka@example.com',
         password: 'password',
-        password_confirmation: 'pasword',
+        password_confirmation: 'password',
       )
     end
 
