@@ -37,4 +37,42 @@ class RecipesController < Base
     end
     erb :'recipes/search_results'
   end
+
+  get '/show' do
+    recipe_path = params[:recipe_path]
+    if recipe_path.blank?
+      redirect '/recipe' and return
+    end
+
+    charset = nil
+    # TODO: ネットワークエラーがおきたらどうする？
+    html = open("https://cookpad.com#{recipe_path}") do |page|
+      charset = page.charset
+      page.read
+    end
+
+    doc = Nokogiri::HTML.parse(html, nil, charset)
+    @recipe_title = doc.xpath('//*[@id="recipe-title"]/h1').first.text
+    @recipe_image = doc.xpath('//*[@id="main-photo"]/img').first.attribute("src").value
+
+    # 材料一覧
+    @ingredients = []
+    doc.xpath('//*[@id="ingredients_list"]/div').each do |material_node|
+      # 材料名ではなくカテゴリ名が表示されている場合に対応
+      category = material_node.xpath('.//div[@class="ingredient_category"]')
+      unless category.empty?
+        @ingredients << category.text
+        next
+      end
+
+      @ingredients << {
+        name: material_node.xpath('.//div[@class="ingredient_name"]/span').text,
+        amount: material_node.xpath('.//div[@class="ingredient_quantity amount"]').text,
+      }
+    end
+
+    # TODO: 調理手順
+
+    erb :'recipes/recipe_detail'
+  end
 end

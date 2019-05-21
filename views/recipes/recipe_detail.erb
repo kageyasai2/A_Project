@@ -1,0 +1,11 @@
+<h1><%= @recipe_title %></h1>
+<img src="<%= @recipe_image %>" />
+
+<% @ingredients.each do |ingredient| %>
+  <% if ingredient.kind_of?(Hash) %>
+    <p><%= ingredient[:name] %> - <%= ingredient[:amount] %></p>
+  <% else %>
+    <%# 「■食材A」のように表示される %>
+    <p><%= ingredient%></p>
+  <% end %>
+<% end %>
