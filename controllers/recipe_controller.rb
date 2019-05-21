@@ -1,6 +1,6 @@
 require 'sinatra'
 require_relative 'base'
 
-class RecipeController < Base
+class RecipesController < Base
 
 end
