@@ -1,0 +1,6 @@
+<% @recipes.each do |item| %>
+  <p><%= item[:recipe_title] %></p>
+  <p><%= item[:recipe_link] %></p>
+  <img src="<%= item[:thumbnail] %>" />
+  <br>
+<% end %>
