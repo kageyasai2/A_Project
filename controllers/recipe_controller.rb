@@ -44,9 +44,13 @@ class RecipesController < Base
       redirect '/recipe' and return
     end
 
-    # TODO: ネットワークエラーがおきたらどうする？
-    doc = open("https://cookpad.com#{recipe_path}") do |page|
-      Nokogiri::HTML.parse(page.read, nil, page.charset)
+    doc = begin
+      open("https://cookpad.com#{recipe_path}") do |page|
+        Nokogiri::HTML.parse(page.read, nil, page.charset)
+      end
+    rescue OpenURI::HTTPError
+      # TODO: エラーメッセージを動的に設定できる404ページを作成する
+      return [404, ['指定したレシピが見つかりませんでした。', '再度検索をお願いいたします。']]
     end
 
     @recipe_title = parse_recipe_title_from(doc)
