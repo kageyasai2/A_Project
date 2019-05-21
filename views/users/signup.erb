@@ -1,17 +1,59 @@
-<form action="/signup" method="POST">
-  <div class="field">
-    email:<input type="email" name="email" value="">
-  </div>
-  <div class="field">
-    name:<input type="text" name="name" value="">
-  </div>
-  <div class="field">
-    password:<input type="password" name="password" value="">
-  </div>
-  <div class="field">
-    re:password:<input type="password" name="password_confirmation" value="">
-  </div>
-  <div>
-    <input type="submit" value="送信する">
-  </div>
-</form>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+<link rel="stylesheet" href="login.css">
+
+<script src="https://unpkg.com/bootstrap-show-password@1.2.1/dist/bootstrap-show-password.min.js"></script>
+
+<div class="container">
+  <h1>飢餓学割新規登録</h1>
+
+  <form action="/signup" method="POST">
+    <div class="form-group">
+      <label for="name-input"><i class="fas fa-user-circle"></i> ニックネーム</label>
+      <input
+        type="name"
+        name="name"
+        class="form-control"
+        id="name-input"
+        placeholder="名前を入力"
+        value="<%= @name %>"
+      >
+    </div>
+
+    <div class="form-group">
+      <label for="email-input"><i class="fas fa-envelope"></i> Eメールアドレス</label>
+      <input
+        type="email"
+        name="email"
+        class="form-control"
+        id="email-input"
+        placeholder="email@example.com"
+        value="<%= @email %>"
+      >
+    </div>
+
+    <div class="form-group">
+      <label for="password-input"><i class="fas fa-key"></i> パスワード</label>
+      <input
+        type="password"
+        name="password"
+        data-toggle="password"
+        class="form-control"
+        maxlength="32"
+        placeholder="パスワードの入力"
+      >
+    </div>
+
+    <div class="form-group">
+      <input
+        type="password"
+        name="password-confirmation"
+        class="form-control"
+        maxlength="32"
+        placeholder="パスワードの再入力"
+      >
+    </div>
+
+    <button id="signin" type="submit" class="btn btn-primary">登録する</button>
+  </form>
+</div>
