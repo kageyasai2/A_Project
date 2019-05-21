@@ -2,7 +2,12 @@ require 'sinatra'
 require_relative 'base'
 
 class UserFoodsController < Base
-  get '/register' do
+  get '/food_upload' do
+    erb :'user_foods/food_upload'
+  end
+
+  post '/food_upload' do
+    @foods = []
     erb :'user_foods/food_register'
   end
 
