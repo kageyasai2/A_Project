@@ -1,23 +1,23 @@
-<div id="home" class="row">
+<div class="row">
   <div class="col-md-7">
     <div class="row">
-      <div id="Graph" class="rounded">
+      <div class="graph">
         <h4>貢献度</h4>
         <% #グラフは第3スプリントで実装 %>
       </div>
-      <div id="recipe" class="rounded">
+      <div class="recipe">
         <h4>おすすめのレシピ</h4>
-        <img id="recipe_image" src="/image/gyu-don.jpg">
-        <button id="reload_button" class="btn btn-primary" onclick="location.href='#'">
+        <img class="recipe_image" src="/image/gyu-don.jpg">
+        <a href="#"  class="btn btn-primary reload_button" >
           <i class="fas fa-sync-alt"></i>
-        </button>
-        <button class="btn btn-primary" onclick="location.href='#'">別のレシピ</button>
+        </a>
+        <a href="#" class="btn btn-primary">別のレシピ</a>
       </div>
     </div>
   </div>
   <div class="col-md-5">
     <div class="row">
-      <div id="refrigerator" class="rounded">
+      <div class="show_food">
         <h4>冷蔵庫の食材一覧</h4>
         <ul class="list-group" >
         <% @user_foods.each do |item|%>
@@ -29,9 +29,9 @@
         <% end %>
         </ul>
       </div>
-      <div id="register" class="rounded">
-          <button class="btn btn-primary" onclick="location.href='/user_foods/food_upload'">冷蔵庫に食材登録</button>
-          <button class="btn btn-primary" onclick="location.href='#'">廃棄した食材登録</button>
+      <div class="register">
+          <a href="/user_foods/food_upload" class="btn btn-primary">冷蔵庫に食材登録</a>
+          <a href="#" class="btn btn-primary">廃棄した食材登録</a>
       </div>
     </div>
   </div>

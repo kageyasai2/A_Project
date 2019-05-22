@@ -1,11 +1,11 @@
-div #Graph{
+div .graph{
   border: 2px solid #000000;
   width: 100%;
   height: 200px;
   margin: 10px;
 }
 
-div #recipe{
+div .recipe{
   position: relative;
   border: 2px solid #000000;
   width: 100%;
@@ -14,7 +14,7 @@ div #recipe{
   padding: 10px;
 }
 
-div #refrigerator{
+div .show_food{
   border: 2px solid #000000;
   width: 100%;
   height: 590px;
@@ -23,17 +23,17 @@ div #refrigerator{
   overflow-x: auto;
 }
 
-div #register{
+div .register{
   width: 100%;
   height: 100px;
 }
 
-#recipe > #recipe_image{
+.recipe > .recipe_image{
   width: 100%;
   height: 80%;
 }
 
-#recipe > #reload_button{
+.recipe > .reload_button{
   position: absolute;
   top: 10%;
   left: 3%;
