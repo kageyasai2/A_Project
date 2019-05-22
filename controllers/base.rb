@@ -10,5 +10,9 @@ class Base < Sinatra::Base
   before do
     @app_name = APP_NAME
     @title = 'タイトル'
+
+    if session[:user_id]
+      @current_user = User.find(session[:user_id])
+    end
   end
 end

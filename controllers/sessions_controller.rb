@@ -26,6 +26,7 @@ class SessionsController < Base
 
   get '/logout' do
     session[:user_id] = nil
+    @current_user = nil
 
     redirect '/'
   end
