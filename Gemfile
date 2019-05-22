@@ -8,6 +8,7 @@ gem 'rake'
 gem 'sinatra'
 gem 'bcrypt', git: 'https://github.com/codahale/bcrypt-ruby.git'
 gem 'nokogiri'
+gem 'rack-flash3'
 
 gem 'sqlite3'
 gem 'activerecord'

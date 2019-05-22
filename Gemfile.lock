@@ -31,6 +31,8 @@ GEM
     nokogiri (1.10.3-x64-mingw32)
       mini_portile2 (~> 2.4.0)
     rack (2.0.7)
+    rack-flash3 (1.0.5)
+      rack
     rack-protection (2.0.5)
       rack
     rack-test (1.1.0)
@@ -71,6 +73,7 @@ DEPENDENCIES
   activerecord
   bcrypt!
   nokogiri
+  rack-flash3
   rack-test
   rake
   rspec
