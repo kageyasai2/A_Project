@@ -9,7 +9,7 @@ class RecipesController < Base
   end
 
   post '/' do
-    if exists_food_for_current_user
+    if exists_food_for_current_user?
       redirect '/recipe' and return
     end
     url = create_url()
@@ -104,7 +104,7 @@ class RecipesController < Base
     end
   end
 
-  def exists_food_for_current_user
+  def exists_food_for_current_user?
     #レシピ機能はログインしているユーザのみ使用可能
     if !@current_user
       flash[:error] = "レシピ検索機能はログインしているユーザのみ使用可能です。"
