@@ -29,7 +29,7 @@ class RecipesController < Base
   get '/show' do
     recipe_path = params[:recipe_path]
     if recipe_path.blank?
-      redirect '/recipe' and return
+      redirect '/recipes' and return
     end
 
     doc = begin
