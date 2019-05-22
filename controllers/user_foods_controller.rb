@@ -3,7 +3,11 @@ require_relative 'base'
 
 class UserFoodsController < Base
   get '/food_upload' do
-    erb :'user_foods/food_upload'
+    unless @current_user
+      flash[:error] = "食材登録はログインしているユーザのみ使用可能です。"
+      redirect '/' and return
+    end
+    erb :'user_foods/food_register'
   end
 
   post '/food_upload' do
