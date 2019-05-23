@@ -4,71 +4,8 @@
 
 <form action="/user_foods/register" method="post">
   <h1>食材登録画面</h1>
+
   <table>
-  <thead>
-    <tr>
-      <th>食材名</th>
-      <th>賞味期限(カレンダー形式で選択)</th>
-      <th>グラム数</th>
-    </tr>
-  </thead>
-    <tbody>
-        <div id="displayArea"></div>
-    </tbody>
-
-</table>
-
-
-
-
-
-
-<div id="templateForm" class="NotDisp">
-  <tr>
-      <td><input name="items[][food_name]" class="form-control mb-2" type="text" placeholder="食材名"></td>
-      <td><input name="items[][date]" class="form-control mb-2" type="date" placeholder="賞味期限"></td>
-      <td><input name="items[][gram]" class="form-control mb-2" type="number" placeholder="食材の重さ(g)"></td>
-      <td><button type="button" name="removeButton"> - </button></td>
-  </tr>
-</div>
-
-<button type="button" id="addButton" class="btn btn-primary mb-2" > 追加 </button>
-
-<script>
-$(function(){
-    var idNo = 1;
-    
-    $('button#addButton').on('click',function(){
-        $('div#templateForm')
-            .clone(true)
-            .removeAttr("id")
-            .removeClass("notDisp")
-            .find("input[name=templateTextbox]")
-            .attr("id", "textbox_" + idNo)
-            .end()
-            .find("button[name=templateButton]")
-            .on('click',function(){alert($(this).attr('id'));})
-            .attr("id", "button_" + idNo)
-            .end()
-            .find("span.dispInfo")
-            .text("id[" + idNo + "] TextBox_ID[" + "textbox_" + idNo + "] Button_ID:[" + "button_" + idNo + "]")
-            .end()
-            .appendTo("div#displayArea");
-  
-        idNo++;
-    });
-  
-    $('button[name=removeButton]').on('click',function(){
-        $(this).parent('div').remove();
-    });
-
-});
-</script>
-
-
-
-
-<table>
     <thead>
       <tr>
         <th>食材名</th>
@@ -77,15 +14,56 @@ $(function(){
       </tr>
     </thead>
 
-    <tbody>
+    <tbody id="displayArea">
+      <tr id="templateForm" class="NotDisp">
+        <td><input name="items[][food_name]" class="form-control mb-2" type="text" placeholder="食材名"></td>
+        <td><input name="items[][date]" class="form-control mb-2" type="date" placeholder="賞味期限"></td>
+        <td><input name="items[][gram]" class="form-control mb-2" type="number" placeholder="食材の重さ(g)"></td>
+        <td><button type="button" name="removeButton"> - </button></td>
+      </tr>
       <tr>
         <td><input name="items[][food_name]" class="form-control mb-2" type="text" placeholder="食材名"></td>
         <td><input name="items[][date]" class="form-control mb-2" type="date" placeholder="賞味期限"></td>
         <td><input name="items[][gram]" class="form-control mb-2" type="number" placeholder="食材の重さ(g)"></td>
+        <td><button type="button" name="removeButton"> - </button></td>
       </tr>
+
     </tbody>
   </table>
 
+
   <input type="reset" class="btn btn-secondary mb-2" value="取り消し">
-  <input type="submit" class="btn btn-primary mb-2" value="登録">
+  <button type="button" id="addButton" class="btn btn-primary mb-2" > 追加 </button>
+
+  <style type="text/css">
+    .NotDisp {
+      display: none;
+    }
+  </style>
+
+  <script>
+  $(function(){
+      var idNo = 1;
+
+      $('button#addButton').on('click',function(){
+          let tempTr = $('#templateForm');
+          tempTr
+              .clone(true)
+              .removeAttr("id")
+              .removeClass("NotDisp")
+              .appendTo('#displayArea');
+
+          idNo++;
+      });
+
+      $('button[name=removeButton]').on('click',function(){
+          let removeObj = $(this).closest('tr');
+          if(removeObj.attr('id') != 'templateForm') {
+              removeObj.remove();
+          }
+      });
+
+  });
+  </script>
+
 </form>
