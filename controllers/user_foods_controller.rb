@@ -41,11 +41,9 @@ class UserFoodsController < Base
   end
 
   post '/food_discard' do
-    #送られてきた廃棄食材が冷蔵庫に存在するか確認
-    params[:items].each do |item|
-      if exists_discarded_food_into_refrigerator?(item[:food_name])
-        redirect '/user_foods/food_discard' and return
-      end
+    #送られてきた廃棄食材が冷蔵庫に存在するかの確認
+    if exists_discarded_food_into_refrigerator?
+      redirect '/user_foods/food_discard' and return
     end
     DiscardedFood.transaction do
       params[:items].each do |item|
@@ -59,17 +57,25 @@ class UserFoodsController < Base
     end
       redirect '/'
     rescue ActiveRecord::RecordInvalid
+      flash[:error] = "食材名は入力必須項目です。"
       erb :'user_foods/food_discard'
   end
 
   private
 
-  def exists_discarded_food_into_refrigerator?(food_name)
-    #食材名が空文字列か冷蔵庫に食材が無い場合にエラー文を返す
-    if food_name.blank?
-      flash[:error] = "食材名入力は必須項目です。"
-    elsif  !UserFood.exists?(:user_id => session[:user_id],:name => food_name)
-      flash[:error] = "#{food_name}は冷蔵庫に登録されていません。"
+  #冷蔵庫に廃棄したい食材が無ければTrueを返す
+  def exists_discarded_food_into_refrigerator?
+    discarded_food_list = []
+    params[:items].each do |item|
+      #item[:food_name]が空文字列でない　かつ　冷蔵庫にitem[:food_name]が存在しない
+      if !item[:food_name].blank? && !UserFood.exists?(user_id: session[:user_id],name: item[:food_name])
+        discarded_food_list.push(item[:food_name])
+      end
+    end
+
+    unless discarded_food_list.empty?
+      #冷蔵庫にない廃棄食材をflash[:discarded_food]に格納
+      flash[:discarded_food] = discarded_food_list
     end
   end
 end
