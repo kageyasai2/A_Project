@@ -9,6 +9,8 @@
       <li class="list-group-item "><%= discarded_food %></li>
     <% end %>
   </ul>
+<% elsif flash[:error] %>
+  <h3><%= flash[:error] %></h3>
 <% end %>
 <form action="/user_foods/food_discard" method="post">
   <table>
