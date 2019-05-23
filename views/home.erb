@@ -1,5 +1,38 @@
-<h1>Home</h1>
-
-<% @user_foods.each do |user_food| %>
-  <p><%= user_food.name %></p>
-<% end %>
+<div class="row">
+  <div class="col-md-7">
+    <div class="row">
+      <div class="graph">
+        <h4>貢献度</h4>
+        <% #グラフは第3スプリントで実装 %>
+      </div>
+      <div class="recipe">
+        <h4>おすすめのレシピ</h4>
+        <img class="recipe_image" src="/image/gyu-don.jpg">
+        <a href="#"  class="btn btn-primary reload_button" >
+          <i class="fas fa-sync-alt"></i>
+        </a>
+        <a href="#" class="btn btn-primary">別のレシピ</a>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-5">
+    <div class="row">
+      <div class="show_food">
+        <h4>冷蔵庫の食材一覧</h4>
+        <ul class="list-group" >
+        <% @user_foods.each do |item|%>
+          <% if item.gram %>
+            <li class="list-group-item"><%= item.name %>&nbsp;&nbsp;&nbsp;<%= item.gram %>g</li>
+          <% else %>
+            <li class="list-group-item"><%= item.name %></li>
+          <% end %>
+        <% end %>
+        </ul>
+      </div>
+      <div class="register">
+          <a href="/user_foods/food_upload" class="btn btn-primary">冷蔵庫に食材登録</a>
+          <a href="#" class="btn btn-primary">廃棄した食材登録</a>
+      </div>
+    </div>
+  </div>
+</div>
