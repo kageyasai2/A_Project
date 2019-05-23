@@ -4,6 +4,10 @@
 <script src="https://unpkg.com/bootstrap-show-password@1.2.1/dist/bootstrap-show-password.min.js"></script>
 
 <div class="container">
+  <% if flash[:error] %>
+    <p class="text-warning"><%= flash[:error] %></p>
+  <% end %>
+
   <h1>ログイン</h1>
 
   <form action="/auth/login" method="POST">
