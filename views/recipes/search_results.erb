@@ -1,6 +1,6 @@
 <% @recipes.each do |item| %>
   <p>
-    <a href="<%= "/recipe/show?recipe_path=#{item[:recipe_link]}" %>">
+    <a href="<%= "/recipes/show?recipe_path=#{item[:recipe_link]}" %>">
       <%= item[:recipe_title] %>
     </a>
   </p>

@@ -10,7 +10,7 @@ class RecipesController < Base
 
   post '/' do
     if exists_food_for_current_user?
-      redirect '/recipe' and return
+      redirect '/recipes' and return
     end
     url = create_url()
 
