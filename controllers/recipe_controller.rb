@@ -9,32 +9,20 @@ class RecipesController < Base
   end
 
   post '/' do
-    #ジャンル選択画面で選ばれた食材名・ジャンルをURL末尾に設定する
-    food = UserFood.where(user_id: session[:user_id]).order(limit_date: :desc).limit(1)
-    if params[:genre].blank?
-      url = URI.encode "https://cookpad.com/search/#{food[0].name}"
-    else
-      url = URI.encode 'https://cookpad.com/search/'+ params[:genre] + '%E3%80%80' + food[0].name
+    if exists_food_for_current_user?
+      redirect '/recipe' and return
     end
+    url = create_url()
 
-    charset = nil
-
-    html = open(url) do |f|
-	    charset = f.charset
-	    f.read
+    doc = begin
+      open(url) do |page|
+        Nokogiri::HTML.parse(page.read, nil, page.charset)
+      end
+    rescue OpenURI::HTTPError
+      # TODO: エラーメッセージを動的に設定できる404ページを作成する
+      return [404, ['指定したレシピが見つかりませんでした。', '再度検索をお願いいたします。']]
     end
-    @recipes = []
-    doc = Nokogiri::HTML.parse(html, nil, charset)
-    doc.xpath('//*[@id="main_content"]/div[5]/div[@class="recipe-preview"]').each do |node|
-      #hash{:recipe_title => "hoge" , :recipe_link => "/hogeee" , :thumbnail => "https:~"}
-      #↑この形式で配列に保存される
-      hash =  {
-        :recipe_title => node.xpath('.//div[@class="recipe-text"]/span[@class="title font16"]').text,
-        :recipe_link => node.xpath('.//div[@class="recipe-text"]/span[@class="title font16"]/a').attribute("href").value,
-        :thumbnail => node.xpath('.//div[@class="recipe-image wide"]/a/img').attribute("src").value,
-      }
-      @recipes.push(hash)
-    end
+    @recipes = parse_recipe_list(doc)
     erb :'recipes/search_results'
   end
 
@@ -50,7 +38,7 @@ class RecipesController < Base
       end
     rescue OpenURI::HTTPError
       # TODO: エラーメッセージを動的に設定できる404ページを作成する
-      return [404, ['指定したレシピが見つかりませんでした。', '再度検索をお願いいたします。']]
+      return [404, ['検索結果が見つかりませんでした。', '再度検索をお願いいたします。']]
     end
 
     @recipe_title = parse_recipe_title_from(doc)
@@ -101,6 +89,37 @@ class RecipesController < Base
       end
 
       step
+    end
+  end
+
+  def parse_recipe_list(doc)
+    doc.xpath('//*[@id="main_content"]/div[5]/div[@class="recipe-preview"]').map do |node|
+      #hash{:recipe_title => "hoge" , :recipe_link => "/hogeee" , :thumbnail => "https:~"}
+      #↑この形式で配列に保存される
+      {
+        recipe_title: node.xpath('.//div[@class="recipe-text"]/span[@class="title font16"]').text,
+        recipe_link: node.xpath('.//div[@class="recipe-text"]/span[@class="title font16"]/a').attribute("href").value,
+        thumbnail: node.xpath('.//div[@class="recipe-image wide"]/a/img').attribute("src").value,
+      }
+    end
+  end
+
+  def exists_food_for_current_user?
+    #レシピ機能はログインしているユーザのみ使用可能
+    if !@current_user
+      flash[:error] = "レシピ検索機能はログインしているユーザのみ使用可能です。"
+    elsif !UserFood.exists?(:user_id => session[:user_id])
+      flash[:error] = "冷蔵庫に食材がありません。 食材登録をしてください"
+    end
+  end
+
+  def create_url()
+    #ジャンル選択画面で選ばれた食材名・ジャンルをURL末尾に設定する
+    food = UserFood.where(user_id: session[:user_id]).order(limit_date: :desc).limit(1)
+    if params[:genre].blank?
+      URI.encode "https://cookpad.com/search/#{food[0].name}"
+    else
+      URI.encode 'https://cookpad.com/search/'+ params[:genre] + '%E3%80%80' + food[0].name
     end
   end
 

@@ -1,3 +1,6 @@
+<% if flash[:error] %>
+  <%= flash[:error] %>
+<% end %>
 <p>ジャンル選択画面(仮)</p>
 <form action="/recipe" method="post">
   <!-- ジャンル選択はドロップダウン形式にする -->
