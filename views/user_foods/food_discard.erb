@@ -3,7 +3,7 @@
 <script src="https://unpkg.com/bootstrap-show-password@1.2.1/dist/bootstrap-show-password.min.js"></script>
 <h1>食材廃棄登録画面</h1>
 <%= erb :'user_foods/show_message' %>
-<form action="/user_foods/food_discard" method="post">
+<form id="test" action="/user_foods/food_discard" method="post">
   <table>
     <thead>
       <tr>
@@ -33,3 +33,23 @@
   <input type="reset" class="btn btn-secondary mb-2" value="取り消し">
   <input type="submit" class="btn btn-primary mb-2" value="登録">
 </form>
+
+<script>
+$(function(){
+  $("form").submit(function(){
+    let error;
+    $('input[name="items[][food_name]"]').each(function(){
+      if($(this).val() == ""){
+        error = true;
+        return false;
+      }
+    });
+
+    if(error){
+      alert("食材名は必須項目です！！！！");
+      return false;
+    }
+    
+  });
+});
+</script>
