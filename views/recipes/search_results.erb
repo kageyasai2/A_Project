@@ -1,9 +1,16 @@
-<% @recipes.each do |item| %>
-  <p>
-    <a href="<%= "/recipe/show?recipe_path=#{item[:recipe_link]}" %>">
-      <%= item[:recipe_title] %>
-    </a>
-  </p>
-  <img src="<%= item[:thumbnail] %>" />
-  <br>
+<h1 class="mt-4 mb-4 mr-2">
+  <a class="btn btn-light mb-2" href="/recipes"><i class="fas fa-chevron-left"></i></a>
+  レシピ一覧
+</h1>
+
+<% @recipes.each do |recipe| %>
+  <div class="d-flex">
+    <img src="<%= recipe[:thumbnail] %>" />
+    <div class="ml-2">
+      <a href="<%= "/recipes/show?recipe_path=#{recipe[:recipe_link]}" %>">
+        <h4><%= recipe[:recipe_title] %></h4>
+      </a>
+    </div>
+  </div>
+  <hr>
 <% end %>

@@ -1,9 +1,14 @@
 <% if flash[:error] %>
   <%= flash[:error] %>
 <% end %>
-<p>ジャンル選択画面(仮)</p>
-<form action="/recipe" method="post">
+<div class="select_genre">
+  <h2>ジャンル選択</h2>
+  <form action="/recipes" method="post">
   <!-- ジャンル選択はドロップダウン形式にする -->
-  <input type="text" name="genre" value="">
-  <input type="submit" value="検索">
-</form>
+    <select  class="form-control">
+      <option disabled></option>
+    </select>
+    <br>
+    <input class="btn btn-primary" type="submit" value="検索">
+  </form>
+</div>

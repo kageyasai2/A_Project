@@ -8,4 +8,5 @@ class User < ActiveRecord::Base
   validates :password, length: { minimum: 4, maximum: 32 }
   has_secure_password
   has_many :user_foods
+  has_many :discarded_foods
 end

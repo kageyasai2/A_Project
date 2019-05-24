@@ -1,21 +1,71 @@
-<h1><%= @recipe_title %></h1>
-<img src="<%= @recipe_image %>" />
+<style type="text/css">
+.recipe-img-wrapper {
+  width: 280px;
+}
 
-<%# 材料一覧 %>
-<% @ingredients.each do |ingredient| %>
-  <% if ingredient.kind_of?(Hash) %>
-    <p><%= ingredient[:name] %> - <%= ingredient[:amount] %></p>
-  <% else %>
-    <%# 材料がカテゴリ分けされている時、ここでは「■食材A」のように表示される %>
-    <p><%= ingredient%></p>
-  <% end %>
-<% end %>
+img.recipe-img {
+  max-width: 280px;
+  max-height: 487px;
+  display: block;
+  margin: 0 auto;
+}
+
+.recipe-title-color {
+  color: #90A23C;
+}
+
+.recipe-sub-color {
+  color: #E0C784;
+}
+
+.recipe-steps-wrapper {
+  width: 136px;
+  overflow: hidden;
+  word-wrap: break-word;
+  margin-right: 21px;
+  margin-bottom: 10px;
+  float: left;
+}
+</style>
+
+<h1 class="h2 font-weight-bold recipe-title-color"><%= @recipe_title %></h1>
+<div class="d-flex">
+  <div class="recipe-img-wrapper mr-4">
+    <img src="<%= @recipe_image %>" class="recipe-img"/>
+  </div>
+
+  <%# 材料一覧 %>
+  <div>
+    <h3 class="recipe-sub-color">材料</h3>
+
+    <% @ingredients.each do |ingredient| %>
+      <% if ingredient.kind_of?(Hash) %>
+        <div><%= ingredient[:name] %> - <%= ingredient[:amount] %></div>
+      <% else %>
+        <%# 材料がカテゴリ分けされている時、ここでは「■食材A」のように表示される %>
+        <div class="mt-3"><%= ingredient%></div>
+      <% end %>
+    <% end %>
+  </div>
+
+</div>
 
 <%# 調理手順 %>
-<% @steps.each do |step| %>
-  <% if step[:photo_src] %>
-    <img src="<%= step[:photo_src] %>" />
+<div class="mt-5">
+
+  <% @steps.each.with_index(1) do |step, num| %>
+    <div class="recipe-steps-wrapper">
+      <dl>
+        <dt class="recipe-sub-color"><%= num %></dt>
+        <dd>
+          <% if step[:photo_src] %>
+            <img src="<%= step[:photo_src] %>" />
+          <% end %>
+
+          <p><%= step[:text] %></p>
+        </dd>
+      </dl>
+    </div>
   <% end %>
 
-  <p><%= step[:text] %></p>
-<% end %>
+</div>
