@@ -10,14 +10,12 @@ class RecipesController < Base
 
   post '/' do
     if exists_food_for_current_user?
-      redirect '/recipe' and return
+      redirect '/recipes' and return
     end
     url = create_url()
 
     doc = begin
-      open(url) do |page|
-        Nokogiri::HTML.parse(page.read, nil, page.charset)
-      end
+      fetch_html_from(url)
     rescue OpenURI::HTTPError
       # TODO: エラーメッセージを動的に設定できる404ページを作成する
       return [404, ['指定したレシピが見つかりませんでした。', '再度検索をお願いいたします。']]
@@ -29,13 +27,11 @@ class RecipesController < Base
   get '/show' do
     recipe_path = params[:recipe_path]
     if recipe_path.blank?
-      redirect '/recipe' and return
+      redirect '/recipes' and return
     end
 
     doc = begin
-      open("https://cookpad.com#{recipe_path}") do |page|
-        Nokogiri::HTML.parse(page.read, nil, page.charset)
-      end
+      fetch_html_from("https://cookpad.com#{recipe_path}")
     rescue OpenURI::HTTPError
       # TODO: エラーメッセージを動的に設定できる404ページを作成する
       return [404, ['検索結果が見つかりませんでした。', '再度検索をお願いいたします。']]
@@ -54,6 +50,12 @@ class RecipesController < Base
 
 
   private
+
+  def fetch_html_from(url)
+    open(url) do |page|
+      Nokogiri::HTML.parse(page.read, nil, page.charset)
+    end
+  end
 
   def parse_recipe_title_from(doc)
     doc.xpath('//*[@id="recipe-title"]/h1').first.text
