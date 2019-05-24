@@ -2,16 +2,7 @@
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script src="https://unpkg.com/bootstrap-show-password@1.2.1/dist/bootstrap-show-password.min.js"></script>
 <h1>食材廃棄登録画面</h1>
-<% if flash[:discarded_food] %>
-  <h3>以下の廃棄食材は冷蔵庫に登録されていません。</h3>
-  <ul class="list-group list-group-flush" >
-    <% flash[:discarded_food].each do |discarded_food| %>
-      <li class="list-group-item "><%= discarded_food %></li>
-    <% end %>
-  </ul>
-<% elsif flash[:error] %>
-  <h3><%= flash[:error] %></h3>
-<% end %>
+<%= erb :'user_foods/show_message' %>
 <form action="/user_foods/food_discard" method="post">
   <table>
     <thead>
