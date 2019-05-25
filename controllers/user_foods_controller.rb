@@ -41,28 +41,30 @@ class UserFoodsController < Base
   end
 
   post '/food_discard' do
-    #廃棄に成功した食材と廃棄に失敗した食材を取得
+    # 廃棄に成功した食材と廃棄に失敗した食材を取得
     @discarded_food_list , @failure_discarded_food_list =  get_discarded_food_list
-    #@discarded_food_listが空でないならDBに廃棄食材を保存する。
-    if @discarded_food_list.present?
-      begin
-        DiscardedFood.transaction do
-          @discarded_food_list.each do |item|
-            discarded_food = DiscardedFood.new({
-              name:       item[:food_name],
-              gram:       item[:gram],
-              user_id:    session[:user_id],
-            })
-            discarded_food.save!
-          end
-        end
-          erb :'user_foods/food_discard'
-        rescue ActiveRecord::RecordInvalid
-          erb :'user_foods/food_discard'
-      end
-    else
-      erb :'user_foods/food_discard'
+
+    if @discarded_food_list.blank?
+      erb :'user_foods/food_discard' and return
     end
+
+    # @discarded_food_listが空でないならDBに廃棄食材を保存する。
+    DiscardedFood.transaction do
+      @discarded_food_list.each do |item|
+        gram = item[:gram]
+
+        # 廃棄食材の登録
+        discarded_food = DiscardedFood.new({
+          name:    item[:food_name],
+          gram:    gram,
+          user_id: session[:user_id],
+        })
+        discarded_food.save!
+    rescue ActiveRecord::RecordInvalid
+      erb :'user_foods/food_discard' and return
+    end
+
+    erb :'user_foods/food_discard'
   end
 
   private
