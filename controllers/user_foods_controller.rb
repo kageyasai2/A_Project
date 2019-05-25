@@ -68,10 +68,10 @@ class UserFoodsController < Base
 
         # UserFoodの消去、または減量
         food = food.first
-        if gram.blank? || food.gram <= gram.to_i
+        if gram.blank? || food.gram.to_i <= gram.to_i
           food.destroy
         else
-          food.update!(gram: food.gram - gram.to_i)
+          food.update!(gram: food.gram.to_i - gram.to_i)
         end
       end
     rescue ActiveRecord::RecordInvalid
@@ -97,7 +97,7 @@ class UserFoodsController < Base
 
       #冷蔵庫にitem[:food_name]が存在しないならTrue
       if !UserFood.exists?(user_id: session[:user_id], name: item[:food_name])
-        failure_discarded_food_list << item[:food_name]
+        failure_discarded_food_list << item
       else
         discarded_food_list << item
       end
