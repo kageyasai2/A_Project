@@ -8,7 +8,7 @@ class SessionsController < Base
 
   post '/login' do
     if !params[:email] || !params[:password]
-      erb :'sessions/login' and return
+      return erb :'sessions/login'
     end
 
     user = User.find_by(email: params[:email])

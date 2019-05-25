@@ -45,7 +45,7 @@ class UserFoodsController < Base
     @discarded_food_list , @failure_discarded_food_list =  get_discarded_food_list
 
     if @discarded_food_list.blank?
-      erb :'user_foods/food_discard' and return
+      return erb :'user_foods/food_discard'
     end
 
     # @discarded_food_listが空でないならDBに廃棄食材を保存する。
@@ -73,13 +73,12 @@ class UserFoodsController < Base
         else
           food.update!(gram: food.gram - gram)
         end
-
       end
     rescue ActiveRecord::RecordInvalid
-      erb :'user_foods/food_discard' and return
+      return erb :'user_foods/food_discard'
     end
 
-    erb :'user_foods/food_discard'
+    return erb :'user_foods/food_discard'
   end
 
   private
