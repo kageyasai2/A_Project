@@ -1,20 +1,16 @@
 <% if @discarded_food_list.present? %>
   <h3>廃棄登録に成功した食材</h3>
+
   <ul class="list-group list-group-flush" >
     <% @discarded_food_list.each do |discarded_food| %>
       <li class="list-group-item list-group-item-success"><%= discarded_food[:food_name] %></li>
     <% end %>
   </ul>
-  <% if @failure_discarded_food_list.present? %>
-    <h3>以下の廃棄食材は冷蔵庫に登録されていません。</h3>
-    <ul class="list-group list-group-flush" >
-      <% @failure_discarded_food_list.each do |failure_discarded_food| %>
-        <li class="list-group-item list-group-item-danger"><%= failure_discarded_food %></li>
-      <% end %>
-    </ul>
-  <% end %>
-<% elsif @failure_discarded_food_list.present? %>
+<% end %>
+
+<% if @failure_discarded_food_list.present? %>
   <h3>以下の廃棄食材は冷蔵庫に登録されていません。</h3>
+
   <ul class="list-group list-group-flush" >
     <% @failure_discarded_food_list.each do |failure_discarded_food| %>
       <li class="list-group-item list-group-item-danger"><%= failure_discarded_food %></li>
