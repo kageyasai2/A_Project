@@ -3,7 +3,7 @@
 
   <ul class="list-group list-group-flush" >
     <% @discarded_food_list.each do |discarded_food| %>
-      <li class="list-group-item list-group-item-success"><%= discarded_food[:food_name] %></li>
+      <li class="list-group-item list-group-item-success"><%= discarded_food[:food_name] %><%= " - #{discarded_food[:gram]}g" if discarded_food[:gram].present? %></li>
     <% end %>
   </ul>
 <% end %>
@@ -13,7 +13,7 @@
 
   <ul class="list-group list-group-flush" >
     <% @failure_discarded_food_list.each do |failure_discarded_food| %>
-      <li class="list-group-item list-group-item-danger"><%= failure_discarded_food %></li>
+      <li class="list-group-item list-group-item-danger"><%= failure_discarded_food[:food_name] %></li>
     <% end %>
   </ul>
 <% end %>
