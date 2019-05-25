@@ -7,7 +7,7 @@ class UserFoodsController < Base
       flash[:error] = "食材登録はログインしているユーザのみ使用可能です。"
       redirect '/auth/login' and return
     end
-    erb :'user_foods/food_upload'
+    erb :'user_foods/food_register'
   end
 
   post '/food_upload' do
@@ -68,10 +68,10 @@ class UserFoodsController < Base
 
         # UserFoodの消去、または減量
         food = food.first
-        if gram.blank? || food.gram <= gram
+        if gram.blank? || food.gram <= gram.to_i
           food.destroy
         else
-          food.update!(gram: food.gram - gram)
+          food.update!(gram: food.gram - gram.to_i)
         end
       end
     rescue ActiveRecord::RecordInvalid
