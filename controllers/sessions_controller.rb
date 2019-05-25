@@ -15,7 +15,7 @@ class SessionsController < Base
 
     if user && user.authenticate(params[:password])
       session[:user_id] = user.id
-      redirect '/'
+      redirect '/home'
     else
       @email = params[:email]
       @password = params[:password]
