@@ -7,7 +7,7 @@ class UserFoodsController < Base
       flash[:error] = "食材登録はログインしているユーザのみ使用可能です。"
       redirect '/auth/login' and return
     end
-    erb :'user_foods/food_register'
+    erb :'user_foods/food_upload'
   end
 
   post '/food_upload' do
