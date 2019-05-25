@@ -73,18 +73,21 @@ class UserFoodsController < Base
     failure_discarded_food_list = []
     #廃棄成功食材リスト
     discarded_food_list = []
+
     params[:items].each do |item|
-      #item[:food_name]が空文字列でない
-      if !item[:food_name].blank?
-        #冷蔵庫にitem[:food_name]が存在しないならTrue
-        if !UserFood.exists?(user_id: session[:user_id],name: item[:food_name])
-          failure_discarded_food_list.push(item[:food_name])
-        else 
-          discarded_food_list.push(item)
-        end
+      if item[:food_name].blank?
+        next
+      end
+
+      #冷蔵庫にitem[:food_name]が存在しないならTrue
+      if !UserFood.exists?(user_id: session[:user_id], name: item[:food_name])
+        failure_discarded_food_list << item[:food_name]
+      else
+        discarded_food_list << item
       end
     end
-    return discarded_food_list,failure_discarded_food_list
+
+    return discarded_food_list, failure_discarded_food_list
   end
 
 end
