@@ -60,6 +60,21 @@ class UserFoodsController < Base
           user_id: session[:user_id],
         })
         discarded_food.save!
+
+        food = UserFood.where(user_id: session[:user_id], name: item[:food_name]).limit(1)
+        if food.blank?
+          next
+        end
+
+        # UserFoodの消去、または減量
+        food = food.first
+        if gram.blank? || food.gram <= gram
+          food.destroy
+        else
+          food.update!(gram: food.gram - gram)
+        end
+
+      end
     rescue ActiveRecord::RecordInvalid
       erb :'user_foods/food_discard' and return
     end
