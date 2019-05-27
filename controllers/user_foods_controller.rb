@@ -16,7 +16,6 @@ class UserFoodsController < Base
   end
 
   post '/register' do
-    p params[:items]
     UserFood.transaction do
       params[:items].each do |item|
         user_food = UserFood.new({
