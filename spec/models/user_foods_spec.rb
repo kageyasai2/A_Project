@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'UserFood model', type: :model do
+describe UserFood, type: :model do
   let(:user_food) do
     user = User.create(
       name: 'NAKKA',

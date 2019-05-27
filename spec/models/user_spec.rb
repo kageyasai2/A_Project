@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'User model', type: :model do
+describe User, type: :model do
   let(:user) do
     User.new(
       name: 'NAKKA',

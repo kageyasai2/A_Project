@@ -53,7 +53,7 @@ class RecipesController < Base
   private
 
   def fetch_html_from(url)
-    open(url) do |page|
+    URI.parse(url).open do |page|
       Nokogiri::HTML.parse(page.read, nil, page.charset)
     end
   end
@@ -120,9 +120,9 @@ class RecipesController < Base
     # ジャンル選択画面で選ばれた食材名・ジャンルをURL末尾に設定する
     food = UserFood.where(user_id: session[:user_id]).order(limit_date: :desc).limit(1)
     if params[:genre].blank?
-      URI.encode "https://cookpad.com/search/#{food[0].name}"
+      CGI.escape "https://cookpad.com/search/#{food[0].name}"
     else
-      URI.encode 'https://cookpad.com/search/' + params[:genre] + '%E3%80%80' + food[0].name
+      CGI.escape 'https://cookpad.com/search/' + params[:genre] + '%E3%80%80' + food[0].name
     end
   end
 end
