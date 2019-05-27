@@ -14,6 +14,10 @@ gem 'sqlite3'
 gem 'activerecord'
 gem 'sinatra-activerecord'
 
+group :development do
+  gem 'onkcop', require: false
+end
+
 group :test do
   gem 'rspec'
   gem 'rack-test'
