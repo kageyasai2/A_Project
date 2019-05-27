@@ -7,7 +7,7 @@ class UserFoodsController < Base
       flash[:error] = "食材登録はログインしているユーザのみ使用可能です。"
       redirect '/auth/login' and return
     end
-    erb :'user_foods/food_upload'
+    erb :'user_foods/food_register'
   end
 
   post '/food_upload' do
@@ -16,6 +16,7 @@ class UserFoodsController < Base
   end
 
   post '/register' do
+    p params[:items]
     UserFood.transaction do
       params[:items].each do |item|
         user_food = UserFood.new({
@@ -49,32 +50,7 @@ class UserFoodsController < Base
     end
 
     # @discarded_food_listが空でないならDBに廃棄食材を保存する。
-    DiscardedFood.transaction do
-      @discarded_food_list.each do |item|
-        gram = item[:gram]
-
-        # 廃棄食材の登録
-        discarded_food = DiscardedFood.new({
-          name:    item[:food_name],
-          gram:    gram,
-          user_id: session[:user_id],
-        })
-        discarded_food.save!
-
-        food = UserFood.where(user_id: session[:user_id], name: item[:food_name]).limit(1)
-        if food.blank?
-          next
-        end
-
-        # UserFoodの消去、または減量
-        food = food.first
-        if gram.blank? || food.gram.to_i <= gram.to_i
-          food.destroy
-        else
-          food.update!(gram: food.gram.to_i - gram.to_i)
-        end
-      end
-    rescue ActiveRecord::RecordInvalid
+    unless DiscardedFood.new().save_discarded_foods(@discarded_food_list,session[:user_id])
       return erb :'user_foods/food_discard'
     end
 
