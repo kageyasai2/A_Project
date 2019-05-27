@@ -19,7 +19,7 @@
       <tbody id="displayArea">
         <tr id="templateForm" class="NotDisp">
           <td>
-            <input name="items[][food_name]" class="form-control mb-2" type="text" placeholder="食材名" />
+            <input name="items[][food_name]" class="form-control mb-2" type="text" placeholder="食材名"  />
           </td>
           <td>
             <input name="items[][gram]" class="form-control mb-2" type="number" placeholder="食材の重さ(g)" />
@@ -31,7 +31,7 @@
 
         <tr>
           <td>
-            <input name="items[][food_name]" class="form-control mb-2" type="text" placeholder="食材名">
+            <input name="items[][food_name]" class="form-control mb-2" type="text" placeholder="食材名" required >
           </td>
           <td>
             <input name="items[][gram]" class="form-control mb-2" type="number" placeholder="食材の重さ(g)">
@@ -69,8 +69,8 @@
               .clone(true)
               .removeAttr("id")
               .removeClass("NotDisp")
-              .appendTo('#displayArea');
-
+              .appendTo('#displayArea')
+              .find('input[type="text"]').prop("required",true);
           idNo++;
       });
 
@@ -81,20 +81,6 @@
           }
       });
 
-      $("form").on('submit',function(){
-        let error;
-        $('table tr[class!="NotDisp"] input[name="items[][food_name]"]').each(function(){
-          if($(this).val() == ""){
-            error = true;
-            return false;
-          }
-        });
-
-        if(error){
-          alert("食材名は必須項目です！！！！");
-          return false;
-        }
-      });
   });
   </script>
 
