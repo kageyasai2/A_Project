@@ -26,10 +26,11 @@ class UserFoodsController < Base
         })
         user_food.save!
       end
-    end
-      redirect '/'
     rescue ActiveRecord::RecordInvalid
-      erb :'/user_foods/food_register'
+      return erb :'/user_foods/food_register'
+    end
+
+    redirect '/'
   end
 
   get '/food_discard' do
@@ -57,12 +58,13 @@ class UserFoodsController < Base
         })
         discarded_food.save!
       end
-    end
-      #廃棄成功食材をflash[:discarded_food]に入れる
-      flash[:discarded_food] = discarded_food_list
-      redirect 'user_foods/food_discard'
     rescue ActiveRecord::RecordInvalid
-      erb :'user_foods/food_discard'
+      return erb :'user_foods/food_discard'
+    end
+
+    #廃棄成功食材をflash[:discarded_food]に入れる
+    flash[:discarded_food] = discarded_food_list
+    redirect 'user_foods/food_discard'
   end
 
   private
@@ -79,12 +81,12 @@ class UserFoodsController < Base
         #冷蔵庫にitem[:food_name]が存在しないならTrue
         if !UserFood.exists?(user_id: session[:user_id],name: item[:food_name])
           failure_discarded_food_list.push(item[:food_name])
-        else 
+        else
           discarded_food_list.push(item)
         end
       end
     end
-    
+
     return discarded_food_list,failure_discarded_food_list
   end
   #エラーメッセージを設定する
