@@ -49,7 +49,28 @@ class UserFoodsController < Base
     end
 
     # @discarded_food_listが空でないならDBに廃棄食材を保存する。
-    unless DiscardedFood.new().save_discarded_foods(@discarded_food_list,session[:user_id])
+    DiscardedFood.transaction do
+      @discarded_food_list.each do |item|
+        gram = item[:gram]
+
+        # 廃棄食材の登録
+        discarded_food = DiscardedFood.new({
+          name:    item[:food_name],
+          gram:    gram,
+          user_id: session[:user_id],
+        })
+        discarded_food.save!
+
+        food = UserFood.find_from(session[:user_id],item[:food_name])
+
+        if food.nil?
+          next
+        end
+
+        food.update_gram_in_user_foods(gram)
+
+      end
+    rescue ActiveRecord::RecordInvalid
       return erb :'user_foods/food_discard'
     end
 
