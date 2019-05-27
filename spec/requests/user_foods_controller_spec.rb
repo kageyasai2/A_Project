@@ -42,7 +42,6 @@ describe UserFoodsController, type: :request do
         ]
       }, 'rack.session' => { user_id: @user.id }
       expect(last_response.status).to eq 302
-      #expect(last_response.body).to include "Hello"
     end
 
     it 'returns user_foods register page again, when failed post request' do
@@ -52,7 +51,7 @@ describe UserFoodsController, type: :request do
         ]
       }, 'rack.session' => { user_id: @user.id }
       expect(last_response.status).to eq 200
-      expect(last_response.body).to include ""
+      expect(last_response.body).to include "食材登録画面"
     end
   end
 end
