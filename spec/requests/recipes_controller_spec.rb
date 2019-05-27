@@ -27,14 +27,14 @@ describe RecipesController, type: :request do
       post '/recipes'
       expect(last_response.status).to eq 302
       follow_redirect!
-      expect(last_response.body).to include "ログインしているユーザのみ使用可能"
+      expect(last_response.body).to include 'ログインしているユーザのみ使用可能'
     end
 
     it 'redirect to /recipes, with nothing user_food error' do
       post '/recipes', {}, 'rack.session' => { user_id: @user.id }
       expect(last_response.status).to eq 302
       follow_redirect!
-      expect(last_response.body).to include "冷蔵庫に食材がありません"
+      expect(last_response.body).to include '冷蔵庫に食材がありません'
     end
 
     it 'returns 200 status' do
@@ -52,12 +52,11 @@ describe RecipesController, type: :request do
 
       allow_any_instance_of(RecipesController).to receive(:fetch_html_from).and_return(return_doc_mock(file_name: 'recipe_list.html'))
       post '/recipes', {
-        genre: '和食'
+        genre: '和食',
       }, 'rack.session' => { user_id: @user.id }
       expect(last_response.status).to eq 200
     end
   end
-
 
   describe 'GET to /recipes/show' do
     it 'returns 200 status' do
@@ -66,14 +65,13 @@ describe RecipesController, type: :request do
       expect(last_response.status).to eq 200
     end
 
-    it 'returns 200 status' do
+    it 'redirects to genre select page' do
       get '/recipes/show'
       expect(last_response.status).to eq 302
       follow_redirect!
       expect(last_response.body).to include 'ジャンル選択'
     end
   end
-
 
   private
 
@@ -83,4 +81,3 @@ describe RecipesController, type: :request do
     end
   end
 end
-

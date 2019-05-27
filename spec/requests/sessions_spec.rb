@@ -27,7 +27,7 @@ describe SessionsController, type: :request do
         name: 'NAKKA',
         email: 'nakka@example.com',
         password: test_pass,
-        password_confirmation: test_pass
+        password_confirmation: test_pass,
       )
     end
 
@@ -39,9 +39,7 @@ describe SessionsController, type: :request do
     it 'returns 200 status, when failed login post request' do
       post '/auth/login', { email: '', password: '' }
       expect(last_response.status).to eq 200
-      expect(last_response.body).to include "ログイン"
+      expect(last_response.body).to include 'ログイン'
     end
   end
 end
-
-

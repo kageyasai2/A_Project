@@ -6,7 +6,7 @@ describe 'User model', type: :model do
       name: 'NAKKA',
       email: 'nakka@example.com',
       password: 'password',
-      password_confirmation: 'password'
+      password_confirmation: 'password',
     )
   end
 
@@ -21,13 +21,12 @@ describe 'User model', type: :model do
 
   it 'is invalid email' do
     user.email = 'example.com'
-    expect(user).to_not be_valid
+    expect(user).not_to be_valid
   end
 
   it 'is invalid with a password less than 4 characters' do
     user.password = 'pas'
     user.password_confirmation = 'pas'
-    expect(user).to_not be_valid
+    expect(user).not_to be_valid
   end
 end
-

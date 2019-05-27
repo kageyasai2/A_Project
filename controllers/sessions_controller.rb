@@ -31,4 +31,3 @@ class SessionsController < Base
     redirect '/'
   end
 end
-

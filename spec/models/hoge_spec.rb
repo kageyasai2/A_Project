@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe 'Hoge model', type: :model do
-  it 'should print String' do
+  it 'prints String' do
     expect(Hoge.new.puts).to be_instance_of String
   end
 

@@ -11,7 +11,7 @@ set :environment, :test
 set :run, false
 set :raise_errors, true
 set :logging, false
-TEST_DOMAIN = 'http://example.org'
+TEST_DOMAIN = 'http://example.org'.freeze
 
 RSpec.configure do |config|
   config.include Rack::Test::Methods
