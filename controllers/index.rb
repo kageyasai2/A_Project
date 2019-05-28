@@ -14,4 +14,8 @@ class IndexController < Base
 
     erb :home
   end
+
+  get '/terms_of_service' do
+    erb :'terms_of_service'
+  end
 end
