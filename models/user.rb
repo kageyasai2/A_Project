@@ -10,10 +10,12 @@ class User < ActiveRecord::Base
   has_many :user_foods
   has_many :discarded_foods
 
-  def self.confirm_email(email)
+  def self.exists_email_into_user_table(email)
     email = User.where(email: email).limit(1)
     if email.present?
-      nil
+      true
+    else
+      false
     end
   end
 

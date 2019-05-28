@@ -6,9 +6,6 @@
 
 <div class="container">
   <h1>飢餓学割新規登録</h1>
-  <% if flash[:email_error] %>
-    <h3><%= flash[:email_error] %></h3>
-  <% end %>
   <form action="/signup" method="POST">
     <div class="form-group">
       <label for="name-input"><i class="fas fa-user-circle"></i> ニックネーム</label>
@@ -25,6 +22,9 @@
 
     <div class="form-group">
       <label for="email-input"><i class="fas fa-envelope"></i> Eメールアドレス</label>
+      <% if flash[:email_error].present? %>
+        <p class="alert alert-danger"><%= flash[:email_error] %></p>
+      <% end %>
       <input
         type="email"
         name="email"
@@ -38,6 +38,9 @@
 
     <div class="form-group">
       <label for="password-input"><i class="fas fa-key"></i> パスワード</label>
+      <% if flash[:password_error].present? %>
+        <p class="alert alert-danger"><%= flash[:password_error] %></p>
+      <% end %>
       <input
         type="password"
         name="password"
@@ -52,7 +55,7 @@
     <div class="form-group">
       <input
         type="password"
-        name="password-confirmation"
+        name="password_confirmation"
         class="form-control"
         maxlength="32"
         placeholder="パスワードの再入力"
