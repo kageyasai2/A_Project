@@ -16,6 +16,10 @@ class UsersController < Base
       password_confirmation: params[:password_confirmation],
     })
 
+    if User.confirm_email(params[:email]).nil?
+      flash[:email_error] = "メールアドレス #{params[:email]}は既に使われています"
+    end
+
     if user.save
       erb :'sessions/login'
     else
