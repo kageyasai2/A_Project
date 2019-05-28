@@ -20,6 +20,7 @@ class Main < Sinatra::Base
     '/auth' => SessionsController,
     '/signup' => UsersController,
     '/user_foods' => UserFoodsController,
+    '/discarded_foods' => DiscardedFoodsController,
     '/recipes' => RecipesController,
   }.freeze
 end
