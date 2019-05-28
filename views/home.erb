@@ -21,11 +21,18 @@
         <h4>冷蔵庫の食材一覧</h4>
         <ul class="list-group" >
         <% @user_foods.each do |item|%>
-          <% if item.gram %>
-            <li class="list-group-item"><%= item.name %>&nbsp;&nbsp;&nbsp;<%= item.gram %>g</li>
-          <% else %>
-            <li class="list-group-item"><%= item.name %></li>
-          <% end %>
+          <li class="list-group-item">
+            <p><%= item.name %></p>
+
+            <% if item.gram.present? %>
+              <p><%= item.gram %>g</p>
+            <% end %>
+
+            <% if item.limit_date.present? %>
+              <p><%= item.limit_date %></p>
+            <% end %>
+
+          </li>
         <% end %>
         </ul>
       </div>
