@@ -6,7 +6,6 @@ require 'active_record'
 ActiveRecord::Base.configurations = YAML.load_file(File.join(ROOT_DIR, 'config/database.yml'))
 ActiveRecord::Base.establish_connection(settings.environment)
 
-
 Dir[CONTROLLERS_DIR + '/*.rb'].each do |controller|
   require controller
 end
@@ -20,8 +19,8 @@ class Main < Sinatra::Base
     '/' => IndexController,
     '/auth' => SessionsController,
     '/signup' => UsersController,
-    '/user_foods'   => UserFoodsController,
+    '/user_foods' => UserFoodsController,
     '/discarded_foods' => DiscardedFoodsController,
     '/recipes' => RecipesController,
-  }
+  }.freeze
 end

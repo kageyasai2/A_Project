@@ -27,20 +27,20 @@ describe RecipesController, type: :request do
       post '/recipes'
       expect(last_response.status).to eq 302
       follow_redirect!
-      expect(last_response.body).to include "ログインしているユーザのみ使用可能"
+      expect(last_response.body).to include 'ログインしているユーザのみ使用可能'
     end
 
     it 'redirect to /recipes, with nothing user_food error' do
       post '/recipes', {}, 'rack.session' => { user_id: @user.id }
       expect(last_response.status).to eq 302
       follow_redirect!
-      expect(last_response.body).to include "冷蔵庫に食材がありません"
+      expect(last_response.body).to include '冷蔵庫に食材がありません'
     end
 
     it 'returns 200 status' do
       UserFood.create(user_id: @user.id, name: 'じゃがいも')
 
-      allow_any_instance_of(RecipesController).to receive(:fetch_html_from).and_return(return_doc_mock(file_name: 'recipe_list.html'))
+      allow(RecipesController).to receive(:fetch_html_from).and_return(return_doc_mock(file_name: 'recipe_list.html'))
       post '/recipes', {}, 'rack.session' => { user_id: @user.id }
       expect(last_response.status).to eq 200
       # HACK: 遷移先のページが正しいか間接的にテストしている
@@ -50,30 +50,28 @@ describe RecipesController, type: :request do
     it 'returns 200 status, with genre' do
       UserFood.create(user_id: @user.id, name: 'じゃがいも')
 
-      allow_any_instance_of(RecipesController).to receive(:fetch_html_from).and_return(return_doc_mock(file_name: 'recipe_list.html'))
+      allow(RecipesController).to receive(:fetch_html_from).and_return(return_doc_mock(file_name: 'recipe_list.html'))
       post '/recipes', {
-        genre: '和食'
+        genre: '和食',
       }, 'rack.session' => { user_id: @user.id }
       expect(last_response.status).to eq 200
     end
   end
 
-
   describe 'GET to /recipes/show' do
     it 'returns 200 status' do
-      allow_any_instance_of(RecipesController).to receive(:fetch_html_from).and_return(return_doc_mock(file_name: 'recipe_detail.html'))
+      allow(RecipesController).to receive(:fetch_html_from).and_return(return_doc_mock(file_name: 'recipe_detail.html'))
       get '/recipes/show?recipe_path=/recipe/5406617'
       expect(last_response.status).to eq 200
     end
 
-    it 'returns 200 status' do
+    it 'redirects to genre select page' do
       get '/recipes/show'
       expect(last_response.status).to eq 302
       follow_redirect!
       expect(last_response.body).to include 'ジャンル選択'
     end
   end
-
 
   private
 
@@ -83,4 +81,3 @@ describe RecipesController, type: :request do
     end
   end
 end
-

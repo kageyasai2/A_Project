@@ -26,10 +26,11 @@ class UserFoodsController < Base
         })
         user_food.save!
       end
-    end
-      redirect '/'
     rescue ActiveRecord::RecordInvalid
-      erb :'/user_foods/food_register'
+      return erb :'/user_foods/food_register'
+    end
+
+    redirect '/'
   end
 
 end

@@ -13,3 +13,6 @@
 Style/StringLiterals:
   EnforcedStyle: single_quotes
 
+# private/protected は一段深くインデントする
+Layout/IndentationConsistency:
+  EnforcedStyle: normal

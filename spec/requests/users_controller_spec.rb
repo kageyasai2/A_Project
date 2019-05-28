@@ -32,7 +32,7 @@ describe UsersController, type: :request do
         password_confirmation: test_pass,
       }
       expect(last_response.status).to eq 200
-      expect(last_response.body).to include "ログイン"
+      expect(last_response.body).to include 'ログイン'
     end
 
     it 'returns signup page again, when failed post request' do
@@ -43,8 +43,7 @@ describe UsersController, type: :request do
         password_confirmation: '',
       }
       expect(last_response.status).to eq 200
-      expect(last_response.body).to include "登録する"
+      expect(last_response.body).to include '登録する'
     end
   end
 end
-

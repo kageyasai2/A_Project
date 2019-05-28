@@ -38,25 +38,20 @@ describe UserFoodsController, type: :request do
     it 'redirects to index page, when successful' do
       post '/user_foods/register', {
         items: [
-          { food_name: 'ばなな', },
-        ]
+          { food_name: 'ばなな' },
+        ],
       }, 'rack.session' => { user_id: @user.id }
       expect(last_response.status).to eq 302
-      #expect(last_response.body).to include "Hello"
     end
 
     it 'returns user_foods register page again, when failed post request' do
       post '/user_foods/register', {
         items: [
-          { food_name: '', },
-        ]
+          { food_name: '' },
+        ],
       }, 'rack.session' => { user_id: @user.id }
       expect(last_response.status).to eq 200
-      expect(last_response.body).to include ""
+      expect(last_response.body).to include '食材登録画面'
     end
   end
 end
-
-
-
-

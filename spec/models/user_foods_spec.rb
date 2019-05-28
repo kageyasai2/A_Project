@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'UserFood model', type: :model do
+describe UserFood, type: :model do
   let(:user_food) do
     user = User.create(
       name: 'NAKKA',
@@ -11,9 +11,9 @@ describe 'UserFood model', type: :model do
 
     UserFood.new(
       name: 'トマト',
-      limit_date: "2019-05-08",
+      limit_date: '2019-05-08',
       user_id: user.id,
-      gram: 100
+      gram: 100,
     )
   end
 
@@ -29,7 +29,6 @@ describe 'UserFood model', type: :model do
 
   it 'Food name has not been entered' do
     user_food.name = nil
-    expect(user_food).to_not be_valid
+    expect(user_food).not_to be_valid
   end
-
 end
