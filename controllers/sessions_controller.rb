@@ -8,14 +8,14 @@ class SessionsController < Base
 
   post '/login' do
     if !params[:email] || !params[:password]
-      erb :'sessions/login' and return
+      return erb :'sessions/login'
     end
 
     user = User.find_by(email: params[:email])
 
     if user && user.authenticate(params[:password])
       session[:user_id] = user.id
-      redirect '/'
+      redirect '/home'
     else
       @email = params[:email]
       @password = params[:password]
