@@ -12,16 +12,16 @@ class DiscardedFoodsController < Base
 
   post '/food_discard' do
     # 廃棄に成功した食材と廃棄に失敗した食材を取得
-    discarded_food_list, failure_discarded_food_list = get_discarded_food_list
+    discarded_foods, failure_discarded_foods = generate_discarded_foods
 
-    if discarded_food_list.blank?
-      flash[:failure_discarded_foods] = failure_discarded_food_list
+    if discarded_foods.blank?
+      flash[:failure_discarded_foods] = failure_discarded_foods
       return erb :'discarded_foods/food_discard'
     end
 
-    # @discarded_food_listが空でないならDBに廃棄食材を保存する。
+    # @discarded_foodsが空でないならDBに廃棄食材を保存する。
     DiscardedFood.transaction do
-      discarded_food_list.each do |item|
+      discarded_foods.each do |item|
         gram = item[:gram]
 
         # 廃棄食材の登録
@@ -45,8 +45,8 @@ class DiscardedFoodsController < Base
       return erb :'discarded_foods/food_discard'
     end
 
-    flash[:discarded_foods] = discarded_food_list
-    flash[:failure_discarded_foods] = failure_discarded_food_list
+    flash[:discarded_foods] = discarded_foods
+    flash[:failure_discarded_foods] = failure_discarded_foods
 
     return erb :'discarded_foods/food_discard'
   end
@@ -54,11 +54,11 @@ class DiscardedFoodsController < Base
   private
 
   # 廃棄成功食材と廃棄失敗食材のリストを返す
-  def get_discarded_food_list
+  def generate_discarded_foods
     # 廃棄失敗食材リスト
-    failure_discarded_food_list = []
+    failure_discarded_foods = []
     # 廃棄成功食材リスト
-    discarded_food_list = []
+    discarded_foods = []
 
     params[:items].each do |item|
       if item[:food_name].blank?
@@ -67,12 +67,12 @@ class DiscardedFoodsController < Base
 
       # 冷蔵庫にitem[:food_name]が存在しないならTrue
       if !UserFood.exists?(user_id: session[:user_id], name: item[:food_name])
-        failure_discarded_food_list << item
+        failure_discarded_foods << item
       else
-        discarded_food_list << item
+        discarded_foods << item
       end
     end
 
-    return discarded_food_list, failure_discarded_food_list
+    return discarded_foods, failure_discarded_foods
   end
 end
