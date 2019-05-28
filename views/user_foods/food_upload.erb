@@ -1,1 +1,20 @@
-<h1>食材の画像アップロード</h1>
+<h1>食材の画像アップロード</h1><br>
+<h3>食材を枠内に収めてください</h3>
+<form action="/user_foods/food_upload" method="POST">
+    <div class="card border-primary card-body bg-light p-5">
+        <img class="card-img-top" src="/image/food_picture.png" alt="撮影画面の画像">
+    </div>
+    <div class="button">
+        <button type="submit" class="btn btn-outline-danger btn-lg rounded-pill">手入力</button>
+    </div>
+</form>
+
+<style>
+ h1,h3 {
+    text-align: center;
+}
+
+.button{
+    text-align:center;
+ }
+</style>
