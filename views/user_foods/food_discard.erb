@@ -3,8 +3,6 @@
 <script src="https://unpkg.com/bootstrap-show-password@1.2.1/dist/bootstrap-show-password.min.js"></script>
 
 <%= erb :'user_foods/show_message' %>
-<form action="/user_foods/food_discard" method="post">
-  <h1>廃棄した食材の登録</h1>
 
 <table>
   <tr id="templateForm" class="NotDisp">
@@ -13,6 +11,11 @@
   <td><button type="button" name="removeButton"  class="btn btn-danger mb-2" > - </button></td>
 </tr>
 </table>
+
+<form action="/user_foods/food_discard" method="post">
+  <h1>廃棄した食材の登録</h1>
+
+
 
   <table>
     <thead>
