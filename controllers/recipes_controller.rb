@@ -1,6 +1,7 @@
 require 'sinatra'
 require 'nokogiri'
 require 'open-uri'
+require 'addressable/uri'
 require_relative 'base'
 
 class RecipesController < Base
@@ -33,7 +34,7 @@ class RecipesController < Base
 
     doc =
       begin
-      fetch_html_from("https://cookpad.com#{recipe_path}")
+      fetch_html_from Addressable::URI.encode("https://cookpad.com#{recipe_path}")
       rescue OpenURI::HTTPError
         # TODO: エラーメッセージを動的に設定できる404ページを作成する
         return [404, ['検索結果が見つかりませんでした。', '再度検索をお願いいたします。']]
@@ -53,7 +54,7 @@ class RecipesController < Base
   private
 
   def fetch_html_from(url)
-    URI.parse(url).open do |page|
+    OpenURI.open_uri(url) do |page|
       Nokogiri::HTML.parse(page.read, nil, page.charset)
     end
   end
@@ -120,9 +121,9 @@ class RecipesController < Base
     # ジャンル選択画面で選ばれた食材名・ジャンルをURL末尾に設定する
     food = UserFood.where(user_id: session[:user_id]).order(limit_date: :desc).limit(1)
     if params[:genre].blank?
-      CGI.escape "https://cookpad.com/search/#{food[0].name}"
+      Addressable::URI.encode "https://cookpad.com/search/#{food[0].name}"
     else
-      CGI.escape 'https://cookpad.com/search/' + params[:genre] + '%E3%80%80' + food[0].name
+      Addressable::URI.encode "https://cookpad.com/search/#{params[:genre]} #{food[0].name}"
     end
   end
 end
