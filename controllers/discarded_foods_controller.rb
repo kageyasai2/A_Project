@@ -12,15 +12,16 @@ class DiscardedFoodsController < Base
 
   post '/food_discard' do
     # 廃棄に成功した食材と廃棄に失敗した食材を取得
-    @discarded_food_list , @failure_discarded_food_list =  get_discarded_food_list
+    discarded_food_list , failure_discarded_food_list =  get_discarded_food_list
 
-    if @discarded_food_list.blank?
+    if discarded_food_list.blank?
+      flash[:failure_discarded_foods] = failure_discarded_food_list
       return erb :'discarded_foods/food_discard'
     end
 
     # @discarded_food_listが空でないならDBに廃棄食材を保存する。
     DiscardedFood.transaction do
-      @discarded_food_list.each do |item|
+      discarded_food_list.each do |item|
         gram = item[:gram]
 
         # 廃棄食材の登録
@@ -41,8 +42,12 @@ class DiscardedFoodsController < Base
 
       end
     rescue ActiveRecord::RecordInvalid
+      flash[:error] = "保存に失敗しました"
       return erb :'discarded_foods/food_discard'
     end
+
+    flash[:discarded_foods] = discarded_food_list
+    flash[:failure_discarded_foods] = failure_discarded_food_list
 
     return erb :'discarded_foods/food_discard'
   end
