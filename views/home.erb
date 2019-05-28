@@ -22,16 +22,17 @@
         <ul class="list-group" >
         <% @user_foods.each do |item|%>
           <li class="list-group-item">
-            <p><%= item.name %></p>
+            <ul style="list-style: none; padding: 0;">
+              <li ><%= item.name %></li>
 
             <% if item.gram.present? %>
-              <p><%= item.gram %>g</p>
+              <li ><%= item.gram %>g</li>
             <% end %>
 
             <% if item.limit_date.present? %>
-              <p><%= item.limit_date %></p>
+              <li ><%= item.limit_date %></li>
             <% end %>
-
+            </ul>
           </li>
         <% end %>
         </ul>
