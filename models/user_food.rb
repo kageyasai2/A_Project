@@ -13,7 +13,7 @@ class UserFood < ActiveRecord::Base
     end
   end
 
-  def self.find_from(user_id,food_name)
+  def self.find_from(user_id, food_name)
     food = UserFood.where(user_id: user_id, name: food_name).limit(1)
     if food.blank?
       nil
@@ -21,5 +21,4 @@ class UserFood < ActiveRecord::Base
       food.first
     end
   end
-
 end

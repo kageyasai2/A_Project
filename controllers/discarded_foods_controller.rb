@@ -4,7 +4,7 @@ require_relative 'base'
 class DiscardedFoodsController < Base
   get '/food_discard' do
     unless @current_user
-      flash[:error] = "廃棄食材登録はログインしているユーザのみ使用可能です。"
+      flash[:error] = '廃棄食材登録はログインしているユーザのみ使用可能です。'
       redirect '/auth/login' and return
     end
     erb :'discarded_foods/food_discard'
@@ -12,7 +12,7 @@ class DiscardedFoodsController < Base
 
   post '/food_discard' do
     # 廃棄に成功した食材と廃棄に失敗した食材を取得
-    discarded_food_list , failure_discarded_food_list =  get_discarded_food_list
+    discarded_food_list, failure_discarded_food_list = get_discarded_food_list
 
     if discarded_food_list.blank?
       flash[:failure_discarded_foods] = failure_discarded_food_list
@@ -26,23 +26,22 @@ class DiscardedFoodsController < Base
 
         # 廃棄食材の登録
         discarded_food = DiscardedFood.new({
-          name:    item[:food_name],
-          gram:    gram,
+          name: item[:food_name],
+          gram: gram,
           user_id: session[:user_id],
         })
         discarded_food.save!
 
-        food = UserFood.find_from(session[:user_id],item[:food_name])
+        food = UserFood.find_from(session[:user_id], item[:food_name])
 
         if food.nil?
           next
         end
 
         food.update_gram_in_user_foods(gram)
-
       end
     rescue ActiveRecord::RecordInvalid
-      flash[:error] = "保存に失敗しました"
+      flash[:error] = '保存に失敗しました'
       return erb :'discarded_foods/food_discard'
     end
 
@@ -54,11 +53,11 @@ class DiscardedFoodsController < Base
 
   private
 
-  #廃棄成功食材と廃棄失敗食材のリストを返す
+  # 廃棄成功食材と廃棄失敗食材のリストを返す
   def get_discarded_food_list
-    #廃棄失敗食材リスト
+    # 廃棄失敗食材リスト
     failure_discarded_food_list = []
-    #廃棄成功食材リスト
+    # 廃棄成功食材リスト
     discarded_food_list = []
 
     params[:items].each do |item|
@@ -66,7 +65,7 @@ class DiscardedFoodsController < Base
         next
       end
 
-      #冷蔵庫にitem[:food_name]が存在しないならTrue
+      # 冷蔵庫にitem[:food_name]が存在しないならTrue
       if !UserFood.exists?(user_id: session[:user_id], name: item[:food_name])
         failure_discarded_food_list << item
       else
@@ -76,5 +75,4 @@ class DiscardedFoodsController < Base
 
     return discarded_food_list, failure_discarded_food_list
   end
-
 end
