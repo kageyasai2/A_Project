@@ -118,8 +118,8 @@ class RecipesController < Base
   end
 
   def create_url
-    # ジャンル選択画面で選ばれた食材名・ジャンルをURL末尾に設定する
-    food = UserFood.where(user_id: session[:user_id]).order(limit_date: :desc).limit(1)
+    #ジャンル選択画面で選ばれた食材名・ジャンルをURL末尾に設定する
+    food = UserFood.where(user_id: session[:user_id]).order(limit_date: :asc).limit(1)
     if params[:genre].blank?
       Addressable::URI.encode "https://cookpad.com/search/#{food[0].name}"
     else
