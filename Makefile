@@ -11,6 +11,8 @@ run:
 test:
 	bundle exec rake spec
 
+test/diff:
+	git status -s | awk '/_spec/ {print $$2}' | xargs bundle exec rspec
 
 create_table:
 	bundle exec rake db:create_migration NAME=$(NAME)
