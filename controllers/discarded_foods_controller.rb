@@ -19,27 +19,8 @@ class DiscardedFoodsController < Base
       return erb :'discarded_foods/food_discard'
     end
 
-    # @discarded_foodsが空でないならDBに廃棄食材を保存する。
     DiscardedFood.transaction do
-      discarded_foods.each do |item|
-        gram = item[:gram]
-
-        # 廃棄食材の登録
-        discarded_food = DiscardedFood.new({
-          name: item[:food_name],
-          gram: gram,
-          user_id: session[:user_id],
-        })
-        discarded_food.save!
-
-        food = UserFood.find_from(session[:user_id], item[:food_name])
-
-        if food.nil?
-          next
-        end
-
-        food.update_gram_in_user_foods!(gram)
-      end
+      truncate_food_based_on(session[:user_id], discarded_foods)
     rescue ActiveRecord::RecordInvalid
       flash[:error] = '保存に失敗しました'
       return erb :'discarded_foods/food_discard'
@@ -47,7 +28,6 @@ class DiscardedFoodsController < Base
 
     flash[:discarded_foods] = discarded_foods
     flash[:failure_discarded_foods] = failure_discarded_foods
-
     return erb :'discarded_foods/food_discard'
   end
 
@@ -55,9 +35,7 @@ class DiscardedFoodsController < Base
 
   # 廃棄成功食材と廃棄失敗食材のリストを返す
   def generate_discarded_foods
-    # 廃棄失敗食材リスト
     failure_discarded_foods = []
-    # 廃棄成功食材リスト
     discarded_foods = []
 
     params[:items].each do |item|
@@ -65,14 +43,36 @@ class DiscardedFoodsController < Base
         next
       end
 
-      # 冷蔵庫にitem[:food_name]が存在しないならTrue
-      if !UserFood.exists?(user_id: session[:user_id], name: item[:food_name])
-        failure_discarded_foods << item
-      else
+      if UserFood.exists?(user_id: session[:user_id], name: item[:food_name])
         discarded_foods << item
+      else
+        failure_discarded_foods << item
       end
     end
 
     return discarded_foods, failure_discarded_foods
+  end
+
+  def truncate_food_based_on(user_id, discarded_foods)
+    discarded_foods.each do |item|
+      gram = item[:gram]
+
+      # 廃棄食材の登録
+      discarded_food = DiscardedFood.new({
+        name: item[:food_name],
+        gram: gram,
+        user_id: user_id,
+      })
+      discarded_food.save!
+
+      food = UserFood.find_from(user_id, item[:food_name])
+
+      if food.nil?
+        next
+      end
+
+      # 廃棄登録された食材を冷蔵庫から削除する
+      food.update_gram_in_user_foods!(gram)
+    end
   end
 end
