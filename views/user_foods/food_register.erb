@@ -3,8 +3,19 @@
 <script src="https://unpkg.com/bootstrap-show-password@1.2.1/dist/bootstrap-show-password.min.js"></script>
 
 <form action="/user_foods/register" method="post">
-  <h1>食材登録画面</h1>
 
+<h1>食材登録画面</h1>
+
+<table>
+  <tr id="templateForm" class="NotDisp">
+    <td><input name="items[][food_name]" class="form-control mb-2" type="text" placeholder="食材名"></td>
+    <td><input name="items[][date]" class="form-control mb-2" type="date" placeholder="賞味期限"></td>
+    <td><input name="items[][gram]" class="form-control mb-2" type="number" placeholder="食材の重さ(g)"></td>
+    <td><button type="button" name="removeButton"  class="btn btn-danger mb-2" > - </button></td>
+    </tr>
+</table>
+
+<form action="/user_foods/register" method="post">
   <table>
     <thead>
       <tr>
@@ -15,25 +26,22 @@
     </thead>
 
     <tbody id="displayArea">
-      <tr id="templateForm" class="NotDisp">
-        <td><input name="items[][food_name]" class="form-control mb-2" type="text" placeholder="食材名"></td>
-        <td><input name="items[][date]" class="form-control mb-2" type="date" placeholder="賞味期限"></td>
-        <td><input name="items[][gram]" class="form-control mb-2" type="number" placeholder="食材の重さ(g)"></td>
-        <td><button type="button" name="removeButton"> - </button></td>
-      </tr>
       <tr>
         <td><input name="items[][food_name]" class="form-control mb-2" type="text" placeholder="食材名"></td>
         <td><input name="items[][date]" class="form-control mb-2" type="date" placeholder="賞味期限"></td>
         <td><input name="items[][gram]" class="form-control mb-2" type="number" placeholder="食材の重さ(g)"></td>
-        <td><button type="button" name="removeButton"> - </button></td>
+        <td><button type="button" name="removeButton"  class="btn btn-danger mb-2" > - </button></td>
       </tr>
-
     </tbody>
   </table>
 
-  <button type="button" id="addButton" class="btn btn-primary mb-2" > 追加 </button>
+
+
+  <button type="button" id="addButton" class="btn btn-lg btn-block btn-success mb-2 w-50" >追加</button>
+
   <input type="reset" class="btn btn-secondary mb-2" value="取り消し">
-  <button type="submit" class="btn btn-secondary mb-2">食材登録</button>
+
+  <button type="submit" class="btn btn-primary mb-2">  登録 </button>
  
 
   <style type="text/css">

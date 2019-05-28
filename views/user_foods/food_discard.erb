@@ -5,7 +5,15 @@
 <%= erb :'user_foods/show_message' %>
 <form action="/user_foods/food_discard" method="post">
   <h1>廃棄した食材の登録</h1>
-<div> 
+
+<table>
+  <tr id="templateForm" class="NotDisp">
+  <td><input name="items[][food_name]" class="form-control mb-2" type="text" placeholder="食材名"></td>
+  <td><input name="items[][gram]" class="form-control mb-2" type="number" placeholder="食材の重さ(g)"></td>
+  <td><button type="button" name="removeButton"  class="btn btn-danger mb-2" > - </button></td>
+</tr>
+</table>
+
   <table>
     <thead>
       <tr>
@@ -15,11 +23,6 @@
     </thead>
 
     <tbody id="displayArea">
-      <tr id="templateForm" class="NotDisp">
-        <td><input name="items[][food_name]" class="form-control mb-2" type="text" placeholder="食材名"></td>
-        <td><input name="items[][gram]" class="form-control mb-2" type="number" placeholder="食材の重さ(g)"></td>
-        <td><button type="button" name="removeButton"  class="btn btn-danger mb-2" > - </button></td>
-      </tr>
       <tr>
         <td><input name="items[][food_name]" class="form-control mb-2" type="text" placeholder="食材名"></td>
         <td><input name="items[][gram]" class="form-control mb-2" type="number" placeholder="食材の重さ(g)"></td>
@@ -29,8 +32,8 @@
     </tbody>
   </table>
 
-  <button type="button" id="addButton" class="btn btn-lg btn-block btn-success mb-2" >追加</button>
-</div>
+  <button type="button" id="addButton" class="btn btn-lg btn-block btn-success mb-2 w-50" >追加</button>
+
   <hr>
   <input type="reset" class="btn btn-secondary mb-2" value="取り消し">
 
