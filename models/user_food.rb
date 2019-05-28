@@ -4,7 +4,7 @@ class UserFood < ActiveRecord::Base
   validates :name, presence: true, length: { maximum: 50 }
   belongs_to :user
 
-  def update_gram_in_user_foods(gram)
+  def update_gram_in_user_foods!(gram)
     # UserFoodの消去、または減量
     if gram.blank? || self.gram.to_i <= gram.to_i
       self.destroy

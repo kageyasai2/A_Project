@@ -38,7 +38,7 @@ class DiscardedFoodsController < Base
           next
         end
 
-        food.update_gram_in_user_foods(gram)
+        food.update_gram_in_user_foods!(gram)
       end
     rescue ActiveRecord::RecordInvalid
       flash[:error] = '保存に失敗しました'
