@@ -1,0 +1,22 @@
+<% if flash[:discarded_foods].present? %>
+  <h3>廃棄登録に成功した食材</h3>
+
+  <ul class="list-group list-group-flush" >
+    <% flash[:discarded_foods].each do |discarded_food| %>
+      <li class="list-group-item list-group-item-success"><%= discarded_food[:food_name] %><%= " - #{discarded_food[:gram]}g" if discarded_food[:gram].present? %></li>
+    <% end %>
+  </ul>
+<% end %>
+
+<% if flash[:failure_discarded_foods].present? %>
+  <h3>以下の廃棄食材は冷蔵庫に登録されていません。</h3>
+
+  <ul class="list-group list-group-flush" >
+    <% flash[:failure_discarded_foods].each do |failure_discarded_food| %>
+      <li class="list-group-item list-group-item-danger"><%= failure_discarded_food[:food_name] %></li>
+    <% end %>
+  </ul>
+<% end %>
+<% if flash[:error].present? %>
+  <h3><%= flash[:error] %></h3>
+<% end %>

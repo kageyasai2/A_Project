@@ -33,3 +33,9 @@ else
 	echo 'Your pc is not windows os'
 endif
 
+
+dry/lint:
+	bundle exec rubocop -D -E -S -P
+
+lint:
+	bundle exec rubocop -a
