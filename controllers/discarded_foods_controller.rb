@@ -28,6 +28,7 @@ class DiscardedFoodsController < Base
         discarded_food = DiscardedFood.new({
           name:    item[:food_name],
           gram:    gram,
+          calorie: rand(100),
           user_id: session[:user_id],
         })
         discarded_food.save!

@@ -23,6 +23,7 @@ class UserFoodsController < Base
           limit_date: item[:date],
           user_id:    session[:user_id],
           gram:       item[:gram],
+          calorie: rand(100),
         })
         user_food.save!
       end
