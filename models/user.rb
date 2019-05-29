@@ -9,14 +9,4 @@ class User < ActiveRecord::Base
   has_secure_password
   has_many :user_foods
   has_many :discarded_foods
-
-  def self.exists_email_into_user_table(email)
-    email = User.where(email: email).limit(1)
-    if email.present?
-      true
-    else
-      false
-    end
-  end
-
 end
