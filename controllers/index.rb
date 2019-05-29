@@ -12,21 +12,13 @@ class IndexController < Base
     end
     @user_foods ||= []
 
-    days_calorie_hash = DiscardedFood.
-      where_my(session[:user_id]).
-      where_current_month.
-      group_by_date.
-      sum_calorie
+    days_calorie_hash = DiscardedFood.read_daily_calories_by(session[:user_id])
     @days_calorie_array = days_calorie_hash.each_key.map do |key|
       val = days_calorie_hash[key]
       [key.to_i, val]
     end
 
-    months_calorie_hash = DiscardedFood.
-      where_my(session[:user_id]).
-      where_current_year.
-      group_by_month.
-      sum_calorie
+    months_calorie_hash = DiscardedFood.read_monthly_calories_by(session[:user_id])
     @months_calorie_array = months_calorie_hash.each_key.map do |key|
       val = months_calorie_hash[key]
       [key.to_i, val]

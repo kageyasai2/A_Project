@@ -10,4 +10,21 @@ class DiscardedFood < ActiveRecord::Base
   scope :group_by_month, -> { group('STRFTIME("%m", DATE(created_at))') }
   scope :group_by_date, -> { group('STRFTIME("%d", DATE(created_at))') }
   scope :sum_calorie, -> { sum(:calorie) }
+
+  class << self
+    def read_daily_calories_by(user_id)
+      where_my(user_id)
+        .where_current_month
+        .group_by_date
+        .sum_calorie
+    end
+
+    def read_monthly_calories_by(user_id)
+      where_my(user_id).
+        where_current_year.
+        group_by_month.
+        sum_calorie
+    end
+
+  end
 end
