@@ -28,3 +28,6 @@ Layout/BlockAlignment:
 
 Layout/MultilineMethodCallIndentation:
   EnforcedStyle: indented
+
+Layout/DotPosition:
+  EnforcedStyle: leading

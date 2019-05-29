@@ -20,11 +20,10 @@ class DiscardedFood < ActiveRecord::Base
     end
 
     def read_monthly_calories_by(user_id)
-      where_my(user_id).
-        where_current_year.
-        group_by_month.
-        sum_calorie
+      where_my(user_id)
+        .where_current_year
+        .group_by_month
+        .sum_calorie
     end
-
   end
 end
