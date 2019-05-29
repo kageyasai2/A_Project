@@ -17,6 +17,7 @@ gem 'sqlite3'
 
 group :development do
   gem 'onkcop', require: false
+  gem 'pre-commit', require: false
 end
 
 group :test do

@@ -16,3 +16,6 @@ Style/StringLiterals:
 # private/protected は一段深くインデントする
 Layout/IndentationConsistency:
   EnforcedStyle: normal
+
+RSpec/BeforeAfterAll:
+  Enabled: false
