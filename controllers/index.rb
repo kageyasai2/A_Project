@@ -16,11 +16,11 @@ class IndexController < Base
   end
 
   get '/terms_of_service' do
-    erb :'terms_of_service'
+    erb :terms_of_service
   end
 
   get '/unsubscribed' do
-    erb :'unsubscribed'
+    erb :unsubscribed
   end
 
 end
