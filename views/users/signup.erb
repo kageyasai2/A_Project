@@ -22,8 +22,8 @@
 
     <div class="form-group">
       <label for="email-input"><i class="fas fa-envelope"></i> Eメールアドレス</label>
-      <% if flash[:email_error].present? %>
-        <p class="alert alert-danger"><%= flash[:email_error] %></p>
+      <% unless flash[:errors][:email].blank? %>
+        <p class="red"><%= flash[:errors][:email][0] %></p>
       <% end %>
       <input
         type="email"
@@ -38,8 +38,8 @@
 
     <div class="form-group">
       <label for="password-input"><i class="fas fa-key"></i> パスワード</label>
-      <% if flash[:password_error].present? %>
-        <p class="alert alert-danger"><%= flash[:password_error] %></p>
+      <% unless flash[:errors][:password_confirmation].blank? %>
+        <p class="red"><%= flash[:errors][:password_confirmation][0] %></p>
       <% end %>
       <input
         type="password"

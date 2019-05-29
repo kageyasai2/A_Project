@@ -5,6 +5,7 @@ require './models/user.rb'
 
 class UsersController < Base
   get '/' do
+    flash[:errors] = {}
     erb :'users/signup'
   end
 
@@ -15,24 +16,19 @@ class UsersController < Base
       password: params[:password],
       password_confirmation: params[:password_confirmation],
     })
-
+    flash[:errors] = {}
     if params[:password_confirmation] && user.save
+      p user.errors.messages[:email]
+      p flash[:errors][:email]
       erb :'sessions/login'
     else
-      setting_user_error_messages(user.errors.messages)
+      flash[:errors] = user.errors.messages
+      p user.errors.messages
+      if flash[:errors][:email].present?
+        p flash[:errors][:email]
+      end
       erb :'users/signup'
     end
   end
 
-  private
-
-  def setting_user_error_messages(error_messages)
-    if error_messages[:email].present?
-      flash.now[:email_error] = error_messages[:email][0]
-    end
-
-    if error_messages[:password_confirmation].present?
-      flash.now[:password_error] = error_messages[:password_confirmation][0]
-    end
-  end
 end
