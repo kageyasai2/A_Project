@@ -19,3 +19,6 @@ Layout/IndentationConsistency:
 
 RSpec/BeforeAfterAll:
   Enabled: false
+
+Layout/SpaceInLambdaLiteral:
+  EnforcedStyle: require_space
