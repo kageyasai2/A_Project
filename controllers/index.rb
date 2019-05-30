@@ -12,19 +12,65 @@ class IndexController < Base
     end
     @user_foods ||= []
 
-    days_calorie_hash = DiscardedFood.read_daily_calories_by(session[:user_id])
-    @days_calorie_array = days_calorie_hash.each_key.map do |key|
-      val = days_calorie_hash[key]
-      [key.to_i, val]
-    end
+    monthly_calories_hash = DiscardedFood.read_monthly_calories_by(session[:user_id])
+    @monthly_kill_retios = generate_loss_degrees_by(
+      calories_hash: monthly_calories_hash,
+      day_or_month: :month,
+    )
+    @monthly_contributes = generate_contribute_degrees_by(
+      calories_hash: monthly_calories_hash,
+      day_or_month: :month,
+    )
 
-    months_calorie_hash = DiscardedFood.read_monthly_calories_by(session[:user_id])
-    @months_calorie_array = months_calorie_hash.each_key.map do |key|
-      val = months_calorie_hash[key]
-      [key.to_i, val]
-    end
+    daily_calories_hash = DiscardedFood.read_daily_calories_by(session[:user_id])
+    @daily_kill_retios = generate_loss_degrees_by(
+      calories_hash: daily_calories_hash,
+      day_or_month: :day,
+    )
+    @daily_contributes = generate_contribute_degrees_by(
+      calories_hash: daily_calories_hash,
+      day_or_month: :day,
+    )
 
     erb :home
+  end
+
+  def generate_loss_degrees_by(calories_hash:, day_or_month:)
+    kill_retios =
+      calories_hash.map do |key, cal|
+        [key, LossHelper.calc_kill_retio(discarded_calorie: cal, day_or_month: day_or_month)]
+      end
+    kill_retios_hash = kill_retios.to_h
+
+    filled_kill_retios_hash =
+      case day_or_month
+      when :month then
+        DateHelper.fill_calorie_of_monthly_as_zero(kill_retios_hash)
+      when :day then
+        DateHelper.fill_calorie_of_daily_as_zero(Time.current.month, kill_retios_hash)
+      else
+        raise AugumentError, 'day_or_month引数には:dayか:monthのどちらかを指定してください'
+      end
+    DateHelper.convert_to_nums_array(filled_kill_retios_hash)
+  end
+
+  def generate_contribute_degrees_by(calories_hash:, day_or_month:)
+    contributes =
+      calories_hash.map do |key, cal|
+        [key, ContributionHelper.calc_contribute_num(discarded_calorie: cal, day_or_month: day_or_month)]
+      end
+    contributes_hash = contributes.to_h
+
+    filled_contributes_hash =
+      case day_or_month
+      when :month then
+        DateHelper.fill_calorie_of_monthly_as_zero(contributes_hash)
+      when :day then
+        DateHelper.fill_calorie_of_daily_as_zero(Time.current.month, contributes_hash)
+      else
+        raise AugumentError, 'day_or_month引数には:dayか:monthのどちらかを指定してください'
+      end
+    DateHelper.convert_to_nums_array(filled_contributes_hash)
   end
 
   get '/terms_of_service' do
