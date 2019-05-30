@@ -1,3 +1,7 @@
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript" src="/js/daily_kill_graph.js"></script>
+<script type="text/javascript" src="/js/monthly_kill_graph.js"></script>
+
 <div class="row">
   <div class="col-md-7">
     <div class="row">
@@ -44,10 +48,24 @@
     </div>
   </div>
 </div>
-<div class="row">
+<% if @current_user %>
+  <% if gon.monthly_kill_retios.present? %>
+    <div id="monthly_chart_div" style="width:100%;"></div>
+  <% else %>
+    <div >
+      <p>Nothing months data.</p>
+    </div>
+  <% end %>
+
+  <% if gon.daily_kill_retios.present? %>
+    <div id="daily_chart_div" style="width:100%;"></div>
+  <% else %>
+    <div class="col">
+      <p>Nothing days data.</p>
+    </div>
+  <% end %>
+<% else %>
   <div class="col">
-    <div id="chart_div"></div>
+    <p>Don't use, when not logged in.</p>
   </div>
-</div>
-<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-<script type="text/javascript" src="/js/death_graph.js"></script>
+<% end %>
