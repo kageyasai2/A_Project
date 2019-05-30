@@ -10,6 +10,7 @@ gem 'nokogiri'
 gem 'rack-flash3'
 gem 'rake'
 gem 'sinatra'
+gem 'gon-sinatra'
 
 gem 'activerecord'
 gem 'sinatra-activerecord'
