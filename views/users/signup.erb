@@ -6,9 +6,12 @@
 
 <div class="container">
   <h1>飢餓学割新規登録</h1>
+
   <form action="/signup" method="POST">
     <div class="form-group">
-      <label for="name-input"><i class="fas fa-user-circle"></i> ニックネーム</label>
+      <label for="name-input">
+        <i class="fas fa-user-circle"></i> ニックネーム
+      </label>
       <input
         type="name"
         name="name"
@@ -21,10 +24,11 @@
     </div>
 
     <div class="form-group">
-      <label for="email-input"><i class="fas fa-envelope"></i> Eメールアドレス</label>
-      <% unless flash[:errors][:email].blank? %>
-        <p class="red"><%= flash[:errors][:email][0] %></p>
-      <% end %>
+      <label for="email-input">
+        <i class="fas fa-envelope"></i> Eメールアドレス
+      </label>
+
+      <%= erb :'shared/_field_errors', locals: { model: @user, column: :email } %>
       <input
         type="email"
         name="email"
@@ -37,10 +41,11 @@
     </div>
 
     <div class="form-group">
-      <label for="password-input"><i class="fas fa-key"></i> パスワード</label>
-      <% unless flash[:errors][:password_confirmation].blank? %>
-        <p class="red"><%= flash[:errors][:password_confirmation][0] %></p>
-      <% end %>
+      <label for="password-input">
+        <i class="fas fa-key"></i> パスワード
+      </label>
+
+      <%= erb :'shared/_field_errors', locals: { model: @user, column: :password_confirmation } %>
       <input
         type="password"
         name="password"
