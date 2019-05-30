@@ -2,7 +2,7 @@
 
 source 'https://rubygems.org'
 
-git_source(:github) {|repo_name| "https://github.com/#{repo_name}" }
+git_source(:github) { |repo_name| "https://github.com/#{repo_name}" }
 
 gem 'addressable', '~> 2.6'
 gem 'bcrypt', git: 'https://github.com/codahale/bcrypt-ruby.git'

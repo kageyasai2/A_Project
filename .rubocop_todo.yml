@@ -31,3 +31,8 @@ Layout/MultilineMethodCallIndentation:
 
 Layout/DotPosition:
   EnforcedStyle: leading
+
+Layout/SpaceInsideBlockBraces:
+  EnforcedStyle: space
+  EnforcedStyleForEmptyBraces: no_space
+  SpaceBeforeBlockParameters: true
