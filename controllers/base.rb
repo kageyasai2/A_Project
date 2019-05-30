@@ -1,8 +1,10 @@
 require 'sinatra/base'
 require 'rack/flash'
+require 'gon-sinatra'
 
 class Base < Sinatra::Base
   require_relative '../config/environments'
+  register Gon::Sinatra
   configure do
     set :root, ROOT_DIR
     enable :sessions
