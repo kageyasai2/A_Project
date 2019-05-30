@@ -1,9 +1,46 @@
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript">
+  google.charts.load('current', {packages: ['corechart', 'line']});
+  google.charts.setOnLoadCallback(drawBackgroundColor);
+
+  function drawBackgroundColor() {
+        var data = new google.visualization.DataTable();
+
+
+        data.addColumn('number', '日');
+        data.addColumn('number', '廃棄カロリー');
+
+        data.addRows([
+
+          [1, 100],   [2, 200],  [3, 300],  [4, 400],  [5, 500],  [6, 500],
+          [7, 700],   [8, 800],  [9, 900],  [10, 100],  [11, 1100],  [12, 0],
+          [13,200],[14,0], [15,400] ,[16,500], [17,300], [18,400], [19,500],
+          [20,200] ,[21,300],[22,400], [23,500], [24,300], [25,600], [26,500],
+           [27,700], [28,1300], [29,600] ,[30,500]
+        ]);
+
+        var options = {
+          hAxis: {
+            title:'月'
+          },
+          vAxis: {
+            title: '食材廃棄カロリー'
+          },
+          backgroundColor: '#f1f8e9'
+        };
+
+        var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+        chart.draw(data, options);
+      }
+</script>
+
 <div class="row">
   <div class="col-md-7">
     <div class="row">
       <div class="graph">
         <h4>貢献度</h4>
-        <% #グラフは第3スプリントで実装 %>
+        <div id="chart_div"></div>
+
       </div>
       <div class="recipe">
         <h4>おすすめのレシピ</h4>
