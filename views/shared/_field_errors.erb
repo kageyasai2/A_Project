@@ -1,0 +1,8 @@
+<% if model.errors.full_messages_for(column).present? %>
+  <ul>
+    <% model.errors.full_messages_for(column).each do |err| %>
+      <li class="text-danger"><%= err %></li>
+    <% end %>
+  </ul>
+<% end %>
+
