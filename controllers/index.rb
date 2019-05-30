@@ -51,7 +51,7 @@ class IndexController < Base
       else
         raise AugumentError, 'day_or_month引数には:dayか:monthのどちらかを指定してください'
       end
-    DateHelper.convert_to_nums_array(filled_kill_retios_hash)
+    DateHelper.convert_to_nums_array(filled_kill_retios_hash).sort { |a, b| a[0] <=> b[0] }
   end
 
   def generate_contribute_degrees_by(calories_hash:, day_or_month:)
@@ -70,7 +70,7 @@ class IndexController < Base
       else
         raise AugumentError, 'day_or_month引数には:dayか:monthのどちらかを指定してください'
       end
-    DateHelper.convert_to_nums_array(filled_contributes_hash)
+    DateHelper.convert_to_nums_array(filled_contributes_hash).sort { |a, b| a[0] <=> b[0] }
   end
 
   get '/terms_of_service' do
