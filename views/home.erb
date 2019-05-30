@@ -48,20 +48,20 @@
 <div>
   <% if @current_user %>
 
-    <% if @days_calorie_array.present? %>
-      <% @days_calorie_array.each do |day_cal| %>
-        <div>Day: <%= day_cal[0] %> : <%= day_cal[1] %></div>
-      <% end %>
-    <% else %>
-      <p>Nothing days data.</p>
-    <% end %>
-
-    <% if @months_calorie_array.present? %>
-      <% @months_calorie_array.each do |month_cal| %>
+    <% if @monthly_kill_retios.present? %>
+      <% @monthly_kill_retios.each do |month_cal| %>
         <div>Month: <%= month_cal[0] %> : <%= month_cal[1] %></div>
       <% end %>
     <% else %>
       <p>Nothing months data.</p>
+    <% end %>
+
+    <% if @daily_kill_retios.present? %>
+      <% @daily_kill_retios.each do |day_cal| %>
+        <div>Day: <%= day_cal[0] %> : <%= day_cal[1] %></div>
+      <% end %>
+    <% else %>
+      <p>Nothing days data.</p>
     <% end %>
 
   <% else %>
