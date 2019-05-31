@@ -1,47 +1,12 @@
-<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-<script type="text/javascript">
-  google.charts.load('current', {packages: ['corechart', 'line']});
-  google.charts.setOnLoadCallback(drawBackgroundColor);
-
-  function drawBackgroundColor() {
-        var data = new google.visualization.DataTable();
-
-
-        data.addColumn('number', '日');
-        data.addColumn('number', '廃棄カロリー');
-
-        data.addRows([
-
-          [1, 100],   [2, 200],  [3, 300],  [4, 400],  [5, 500],  [6, 500],
-          [7, 700],   [8, 800],  [9, 900],  [10, 100],  [11, 1100],  [12, 0],
-          [13,200],[14,0], [15,400] ,[16,500], [17,300], [18,400], [19,500],
-          [20,200] ,[21,300],[22,400], [23,500], [24,300], [25,600], [26,500],
-           [27,700], [28,1300], [29,600] ,[30,500]
-        ]);
-
-        var options = {
-          hAxis: {
-            title:'月'
-          },
-          vAxis: {
-            title: '食材廃棄カロリー'
-          },
-          backgroundColor: '#f1f8e9'
-        };
-
-        var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
-        chart.draw(data, options);
-      }
-</script>
-
 <div class="row">
+
   <div class="col-md-7">
     <div class="row">
+
       <div class="graph">
         <h4>貢献度</h4>
-        <div id="chart_div"></div>
-
       </div>
+
       <div class="recipe">
         <h4>おすすめのレシピ</h4>
         <img class="recipe_image" src="/image/gyu-don.jpg">
@@ -50,37 +15,44 @@
         </a>
         <a href="/recipes" class="btn btn-primary">別のレシピ</a>
       </div>
+
     </div>
   </div>
+
   <div class="col-md-5">
     <div class="row">
+
       <div class="show_food">
         <h4>冷蔵庫の食材一覧</h4>
+
         <ul class="list-group" >
-        <% @user_foods.each do |item|%>
-          <li class="list-group-item">
-            <ul style="list-style: none; padding: 0;">
-              <li ><%= item.name %></li>
+          <% @user_foods.each do |item|%>
+            <li class="list-group-item">
+              <ul style="list-style: none; padding: 0;">
+                <li><%= item.name %></li>
 
-            <% if item.gram.present? %>
-              <li ><%= item.gram %>g</li>
-            <% end %>
+              <% if item.gram.present? %>
+                <li ><%= item.gram %>g</li>
+              <% end %>
 
-            <% if item.limit_date.present? %>
-              <li ><%= item.limit_date %></li>
-            <% end %>
-            </ul>
-          </li>
-        <% end %>
+              <% if item.limit_date.present? %>
+                <li ><%= item.limit_date %></li>
+              <% end %>
+              </ul>
+            </li>
+          <% end %>
         </ul>
       </div>
+
       <div class="register">
           <a href="/user_foods/food_upload" class="btn btn-primary">冷蔵庫に食材登録</a>
           <a href="/discarded_foods/food_discard" class="btn btn-primary">廃棄した食材登録</a>
       </div>
     </div>
   </div>
+
 </div>
+
 <% if @current_user %>
   <% if gon.monthly_kill_retios.present? %>
     <div id="monthly_chart_div" style="width:100%;"></div>
@@ -97,11 +69,31 @@
       <p>Nothing days data.</p>
     </div>
   <% end %>
+
+  <% if gon.monthly_contributes.present? %>
+    <div id="monthly_contirbutes_graph"></div>
+  <% else %>
+    <div>
+      <p>Nothing days data.</p>
+    </div>
+  <% end %>
+
+  <% if gon.daily_contributes.present? %>
+    <div id="daily_contirbutes_graph"></div>
+  <% else %>
+    <div>
+      <p>Nothing days data.</p>
+    </div>
+  <% end %>
+
 <% else %>
   <div>
     <p>Don't use, when not logged in.</p>
   </div>
+
 <% end %>
 
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <script type="text/javascript" src="/js/make_kill_graph.js"></script>
+<script type="text/javascript" src="/js/make_contribute_graph.js"></script>
+
