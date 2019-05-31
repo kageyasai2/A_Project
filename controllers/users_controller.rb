@@ -3,6 +3,7 @@ require_relative 'base'
 
 class UsersController < Base
   get '/' do
+    @user = User.new
     erb :'users/signup'
   end
 
