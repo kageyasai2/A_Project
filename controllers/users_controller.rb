@@ -1,23 +1,22 @@
 require 'sinatra'
 require_relative 'base'
 
-require './models/user.rb'
-
 class UsersController < Base
   get '/' do
+    @user = User.new
     erb :'users/signup'
   end
 
   post '/' do
-    user = User.new({
+    @user = User.new({
       name: params[:name],
       email: params[:email],
       password: params[:password],
       password_confirmation: params[:password_confirmation],
     })
 
-    if user.save
-      erb :'sessions/login'
+    if params[:password_confirmation] && @user.save
+      redirect :'auth/login'
     else
       erb :'users/signup'
     end
