@@ -17,7 +17,7 @@ class IndexController < Base
       calories_hash: monthly_calories_hash,
       day_or_month: :month,
     )
-    @monthly_contributes = generate_contribute_degrees_by(
+    gon.monthly_contributes = generate_contribute_degrees_by(
       calories_hash: monthly_calories_hash,
       day_or_month: :month,
     )
@@ -27,7 +27,7 @@ class IndexController < Base
       calories_hash: daily_calories_hash,
       day_or_month: :day,
     )
-    @daily_contributes = generate_contribute_degrees_by(
+    gon.daily_contributes = generate_contribute_degrees_by(
       calories_hash: daily_calories_hash,
       day_or_month: :day,
     )
