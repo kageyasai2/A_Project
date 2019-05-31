@@ -55,7 +55,7 @@
 
 <% if @current_user %>
   <% if gon.monthly_kill_retios.present? %>
-    <div id="monthly_chart_div" style="width:100%;"></div>
+    <div id="monthly_kill_retios_graph" style="width:100%;"></div>
   <% else %>
     <div >
       <p>Nothing months data.</p>
@@ -63,7 +63,7 @@
   <% end %>
 
   <% if gon.daily_kill_retios.present? %>
-    <div id="daily_chart_div" style="width:100%;"></div>
+    <div id="daily_kill_retios_graph" style="width:100%;"></div>
   <% else %>
     <div>
       <p>Nothing days data.</p>
