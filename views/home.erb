@@ -81,3 +81,27 @@
     </div>
   </div>
 </div>
+<% if @current_user %>
+  <% if gon.monthly_kill_retios.present? %>
+    <div id="monthly_chart_div" style="width:100%;"></div>
+  <% else %>
+    <div >
+      <p>Nothing months data.</p>
+    </div>
+  <% end %>
+
+  <% if gon.daily_kill_retios.present? %>
+    <div id="daily_chart_div" style="width:100%;"></div>
+  <% else %>
+    <div>
+      <p>Nothing days data.</p>
+    </div>
+  <% end %>
+<% else %>
+  <div>
+    <p>Don't use, when not logged in.</p>
+  </div>
+<% end %>
+
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript" src="/js/make_kill_graph.js"></script>

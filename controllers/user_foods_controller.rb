@@ -4,7 +4,7 @@ require_relative 'base'
 class UserFoodsController < Base
   get '/food_upload' do
     unless @current_user
-      flash[:error] = "食材登録はログインしているユーザのみ使用可能です。"
+      flash[:error] = '食材登録はログインしているユーザのみ使用可能です。'
       redirect '/auth/login' and return
     end
     erb :'user_foods/food_upload'
@@ -19,10 +19,11 @@ class UserFoodsController < Base
     UserFood.transaction do
       params[:items].each do |item|
         user_food = UserFood.new({
-          name:       item[:food_name],
+          name: item[:food_name],
           limit_date: item[:date],
-          user_id:    session[:user_id],
-          gram:       item[:gram],
+          user_id: session[:user_id],
+          gram: item[:gram],
+          calorie: rand(100),
         })
         user_food.save!
       end
@@ -32,5 +33,4 @@ class UserFoodsController < Base
 
     redirect '/'
   end
-
 end

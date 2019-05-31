@@ -16,7 +16,16 @@ $ gem install bundler
 $ bundle install --path vendor/bundle
 ```
 
-4. DBをセットアップする
+4. gitを設定する
+
+```
+$ bundle exec pre-commit install
+$ git config pre-commit.ruby "bundle exec ruby"
+$ git config pre-commit.checks "[rubocop]"
+$ git config pre-commit.rubocop.flags ["-a"]
+```
+
+5. DBをセットアップする
 
 ```
 # OSX / Linux
@@ -26,7 +35,7 @@ $ make migrate
 $ make win/migrate
 ```
 
-5. サーバーを起動する
+6. サーバーを起動する
 
 ```
 $ make run
