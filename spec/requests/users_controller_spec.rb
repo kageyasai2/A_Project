@@ -31,8 +31,7 @@ describe UsersController, type: :request do
         password: test_pass,
         password_confirmation: test_pass,
       }
-      expect(last_response.status).to eq 200
-      expect(last_response.body).to include 'ログイン'
+      expect(last_response.status).to eq 302
     end
 
     it 'returns signup page again, when failed post request' do
