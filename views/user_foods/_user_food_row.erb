@@ -1,0 +1,37 @@
+<div class="form-row mb-1" id="<%= "#{id}" %>">
+  <div class="col-4">
+    <input
+      name="items[][food_name]"
+      class="form-control"
+      type="text"
+      placeholder="食材名"
+      value="<%= food.name if food %>"
+    >
+  </div>
+
+  <div class="col-4">
+    <input
+      name="items[][date]"
+      class="form-control"
+      type="date"
+      placeholder="賞味期限"
+      value="<%= food.limit_date if food %>"
+    >
+  </div>
+
+  <div class="col-3">
+    <input
+      name="items[][gram]"
+      class="form-control"
+      type="number"
+      placeholder="食材の重さ(g)"
+      value="<%= food.gram if food %>"
+    >
+  </div>
+
+  <div class="col-1">
+    <button type="button" name="removeButton" class="btn btn-sm btn-danger mt-1">
+      <i class="fas fa-times"></i>
+    </button>
+  </div>
+</div>

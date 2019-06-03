@@ -5,46 +5,48 @@
 
 <h1>食材登録画面</h1>
 
-<table>
-  <tr id="templateForm" class="NotDisp">
-    <td><input name="items[][food_name]" class="form-control mb-2" type="text" placeholder="食材名"></td>
-    <td><input name="items[][date]" class="form-control mb-2" type="date" placeholder="賞味期限"></td>
-    <td><input name="items[][gram]" class="form-control mb-2" type="number" placeholder="食材の重さ(g)"></td>
-    <td><button type="button" name="removeButton"  class="btn btn-danger mb-2" > - </button></td>
-    </tr>
-</table>
+<%= erb :'user_foods/_user_food_row', locals: { food: nil, id: 'templateForm' } %>
 
 <form action="/user_foods/register" method="post">
-  <table>
-    <thead>
-      <tr>
-        <th>食材名</th>
-        <th>賞味期限(カレンダー形式で選択)</th>
-        <th>グラム数</th>
-      </tr>
-    </thead>
+  <div class="rows" id="displayArea">
+    <div class="form-row mb-2">
+      <div class="col-4">食材名</div>
+      <div class="col-4">賞味期限</div>
+      <div class="col-3">グラム</div>
+    </div>
 
-    <tbody id="displayArea">
-      <tr>
-        <td><input name="items[][food_name]" class="form-control mb-2" type="text" placeholder="食材名"></td>
-        <td><input name="items[][date]" class="form-control mb-2" type="date" placeholder="賞味期限"></td>
-        <td><input name="items[][gram]" class="form-control mb-2" type="number" placeholder="食材の重さ(g)"></td>
-        <td><button type="button" name="removeButton"  class="btn btn-danger mb-2" > - </button></td>
-      </tr>
-    </tbody>
-  </table>
+    <% if @user_foods %>
+      <% @user_foods.each do |food| %>
+        <%= erb :'user_foods/_user_food_row', locals: { food: food, id: '' } %>
 
+        <div name="errors" class="row mb-2">
+          <%= erb :'shared/_field_errors', locals: { model: food, column: :name } %>
+          <%= erb :'shared/_field_errors', locals: { model: food, column: :limit_date } %>
+          <%= erb :'shared/_field_errors', locals: { model: food, column: :gram } %>
+        </div>
+      <% end %>
 
+    <% else %>
+      <%= erb :'user_foods/_user_food_row', locals: { food: nil, id: '' } %>
+    <% end %>
+  </div>
 
-  <button type="button" id="addButton" class="btn btn-lg btn-block btn-success mb-2 w-50" >追加</button>
+  <button
+    type="button"
+    id="addButton"
+    class="btn btn-lg btn-outline-success rounded-circle p-0 d-block mx-auto mb-4 mt-4"
+    style="width:3rem; height:3rem;"
+  >
+    <i class="fas fa-plus"></i>
+  </button>
 
-  <input type="reset" class="btn btn-secondary mb-2" value="取り消し">
+  <button type="submit" class="btn btn-primary d-block ml-auto mb-2">
+    登録する
+  </button>
 
-  <button type="submit" class="btn btn-primary mb-2">  登録 </button>
- 
 
   <style type="text/css">
-    .NotDisp {
+    #templateForm {
       display: none;
     }
   </style>
@@ -58,15 +60,15 @@
           tempTr
               .clone(true)
               .removeAttr("id")
-              .removeClass("NotDisp")
               .appendTo('#displayArea');
 
           idNo++;
       });
 
       $('button[name=removeButton]').on('click',function(){
-          let removeObj = $(this).closest('tr');
+          let removeObj = $(this).closest('.form-row');
           if(removeObj.attr('id') != 'templateForm') {
+              removeObj.next('*[name=errors]').remove();
               removeObj.remove();
           }
       });
