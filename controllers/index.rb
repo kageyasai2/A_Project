@@ -2,8 +2,13 @@ require 'sinatra'
 require_relative 'base'
 
 class IndexController < Base
+
   get '/' do
-    erb :index
+    if LoginUser.confirm_login?(@current_user)
+      redirect '/home'
+    else
+      erb :index
+    end
   end
 
   get '/home' do
