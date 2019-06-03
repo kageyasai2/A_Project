@@ -29,7 +29,7 @@
 
     <tbody id="displayArea">
       <tr>
-        <td><input name="items[][food_name]" class="form-control mb-2" type="text" placeholder="食材名"></td>
+        <td><input name="items[][food_name]" class="form-control mb-2" type="text" placeholder="食材名" required></td>
         <td><input name="items[][gram]" class="form-control mb-2" type="number" placeholder="食材の重さ(g)"></td>
         <td><button type="button" name="removeButton"  class="btn btn-danger mb-2" > - </button></td>
       </tr>
@@ -60,8 +60,8 @@
               .clone(true)
               .removeAttr("id")
               .removeClass("NotDisp")
-              .appendTo('#displayArea');
-
+              .appendTo('#displayArea')
+              .find('input[type="text"]').prop("required",true);
           idNo++;
       });
 
