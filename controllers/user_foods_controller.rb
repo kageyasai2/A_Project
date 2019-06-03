@@ -17,20 +17,32 @@ class UserFoodsController < Base
 
   post '/register' do
     UserFood.transaction do
-      params[:items].each do |item|
-        user_food = UserFood.new({
-          name: item[:food_name],
-          limit_date: item[:date],
-          user_id: session[:user_id],
-          gram: item[:gram],
-          calorie: rand(100),
-        })
-        user_food.save!
-      end
+      register_user_foods!(items: params[:items], user_id: session[:user_id])
     rescue ActiveRecord::RecordInvalid
       return erb :'/user_foods/food_register'
     end
 
     redirect '/'
+  end
+
+  def register_user_foods!(items:, user_id:)
+    raise ActiveRecord::RecordInvalid if items.nil?
+
+    is_err = false
+    @user_foods =
+      items.map do |item|
+        user_food = UserFood.new({
+          name: item[:food_name],
+          limit_date: item[:date],
+          user_id: user_id,
+          gram: item[:gram],
+          calorie: rand(100),
+        })
+        is_err = true unless user_food.save
+
+        user_food
+      end
+
+    raise ActiveRecord::RecordInvalid if is_err
   end
 end
