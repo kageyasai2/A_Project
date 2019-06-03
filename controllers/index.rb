@@ -4,10 +4,10 @@ require_relative 'base'
 class IndexController < Base
 
   get '/' do
-    if LoginUser.confirm_login?(@current_user)
-      redirect '/home'
-    else
+    if @current_user
       erb :index
+    else
+      redirect '/home'
     end
   end
 
