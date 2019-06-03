@@ -5,9 +5,9 @@ class IndexController < Base
 
   get '/' do
     if @current_user
-      erb :index
+      redirect 'home'
     else
-      redirect '/home'
+      erb :index
     end
   end
 
