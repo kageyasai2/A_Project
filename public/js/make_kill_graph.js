@@ -1,50 +1,38 @@
 google.charts.load('current', {packages: ['corechart', 'line']});
-google.charts.setOnLoadCallback(draw_daily_kill_graph);
-google.charts.setOnLoadCallback(draw_monthly_kill_graph);
-function draw_daily_kill_graph() {
-
-  let data = new google.visualization.DataTable();
-  data.addColumn('number', '日付');
-  data.addColumn('number', '死者数(人)');
-  for (let item = 0; item < gon.daily_kill_retios.length; item++){
-    data.addRow(
-      gon.daily_kill_retios[item]
-    );
-  }
-  let options = {
-    title: 'daily kill graph',
-    hAxis: {
-      title: '日'
-    },
-    vAxis: {
-      title: '死者数'
-    },
-    colors: ['#800000']
-  };
-  var chart = new google.visualization.LineChart(document.getElementById('daily_chart_div'));
-  chart.draw(data, options);
+if(document.getElementById('daily_kill_retios_graph') != null) {
+    google.charts.setOnLoadCallback(() => drawKillRetiosGraph({ isDaily: true }));
+}
+if(document.getElementById('monthly_kill_retios_graph') != null) {
+    google.charts.setOnLoadCallback(() => drawKillRetiosGraph({ isDaily: false }));
 }
 
-function draw_monthly_kill_graph() {
+function drawKillRetiosGraph({ isDaily }) {
+    let data = new google.visualization.DataTable();
 
-  let data = new google.visualization.DataTable();
-  data.addColumn('number', '月');
-  data.addColumn('number', '死者数');
-  for (let item = 0; item < gon.monthly_kill_retios.length; item++){
-    data.addRow(
-      gon.monthly_kill_retios[item]
-    );
-  }
-  let options = {
-    title: 'monthly kill graph',
-    hAxis: {
-      title: '月'
-    },
-    vAxis: {
-      title: '死者数'
-    },
-    colors: ['#800000']
-  };
-  let chart = new google.visualization.LineChart(document.getElementById('monthly_chart_div'));
-  chart.draw(data, options);
+    data.addColumn('number', '日付');
+    data.addColumn('number', '殺害数(人)');
+
+    let chart, hTitle;
+    if(isDaily) {
+        hTitle = '日';
+        data.addRows(gon.daily_kill_retios);
+        chart = new google.visualization.LineChart(document.getElementById('daily_kill_retios_graph'));
+    } else {
+        hTitle = '月';
+        data.addRows(gon.monthly_kill_retios);
+        chart = new google.visualization.LineChart(document.getElementById('monthly_kill_retios_graph'));
+    }
+
+    let options = {
+        title: '殺害グラフ(日毎)',
+        hAxis: {
+          title: hTitle
+        },
+        vAxis: {
+          title: '死者数'
+        },
+        colors: ['#800000']
+    };
+
+    chart.draw(data, options);
 }
