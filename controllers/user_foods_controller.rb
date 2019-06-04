@@ -19,10 +19,11 @@ class UserFoodsController < Base
     UserFood.transaction do
       register_user_foods!(items: params[:items], user_id: session[:user_id])
     rescue ActiveRecord::RecordInvalid
+      flash[:error] = '保存に失敗しました'
       return erb :'/user_foods/food_register'
     end
 
-    redirect '/'
+    redirect '/home'
   end
 
   def register_user_foods!(items:, user_id:)

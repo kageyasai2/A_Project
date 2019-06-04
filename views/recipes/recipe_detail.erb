@@ -40,10 +40,16 @@ img.recipe-img {
 
     <% @ingredients.each do |ingredient| %>
       <% if ingredient.kind_of?(Hash) %>
-        <div><%= ingredient[:name] %> - <%= ingredient[:amount] %></div>
+
+        <div>
+        <a href="<%='https://www.amazon.co.jp/s?k='+ingredient[:name] %>" class="btn  rounded-circle p-0"><i class="fas fa-shopping-cart"></i></a>
+
+        <%= ingredient[:name] %> - <%= ingredient[:amount] %>
+        </div>
       <% else %>
         <%# 材料がカテゴリ分けされている時、ここでは「■食材A」のように表示される %>
         <div class="mt-3"><%= ingredient%></div>
+
       <% end %>
     <% end %>
   </div>

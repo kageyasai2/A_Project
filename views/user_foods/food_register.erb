@@ -1,7 +1,7 @@
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script src="https://unpkg.com/bootstrap-show-password@1.2.1/dist/bootstrap-show-password.min.js"></script>
-
+<%= erb :'user_foods/_show_message' %>
 
 <h1>食材登録画面</h1>
 
@@ -52,28 +52,30 @@
   </style>
 
   <script>
-  $(function(){
-      var idNo = 1;
+    $(function(){
+        var idNo = 1;
 
-      $('button#addButton').on('click',function(){
-          let tempTr = $('#templateForm');
-          tempTr
-              .clone(true)
-              .removeAttr("id")
-              .appendTo('#displayArea');
+        $('button#addButton').on('click',function(){
+            let tempTr = $('#templateForm');
+            tempTr
+                .clone(true)
+                .removeAttr("id")
+                .removeClass("NotDisp")
+                .appendTo('#displayArea')
+                .find('input[type="text"]')
+                .prop("required",true);
+            idNo++;
+        });
 
-          idNo++;
-      });
+        $('button[name=removeButton]').on('click',function(){
+            let removeObj = $(this).closest('.form-row');
+            if(removeObj.attr('id') != 'templateForm') {
+                removeObj.next('*[name=errors]').remove();
+                removeObj.remove();
+            }
+        });
 
-      $('button[name=removeButton]').on('click',function(){
-          let removeObj = $(this).closest('.form-row');
-          if(removeObj.attr('id') != 'templateForm') {
-              removeObj.next('*[name=errors]').remove();
-              removeObj.remove();
-          }
-      });
-
-  });
+    });
   </script>
 
 </form>

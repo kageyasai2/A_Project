@@ -3,7 +3,11 @@ require_relative 'base'
 
 class IndexController < Base
   get '/' do
-    erb :index
+    if @current_user
+      redirect 'home'
+    else
+      erb :index
+    end
   end
 
   get '/home' do
