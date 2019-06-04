@@ -49,7 +49,7 @@ class RecipesController < Base
     @steps = parse_recipe_steps_from(doc)
 
     #冷蔵庫の食材一覧
-    @refrigerator_foods = UserFood.get_foods_into_refrigerator(session[:user_id])
+    @refrigerator_foods = UserFood.fetch_foods_into_refrigerator(session[:user_id])
     erb :'recipes/recipe_detail'
   end
 
