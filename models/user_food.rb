@@ -21,4 +21,8 @@ class UserFood < ActiveRecord::Base
       food.first
     end
   end
+
+  def self.fetch_foods_into_refrigerator(user_id)
+    UserFood.where(user_id: user_id)
+  end
 end

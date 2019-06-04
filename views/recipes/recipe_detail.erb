@@ -75,3 +75,20 @@ img.recipe-img {
   <% end %>
 
 </div>
+
+<!--バックエンドのテストのために設置
+    選択フォームが出来次第削除する
+-->
+<form action="/recipes/delete" method="POST">
+  <% if @refrigerator_foods.present? %>
+    <% @refrigerator_foods.each do |refrigerator_food| %>
+      <p>
+      食材名：<%= refrigerator_food.name %>
+      グラム数: <%= refrigerator_food.gram if refrigerator_food.gram.present?%>
+      </p>
+    <% end %>
+  <% else %>
+    <p>冷蔵庫に食材がありません。</p>
+  <% end %>
+  <input type="submit">テスト</input>
+</form>
