@@ -152,7 +152,6 @@ class RecipesController < Base
 
   def truncate_food_based_on(user_id, items)
     items.each do |item|
-      gram = item[:gram]
       # 料理に使用した食材の廃棄
       used_food = UserFood.find_from(user_id, item[:food_name])
 
@@ -160,7 +159,7 @@ class RecipesController < Base
         next
       end
       # 料理に使用した食材を冷蔵庫から削除する
-      used_food.update_gram_in_user_foods!(gram)
+      used_food.update_gram_in_user_foods!(item[:gram])
     end
   end
 
