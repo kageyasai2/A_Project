@@ -16,42 +16,34 @@ class UserFoodsController < Base
   end
 
   post '/register' do
-    foods = generate_foods
-
     UserFood.transaction do
-      truncate_food_based_on(session[:user_id],foods)
+      register_user_foods!(items: params[:items], user_id: session[:user_id])
     rescue ActiveRecord::RecordInvalid
       flash[:error] = '保存に失敗しました'
       return erb :'/user_foods/food_register'
     end
-    
-    flash.now[:foods] = foods
-    return erb :'user_foods/food_register'
+
+    redirect '/home'
   end
 
-  private
+  def register_user_foods!(items:, user_id:)
+    raise ActiveRecord::RecordInvalid if items.nil?
 
-  def generate_foods
-    foods = []
-    params[:items].each do |item|
-      if item[:food_name].blank?
-        next
+    is_err = false
+    @user_foods =
+      items.map do |item|
+        user_food = UserFood.new({
+          name: item[:food_name],
+          limit_date: item[:date],
+          user_id: user_id,
+          gram: item[:gram],
+          calorie: rand(100),
+        })
+        is_err = true unless user_food.save
+
+        user_food
       end
-      foods << item
-    end
-  end
 
-  def truncate_food_based_on(user_id,foods)
-    foods.each do |item|
-      user_food = UserFood.new({
-        name: item[:food_name],
-        limit_date: item[:date],
-        user_id: session[:user_id],
-        gram: item[:gram],
-        calorie: rand(100),
-      })
-      user_food.save!
-    end
+    raise ActiveRecord::RecordInvalid if is_err
   end
-
 end

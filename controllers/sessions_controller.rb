@@ -17,7 +17,7 @@ class SessionsController < Base
       session[:user_id] = user.id
       redirect '/home'
     else
-      flash.now[:error] = "Eメールアドレスまたはパスワードが違います。"
+      flash.now[:error] = 'Eメールアドレスまたはパスワードが違います。'
       @email = params[:email]
       @password = params[:password]
 
