@@ -11,69 +11,46 @@ class DiscardedFoodsController < Base
   end
 
   post '/food_discard' do
-    # 廃棄に成功した食材と廃棄に失敗した食材を取得
-    discarded_foods, failure_discarded_foods = generate_discarded_foods
-
-    if discarded_foods.blank?
-      flash[:failure_discarded_foods] = failure_discarded_foods
-      return erb :'discarded_foods/food_discard'
-    end
-
     DiscardedFood.transaction do
-      truncate_food_based_on(session[:user_id], discarded_foods)
+      register_discarded_food!(items: params[:items], user_id: session[:user_id])
     rescue ActiveRecord::RecordInvalid
       flash[:error] = '保存に失敗しました'
-      return erb :'discarded_foods/food_discard'
     end
 
-    flash[:discarded_foods] = discarded_foods
-    flash[:failure_discarded_foods] = failure_discarded_foods
     return erb :'discarded_foods/food_discard'
   end
 
   private
 
-  # 廃棄成功食材と廃棄失敗食材のリストを返す
-  def generate_discarded_foods
-    failure_discarded_foods = []
-    discarded_foods = []
+  def register_discarded_food!(items:, user_id:)
+    flash[:discarded_foods] = []
+    flash[:failure_discarded_foods] = []
+    is_err = false
 
-    params[:items].each do |item|
-      if item[:food_name].blank?
-        next
-      end
-
-      if UserFood.exists?(user_id: session[:user_id], name: item[:food_name])
-        discarded_foods << item
-      else
-        failure_discarded_foods << item
-      end
-    end
-
-    return discarded_foods, failure_discarded_foods
-  end
-
-  def truncate_food_based_on(user_id, discarded_foods)
-    discarded_foods.each do |item|
-      gram = item[:gram]
-
-      # 廃棄食材の登録
+    items.each do |item|
       discarded_food = DiscardedFood.new({
         name: item[:food_name],
-        gram: gram,
+        gram: item[:gram],
         calorie: rand(100),
         user_id: user_id,
       })
-      discarded_food.save!
 
       food = UserFood.find_from(user_id, item[:food_name])
+      if discarded_food.valid? && food
+        # 廃棄登録された食材を冷蔵庫から削除する
+        food.update_gram_in_user_foods!(item[:gram])
+        flash[:discarded_foods] << discarded_food
+      else
+        is_err = true
 
-      if food.nil?
-        next
+        if item[:food_name].present? && food.nil?
+          discarded_food.errors[:name] << 'not found in the refrigerator'
+        end
+
+        flash[:failure_discarded_foods] << discarded_food
       end
-
-      # 廃棄登録された食材を冷蔵庫から削除する
-      food.update_gram_in_user_foods!(gram)
     end
+
+    raise ActiveRecord::RecordInvalid if is_err
   end
 end
