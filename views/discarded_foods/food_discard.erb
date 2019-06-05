@@ -4,48 +4,47 @@
 
 <%= erb :'discarded_foods/_show_message' %>
 
-
-
-<table>
-  <tr id="templateForm" class="NotDisp">
-  <td><input name="items[][food_name]" class="form-control mb-2" type="text" placeholder="食材名"></td>
-  <td><input name="items[][gram]" class="form-control mb-2" type="number" placeholder="食材の重さ(g)"></td>
-  <td><button type="button" name="removeButton"  class="btn btn-danger mb-2" > - </button></td>
-</tr>
-</table>
+<h1>廃棄した食材の登録</h1>
+<%= erb :'discarded_foods/_form_row', locals: { food: nil, id: 'templateForm' } %>
 
 <form action="/discarded_foods/food_discard" method="post">
-  <h1>廃棄した食材の登録</h1>
+  <div class="rows" id="displayArea">
+    <div class="form-row mb-2">
+      <div class="col-5">食材名</div>
+      <div class="col-5">グラム</div>
+    </div>
 
+    <% if flash[:failure_discarded_foods] %>
+      <% flash[:failure_discarded_foods].each do |food| %>
+        <%= erb :'discarded_foods/_form_row', locals: { food: food, id: '' } %>
 
+        <div name="errors" class="row mb-2">
+          <%= erb :'shared/_field_errors', locals: { model: food, column: :name } %>
+          <%= erb :'shared/_field_errors', locals: { model: food, column: :gram } %>
+        </div>
+      <% end %>
 
-  <table>
-    <thead>
-      <tr>
-        <th>食材名</th>
-        <th>グラム数</th>
-      </tr>
-    </thead>
+    <% else %>
+      <%= erb :'discarded_foods/_form_row', locals: { food: nil, id: '' } %>
+    <% end %>
+  </div>
 
-    <tbody id="displayArea">
-      <tr>
-        <td><input name="items[][food_name]" class="form-control mb-2" type="text" placeholder="食材名" required></td>
-        <td><input name="items[][gram]" class="form-control mb-2" type="number" placeholder="食材の重さ(g)"></td>
-        <td><button type="button" name="removeButton"  class="btn btn-danger mb-2" > - </button></td>
-      </tr>
+  <button
+    type="button"
+    id="addButton"
+    class="btn btn-lg btn-outline-success rounded-circle p-0 d-block mx-auto mb-4 mt-4"
+    style="width:3rem; height:3rem;"
+  >
+    <i class="fas fa-plus"></i>
+  </button>
 
-    </tbody>
-  </table>
+  <button type="submit" class="btn btn-primary d-block ml-auto mb-2">
+    廃棄する
+  </button>
 
-  <button type="button" id="addButton" class="btn btn-lg btn-block btn-success mb-2 w-50" >追加</button>
-
-  <hr>
-  <input type="reset" class="btn btn-secondary mb-2" value="取り消し">
-
-  <button type="submit" class="btn btn-primary mb-2">  登録 </button>
 
   <style type="text/css">
-    .NotDisp {
+    #templateForm {
       display: none;
     }
   </style>
@@ -59,15 +58,16 @@
           tempTr
               .clone(true)
               .removeAttr("id")
-              .removeClass("NotDisp")
               .appendTo('#displayArea')
-              .find('input[type="text"]').prop("required",true);
+              .find('input[type="text"]')
+              .prop("required",true);
           idNo++;
       });
 
       $('button[name=removeButton]').on('click',function(){
-          let removeObj = $(this).closest('tr');
+          let removeObj = $(this).closest('.form-row');
           if(removeObj.attr('id') != 'templateForm') {
+              removeObj.next('*[name=errors]').remove();
               removeObj.remove();
           }
       });
