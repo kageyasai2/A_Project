@@ -41,6 +41,8 @@
               <% if item.limit_date.present? %>
                 <% if str > item.limit_date.to_s %>
                 <li class="list-group-item list-group-item-danger"><%= item.limit_date %></li>
+                  <% elsif str >= (item.limit_date-3).to_s %>
+                <li class="list-group-item list-group-item-warning"><%= item.limit_date %></li>
                   <% else %>
                 <li ><%= item.limit_date %></li>
                 <% end %>  
