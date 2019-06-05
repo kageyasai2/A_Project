@@ -28,8 +28,6 @@
 
         <ul class="list-group" >
           <% @user_foods.each do |item|%>
-            <% now_date = Time.new.strftime("%Y-%m-%d") %>
-
             <li class="list-group-item">
               <ul style="list-style: none; padding: 0;">
                 <li>
@@ -37,7 +35,7 @@
                 </li>
 
                 <% if item.limit_date.present? %>
-                  <% if now_date > item.limit_date.to_s %>
+                  <% if Time.new.strftime("%Y-%m-%d") > item.limit_date.to_s %>
                     <li class="list-group-item list-group-item-danger">
                       <%= item.limit_date %>
                     </li>
