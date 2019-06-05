@@ -55,6 +55,7 @@ class RecipesController < Base
 
   post '/delete' do
     #ダミーデータ
+    p params[:items]
     items = [
       {food_name: "キャベツ", gram: ""},
       {food_name: "レタス", gram: ""},
