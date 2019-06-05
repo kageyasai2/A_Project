@@ -28,32 +28,34 @@
 
         <ul class="list-group" >
           <% @user_foods.each do |item|%>
-            <% t = Time.new 
-              str = t.strftime("%Y-%m-%d") %> 
+            <% now_date = Time.new.strftime("%Y-%m-%d") %>
+
             <li class="list-group-item">
               <ul style="list-style: none; padding: 0;">
-                <li><%= item.name %>
+                <li>
+                  <%= item.name %> <%= "#{item.gram}g" if item.gram.present? %>
+                </li>
 
-              <% if item.gram.present? %>
-                <%= item.gram %>g</li>
-              <% end %>
-
-              <% if item.limit_date.present? %>
-                <% if str > item.limit_date.to_s %>
-                <li class="list-group-item list-group-item-danger"><%= item.limit_date %></li>
+                <% if item.limit_date.present? %>
+                  <% if now_date > item.limit_date.to_s %>
+                    <li class="list-group-item list-group-item-danger">
+                      <%= item.limit_date %>
+                    </li>
                   <% else %>
-                <li ><%= item.limit_date %></li>
-                <% end %>  
-              <% end %>  
+                    <li><%= item.limit_date %></li>
+                  <% end %>
+                <% end %>
+
               </ul>
             </li>
+
           <% end %>
         </ul>
       </div>
 
       <div class="register">
-          <a href="/user_foods/food_upload" class="btn btn-primary">冷蔵庫に食材登録</a>
-          <a href="/discarded_foods/food_discard" class="btn btn-primary">廃棄した食材登録</a>
+        <a href="/user_foods/food_upload" class="btn btn-primary">冷蔵庫に食材登録</a>
+        <a href="/discarded_foods/food_discard" class="btn btn-primary">廃棄した食材登録</a>
       </div>
     </div>
   </div>
