@@ -2,7 +2,6 @@ require 'sinatra'
 require_relative 'base'
 
 class IndexController < Base
-
   get '/' do
     if @current_user
       redirect 'home'
