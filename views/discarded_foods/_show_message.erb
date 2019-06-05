@@ -1,22 +1,40 @@
 <% if flash[:discarded_foods].present? %>
-  <ul class="list-group list-group-flush" >
-    <% flash[:discarded_foods].each do |discarded_food| %>
-      <li class="list-group-item list-group-item-success"><%= discarded_food[:name] %><%= " - #{discarded_food[:gram]}g" if discarded_food[:gram].present? %></li>
-    <% end %>
-  </ul>
+  <div class="alert alert-success alert-dismissible fade show" role="alert">
+    <h4 class="alert-heading">廃棄した食材
+        <button type="button" class="close" data-dismiss="alert" aria-label="閉じる">
+          <span aria-hidden="true">&times;</span>
+        </button>
+    </h4>
+    <p>
+      <ul class="text-center">
+        <% flash[:discarded_foods].each.with_index(1) do |discarded_food, i| %>
+          <ol><%= discarded_food[:name] %><%= " - #{discarded_food[:gram]}g" if discarded_food[:gram].present? %></ol>
+          <% unless flash[:discarded_foods].size == i %>
+            <hr>
+          <% end %>
+        <% end %>
+      </ul>
+    </p>
+  </div>
 <% end %>
 
 <% if flash[:failure_discarded_foods].present? %>
-  <h3>廃棄に失敗した食材</h3>
-
-  <ul class="list-group list-group-flush" >
-    <% flash[:failure_discarded_foods].each do |failure_discarded_food| %>
-      <li class="list-group-item list-group-item-danger"><%= failure_discarded_food[:name] %></li>
-    <% end %>
-  </ul>
-<% end %>
-
-<% if flash[:error].present? %>
-  <p class="text-danger"><%= flash[:error] %></p>
+  <div class="alert alert-danger alert-dismissible fade show" role="alert">
+    <h4 class="alert-heading">廃棄に失敗した食材
+        <button type="button" class="close" data-dismiss="alert" aria-label="閉じる">
+          <span aria-hidden="true">&times;</span>
+        </button>
+    </h4>
+    <p>
+      <ul class="text-center">
+        <% flash[:failure_discarded_foods].each.with_index(1) do |failure_discarded_food, i| %>
+          <ol><%= failure_discarded_food[:name] %></ol>
+          <% unless flash[:failure_discarded_foods].size == i %>
+            <hr>
+          <% end %>
+        <% end %>
+      </ul>
+    </p>
+  </div>
 <% end %>
 
