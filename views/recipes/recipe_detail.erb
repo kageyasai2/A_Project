@@ -76,77 +76,26 @@ img.recipe-img {
 
 </div>
 
-<!--バックエンドのテストのために設置
-    選択フォームが出来次第削除する
-<form action="/recipes/delete" method="POST">
-  <% if @refrigerator_foods.present? %>
-    <% @refrigerator_foods.each do |refrigerator_food| %>
-      <input 
-        type="checkbox"
-        name="items[][name]"
-        value="<%= refrigerator_food.name %>"
-      >
-      <%= refrigerator_food.name %>
-      <input 
-        type="range"
-        name="items[][gram]"
-        value="<%= refrigerator_food.gram %>"
-        min="1"
-        max="<%= refrigerator_food.gram %>"
-        step="1"
-        oninput="document.getElementById('<%= refrigerator_food.id %>').value=this.value"
-      >
-      <output id="<%= refrigerator_food.id %>"><%= refrigerator_food.gram %></output>
-      <br>
-    <% end %>
+<div>
+<h2>使用する食材</h2>
+<% if @refrigerator_foods.present? %>
+  <form action="/recipes/delete" method="POST">
+    <table>
+      <thead>
+        <tr>
+          <th>食材名</th>
+          <th>グラム数</th>
+        </tr>
+      </thead>
+      <tbody>
+      <% @refrigerator_foods.each do |refrigerator_food| %>
+        <%= erb :'recipes/_show_select_foods', locals: { refrigerator_food: refrigerator_food} %>
+      <% end %>
+      </tbody>
+    </table>
+    <input type="submit" value="料理を終了する"></input>
+  </form>
   <% else %>
     <p>冷蔵庫に食材がありません。</p>
   <% end %>
-  <input type="submit">テスト</input>
-</form>
--->
-<form action="/recipes/delete" method="POST">
-  <% if @refrigerator_foods.present? %>
-  <table>
-    <thead>
-      <tr>
-        <th>食材名</th>
-        <th>グラム数</th>
-      </tr>
-    </thead>
-    <tbody>
-    <% @refrigerator_foods.each do |refrigerator_food| %>
-      <tr>
-      <td>
-        <input 
-          type="checkbox"
-          name="items[][food_name]"
-          class="<%= refrigerator_food.id %>"
-          value="<%= refrigerator_food.name %>"
-        >
-        <%= refrigerator_food.name %>
-      </td>
-      <td>
-      <% if refrigerator_food.gram.present? %>
-        <input 
-          type="range"
-          name="items[][gram]"
-          value="<%= refrigerator_food.gram %>"
-          min="1"
-          max="<%= refrigerator_food.gram %>"
-          step="1"
-          oninput="document.getElementById('<%= refrigerator_food.id %>').value=this.value"
-        >
-        <output id="<%= refrigerator_food.id %>"><%= refrigerator_food.gram %></output>
-      <% else %>
-        <input type="range" disabled>
-        <input type="hidden" name="items[][gram]" value="">
-      <% end %>
-      </td>
-      </tr>
-    <% end %>
-    </tbody>
-  </table>
-  <% end %>
-  <input type="submit">テスト</input>
-</form>
+</div>
