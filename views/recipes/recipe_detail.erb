@@ -18,7 +18,7 @@ img.recipe-img {
   color: #E0C784;
 }
 
-.recipe-steps-wrapper {
+.recipe-step-wrapper {
   width: 136px;
   overflow: hidden;
   word-wrap: break-word;
@@ -57,10 +57,10 @@ img.recipe-img {
 </div>
 
 <%# 調理手順 %>
-<div class="mt-5">
+<div class="mt-5 row">
 
   <% @steps.each.with_index(1) do |step, num| %>
-    <div class="recipe-steps-wrapper">
+    <div class="recipe-step-wrapper">
       <dl>
         <dt class="recipe-sub-color"><%= num %></dt>
         <dd>
@@ -74,12 +74,13 @@ img.recipe-img {
     </div>
   <% end %>
 
+  <div class="clearfix"></div>
 </div>
 
 <div>
 <h2>使用する食材</h2>
 <% if @refrigerator_foods.present? %>
-  <form action="/recipes/delete" method="POST">
+  <form action="/recipes/delete" method="POST" class="mt-5">
     <table>
       <thead>
         <tr>

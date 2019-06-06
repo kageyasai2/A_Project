@@ -48,7 +48,7 @@ class RecipesController < Base
     # 調理手順
     @steps = parse_recipe_steps_from(doc)
 
-    #冷蔵庫の食材一覧
+    # 冷蔵庫の食材一覧
     @refrigerator_foods = UserFood.fetch_foods_into_refrigerator(session[:user_id])
     erb :'recipes/recipe_detail'
   end
@@ -157,5 +157,4 @@ class RecipesController < Base
       used_food.update_gram_in_user_foods!(item[:gram])
     end
   end
-
 end
