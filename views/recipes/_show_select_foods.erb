@@ -3,7 +3,6 @@
   <input 
     type="checkbox"
     name="items[][food_name]"
-    class="<%= refrigerator_food.id %>"
     value="<%= refrigerator_food.name %>"
   >
   <%= refrigerator_food.name %>
@@ -27,8 +26,6 @@
       name="items[][gram]"
       min = "0"
       max = "0"
-      value = ""
-      oninput="document.getElementById('<%= refrigerator_food.id %>').value=this.value"
       disabled
     >
   <% end %>
