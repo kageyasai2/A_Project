@@ -39,7 +39,9 @@
 <script>
 $(function(){
   $('input[name="items[][food_name]"').on('change',function(){
-    $('input[name="items[][gram]"').eq($('input[name="items[][food_name]"').index(this)).prop('disabled',!$(this).prop('checked'));
+    $('input[name="items[][gram]"')
+      .eq($('input[name="items[][food_name]"').index(this))
+      .prop('disabled',!$(this).prop('checked'));
   }).trigger('change');
 });
 </script>
