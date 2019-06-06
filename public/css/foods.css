@@ -1,0 +1,18 @@
+.alert-display-position {
+  position: fixed;
+  min-height: 200px;
+  min-width: 320px;
+  z-index: 1;
+  top: 70px;
+  right: 30px;
+}
+
+.alert-list-wrapper {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+#templateForm {
+  display: none;
+}
