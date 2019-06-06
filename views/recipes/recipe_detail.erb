@@ -76,19 +76,26 @@ img.recipe-img {
 
 </div>
 
-<!--バックエンドのテストのために設置
-    選択フォームが出来次第削除する
--->
-<form action="/recipes/delete" method="POST">
-  <% if @refrigerator_foods.present? %>
-    <% @refrigerator_foods.each do |refrigerator_food| %>
-      <p>
-      食材名：<%= refrigerator_food.name %>
-      グラム数: <%= refrigerator_food.gram if refrigerator_food.gram.present?%>
-      </p>
-    <% end %>
+<div>
+<h2>使用する食材</h2>
+<% if @refrigerator_foods.present? %>
+  <form action="/recipes/delete" method="POST">
+    <table>
+      <thead>
+        <tr>
+          <th>食材名</th>
+          <th>グラム数</th>
+        </tr>
+      </thead>
+      <tbody>
+      <% @refrigerator_foods.each do |refrigerator_food| %>
+        <%= erb :'recipes/_show_select_foods', locals: { refrigerator_food: refrigerator_food} %>
+      <% end %>
+      </tbody>
+    </table>
+    <input type="submit" value="料理を終了する"></input>
+  </form>
   <% else %>
     <p>冷蔵庫に食材がありません。</p>
   <% end %>
-  <input type="submit">テスト</input>
-</form>
+</div>

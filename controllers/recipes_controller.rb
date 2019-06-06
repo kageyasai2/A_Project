@@ -54,18 +54,12 @@ class RecipesController < Base
   end
 
   post '/delete' do
-    #ダミーデータ
-    items = [
-      {food_name: "キャベツ", gram: ""},
-      {food_name: "レタス", gram: ""},
-      {food_name: "トマト", gram: "20"},
-      {food_name: "マグロ", gram: ""},
-      {food_name: "鮭", gram: "40"},
-      {food_name: "牛肉", gram: "100"}
-    ]
+    if params[:items].nil?
+      redirect '/home'
+    end
 
     UserFood.transaction do
-      truncate_food_based_on(session[:user_id], items)
+      truncate_food_based_on(session[:user_id], params[:items])
     rescue ActiveRecord::RecordInvalid
       flash[:error] = '保存に失敗しました'
       return erb :index
@@ -158,6 +152,7 @@ class RecipesController < Base
       if used_food.nil?
         next
       end
+
       # 料理に使用した食材を冷蔵庫から削除する
       used_food.update_gram_in_user_foods!(item[:gram])
     end
