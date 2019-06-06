@@ -153,7 +153,6 @@ class RecipesController < Base
         next
       end
 
-      p item[:gram]
       # 料理に使用した食材を冷蔵庫から削除する
       used_food.update_gram_in_user_foods!(item[:gram])
     end
