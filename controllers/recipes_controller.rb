@@ -6,6 +6,10 @@ require_relative 'base'
 
 class RecipesController < Base
   get '/' do
+    unless @current_user
+      flash[:error] = 'レシピ検索機能はログインしているユーザのみ使用可能です。'
+      redirect '/auth/login' and return
+    end
     erb :'recipes/genre_select'
   end
 
@@ -126,10 +130,7 @@ class RecipesController < Base
   end
 
   def exists_food_for_current_user?
-    # レシピ機能はログインしているユーザのみ使用可能
-    if !@current_user
-      flash[:error] = 'レシピ検索機能はログインしているユーザのみ使用可能です。'
-    elsif !UserFood.exists?(user_id: session[:user_id])
+    if !UserFood.exists?(user_id: session[:user_id])
       flash[:error] = '冷蔵庫に食材がありません。 食材登録をしてください'
     end
   end
