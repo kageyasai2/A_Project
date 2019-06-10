@@ -3,6 +3,8 @@ require 'nokogiri'
 require 'open-uri'
 require 'addressable/uri'
 require_relative 'base'
+require_relative '../services/cookpad_list_scraper'
+require_relative '../services/fetch_doc_service'
 
 class RecipesController < Base
   get '/' do
@@ -15,14 +17,13 @@ class RecipesController < Base
     end
     url = create_url
 
-    doc =
+    @recipes =
       begin
-      fetch_html_from(url)
+      CookpadListScraper.new(url).execute
       rescue OpenURI::HTTPError
         # TODO: エラーメッセージを動的に設定できる404ページを作成する
         return [404, ['指定したレシピが見つかりませんでした。', '再度検索をお願いいたします。']]
     end
-    @recipes = parse_recipe_list(doc)
     erb :'recipes/search_results'
   end
 
@@ -34,7 +35,7 @@ class RecipesController < Base
 
     doc =
       begin
-      fetch_html_from Addressable::URI.encode("https://cookpad.com#{recipe_path}")
+      FetchDocService.new(Addressable::URI.encode("https://cookpad.com#{recipe_path}")).execute
       rescue OpenURI::HTTPError
         # TODO: エラーメッセージを動的に設定できる404ページを作成する
         return [404, ['検索結果が見つかりませんでした。', '再度検索をお願いいたします。']]
