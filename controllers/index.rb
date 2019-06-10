@@ -11,6 +11,10 @@ class IndexController < Base
   end
 
   get '/home' do
+    unless @current_user
+      redirect '/' and return
+    end
+
     if session[:user_id]
       @user_foods = UserFood.where(user_id: session[:user_id]).order(limit_date: :asc)
     end
