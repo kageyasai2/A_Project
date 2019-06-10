@@ -5,7 +5,7 @@ class UserFoodsController < Base
   get '/food_upload' do
     unless @current_user
       flash[:error] = '食材登録はログインしているユーザのみ使用可能です。'
-      redirect '/auth/login' and return
+      redirect '/auth/login'
     end
     erb :'user_foods/food_upload'
   end

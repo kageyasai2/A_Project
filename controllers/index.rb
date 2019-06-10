@@ -11,8 +11,8 @@ class IndexController < Base
   end
 
   get '/home' do
-    unless @current_user
-      redirect '/' and return
+    if exists_current_user?
+      redirect '/auth/login'
     end
 
     if session[:user_id]
@@ -79,6 +79,12 @@ class IndexController < Base
         raise AugumentError, 'day_or_month引数には:dayか:monthのどちらかを指定してください'
       end
     DateHelper.convert_to_nums_array(filled_contributes_hash).sort { |a, b| a[0] <=> b[0] }
+  end
+
+  def exists_current_user?
+    unless @current_user
+      flash[:error] = "当サイトのサービスを利用するにはログインが必須です"
+    end
   end
 
   get '/terms_of_service' do

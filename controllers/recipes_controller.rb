@@ -8,14 +8,14 @@ class RecipesController < Base
   get '/' do
     unless @current_user
       flash[:error] = 'レシピ検索機能はログインしているユーザのみ使用可能です。'
-      redirect '/auth/login' and return
+      redirect '/auth/login'
     end
     erb :'recipes/genre_select'
   end
 
   post '/' do
     if exists_food_for_current_user?
-      redirect '/recipes' and return
+      redirect '/recipes'
     end
     url = create_url
 
