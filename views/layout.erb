@@ -16,28 +16,12 @@
   </head>
   <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light mb-4">
-      <a class="navbar-brand" href="#"><%= @app_name %></a>
+      <a class="navbar-brand" href="/home"><%= @app_name %></a>
       <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#Navber" aria-controls="Navber" aria-expanded="false" aria-label="ナビゲーションの切替">
         <span class="navbar-toggler-icon"></span>
       </button>
 
       <div class="collapse navbar-collapse" id="Navber">
-        <ul class="navbar-nav mr-auto">
-          <li class="nav-item active">
-            <a class="nav-link" href="/home">ホーム <span class="sr-only">(現位置)</span></a>
-          </li>
-          <li class="nav-item dropdown">
-            <a href="#" class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              ドロップダウン
-            </a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" href="#">メニュー1</a>
-              <a class="dropdown-item" href="#">メニュー2</a>
-              <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="#">その他</a>
-            </div>
-          </li>
-        </ul>
 
         <!-- Right Side Of Navbar -->
         <ul class="navbar-nav ml-auto">
@@ -48,8 +32,6 @@
               </a>
 
               <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="#">メニュー</a>
-
                 <!-- Logout form -->
                 <a class="dropdown-item" href="/auth/logout">ログアウト</a>
               </div>
