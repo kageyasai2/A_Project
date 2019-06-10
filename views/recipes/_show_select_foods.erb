@@ -12,14 +12,14 @@
     <input 
       type="range"
       name="items[][gram]"
-      value="<%= refrigerator_food.gram %>"
-      min="1"
+      value="0"
+      min="0"
       max="<%= refrigerator_food.gram %>"
       step="1"
       oninput="document.getElementById('<%= refrigerator_food.id %>').value=this.value"
       disabled
     >
-    <output id="<%= refrigerator_food.id %>" ><%= refrigerator_food.gram %>g</output>
+    <output id="<%= refrigerator_food.id %>" >0</output>g/<%= refrigerator_food.gram %>g
   <% else %>
     <input 
       type="range"
