@@ -36,6 +36,13 @@ class IndexController < Base
       day_or_month: :day,
     )
 
+    begin
+      fetch_random_recipe
+    rescue => e
+      warn 'This error is known.'
+      warn e.backtrace
+    end
+
     erb :home
   end
 
@@ -83,5 +90,21 @@ class IndexController < Base
 
   get '/unsubscribed' do
     erb :unsubscribed
+  end
+
+  private
+
+  def fetch_random_recipe
+    food = UserFood.where(user_id: session[:user_id]).order(limit_date: :asc).limit(1)
+    return if food.blank?
+
+    url = Addressable::URI.encode "https://cookpad.com/search/#{food[0].name}"
+    recipes = CookpadListScraper.new(url).execute
+
+    return if recipes.blank?
+
+    recipe_path = recipes[rand(recipes.size)][:recipe_link]
+    url = Addressable::URI.encode("https://cookpad.com#{recipe_path}")
+    @recommend_recipe = CookpadDetailScraper.new(url).execute
   end
 end

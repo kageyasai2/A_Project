@@ -10,7 +10,7 @@
 
       <div class="recipe">
         <h4>おすすめのレシピ</h4>
-        <img class="recipe_image" src="/image/gyu-don.jpg">
+        <img class="recipe_image" src="<%= @recommend_recipe.present? ? @recommend_recipe[:recipe_image] : '' %>">
         <a class="btn btn-primary text-white reload_button" onclick="window.location.reload();">
           <i class="fas fa-sync-alt"></i>
         </a>
