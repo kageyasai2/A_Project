@@ -36,7 +36,7 @@ class DiscardedFoodsController < Base
       })
 
       food = UserFood.find_from(user_id, item[:food_name])
-      if discarded_food.valid? && food
+      if discarded_food.save && food
         # 廃棄登録された食材を冷蔵庫から削除する
         food.update_gram_in_user_foods!(item[:gram])
         flash[:discarded_foods] << discarded_food
