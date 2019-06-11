@@ -11,7 +11,7 @@ class IndexController < Base
   end
 
   get '/home' do
-    if exists_current_user?
+    if user_not_logged_in?
       redirect '/auth/login'
     end
 
@@ -81,7 +81,7 @@ class IndexController < Base
     DateHelper.convert_to_nums_array(filled_contributes_hash).sort { |a, b| a[0] <=> b[0] }
   end
 
-  def exists_current_user?
+  def user_not_logged_in?
     unless @current_user
       flash[:error] = "当サイトのサービスを利用するにはログインが必須です"
     end

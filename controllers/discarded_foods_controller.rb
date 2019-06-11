@@ -2,11 +2,13 @@ require 'sinatra'
 require_relative 'base'
 
 class DiscardedFoodsController < Base
-  get '/food_discard' do
-    unless @current_user
-      flash[:error] = '廃棄食材登録はログインしているユーザのみ使用可能です。'
-      redirect '/auth/login' and return
+  before do
+    if user_not_logged_in?
+      redirect '/auth/login'
     end
+  end
+
+  get '/food_discard' do
     erb :'discarded_foods/food_discard'
   end
 
@@ -21,6 +23,12 @@ class DiscardedFoodsController < Base
   end
 
   private
+
+  def user_not_logged_in?
+    unless @current_user
+      flash[:error] = '廃棄食材登録はログインしているユーザのみ使用可能です。'
+    end
+  end
 
   def register_discarded_food!(items:, user_id:)
     flash[:discarded_foods] = []

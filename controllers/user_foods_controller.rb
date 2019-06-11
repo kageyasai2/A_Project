@@ -2,11 +2,13 @@ require 'sinatra'
 require_relative 'base'
 
 class UserFoodsController < Base
-  get '/food_upload' do
-    unless @current_user
-      flash[:error] = '食材登録はログインしているユーザのみ使用可能です。'
+  before do
+    if user_not_logged_in?
       redirect '/auth/login'
     end
+  end
+
+  get '/food_upload' do
     erb :'user_foods/food_upload'
   end
 
@@ -46,4 +48,11 @@ class UserFoodsController < Base
 
     raise ActiveRecord::RecordInvalid if is_err
   end
+
+  def user_not_logged_in?
+    unless @current_user
+      flash[:error] = '食材登録はログインしているユーザのみ使用可能です。'
+    end
+  end
+
 end
