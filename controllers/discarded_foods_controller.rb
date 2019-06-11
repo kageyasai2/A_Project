@@ -52,7 +52,7 @@ class DiscardedFoodsController < Base
         is_err = true
 
         if item[:food_name].present? && food.nil?
-          discarded_food.errors[:name] << 'not found in the refrigerator'
+          discarded_food.errors[:name] << 'は冷蔵庫から見つかりません。'
         end
 
         flash[:failure_discarded_foods] << discarded_food
