@@ -102,6 +102,7 @@ DEPENDENCIES
   addressable (~> 2.6)
   bcrypt!
   gon-sinatra
+  i18n
   nokogiri
   onkcop
   pre-commit

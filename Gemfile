@@ -7,6 +7,7 @@ git_source(:github) { |repo_name| "https://github.com/#{repo_name}" }
 gem 'addressable', '~> 2.6'
 gem 'bcrypt', git: 'https://github.com/codahale/bcrypt-ruby.git'
 gem 'gon-sinatra'
+gem 'i18n'
 gem 'nokogiri'
 gem 'rack-flash3'
 gem 'rake'
