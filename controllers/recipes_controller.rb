@@ -5,14 +5,21 @@ require 'addressable/uri'
 require_relative 'base'
 
 class RecipesController < Base
+  before do
+    if user_not_logged_in?
+      redirect '/auth/login'
+    end
+  end
+
   get '/' do
     erb :'recipes/genre_select'
   end
 
   post '/' do
     if exists_food_for_current_user?
-      redirect '/recipes' and return
+      redirect '/recipes'
     end
+
     url = create_url
 
     doc =
@@ -125,15 +132,6 @@ class RecipesController < Base
     end
   end
 
-  def exists_food_for_current_user?
-    # レシピ機能はログインしているユーザのみ使用可能
-    if !@current_user
-      flash[:error] = 'レシピ検索機能はログインしているユーザのみ使用可能です。'
-    elsif !UserFood.exists?(user_id: session[:user_id])
-      flash[:error] = '冷蔵庫に食材がありません。 食材登録をしてください'
-    end
-  end
-
   def create_url
     # ジャンル選択画面で選ばれた食材名・ジャンルをURL末尾に設定する
     food = UserFood.where(user_id: session[:user_id]).order(limit_date: :asc).limit(1)
@@ -157,4 +155,17 @@ class RecipesController < Base
       used_food.update_gram_in_user_foods!(item[:gram])
     end
   end
+
+  def user_not_logged_in?
+    unless @current_user
+      flash[:error] = 'レシピ検索機能はログインしているユーザのみ使用可能です。'
+    end
+  end
+
+  def exists_food_for_current_user?
+    if !UserFood.exists?(user_id: session[:user_id])
+      flash[:error] = '冷蔵庫に食材がありません。 食材登録をしてください'
+    end
+  end
+
 end

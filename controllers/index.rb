@@ -11,6 +11,10 @@ class IndexController < Base
   end
 
   get '/home' do
+    if user_not_logged_in?
+      redirect '/auth/login'
+    end
+
     if session[:user_id]
       @user_foods = UserFood.where(user_id: session[:user_id]).order(limit_date: :asc)
     end
@@ -75,6 +79,12 @@ class IndexController < Base
         raise AugumentError, 'day_or_month引数には:dayか:monthのどちらかを指定してください'
       end
     DateHelper.convert_to_nums_array(filled_contributes_hash).sort { |a, b| a[0] <=> b[0] }
+  end
+
+  def user_not_logged_in?
+    unless @current_user
+      flash[:error] = "当サイトのサービスを利用するにはログインが必須です"
+    end
   end
 
   get '/terms_of_service' do
