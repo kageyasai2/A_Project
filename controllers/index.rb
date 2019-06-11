@@ -51,9 +51,11 @@ class IndexController < Base
   end
 
   def generate_loss_degrees_by(calories_hash:, day_or_month:)
+    total_kill_retio = 0
     kill_retios =
       calories_hash.map do |key, cal|
-        [key, LossHelper.calc_kill_retio(discarded_calorie: cal, day_or_month: day_or_month)]
+        total_kill_retio += LossHelper.calc_kill_retio(discarded_calorie: cal, day_or_month: day_or_month)
+        [key, total_kill_retio]
       end
     kill_retios_hash = kill_retios.to_h
 
