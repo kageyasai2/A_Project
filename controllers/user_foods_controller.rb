@@ -54,5 +54,4 @@ class UserFoodsController < Base
       flash[:error] = '食材登録はログインしているユーザのみ使用可能です。'
     end
   end
-
 end
