@@ -10,11 +10,20 @@
 
       <div class="recipe">
         <h4>おすすめのレシピ</h4>
-        <img class="recipe_image" src="<%= @recommend_recipe.present? ? @recommend_recipe[:recipe_image] : '' %>">
+        <img
+          class="recipe_image"
+          src="<%= @recommend_recipe.present? ? @recommend_recipe[:recipe_image] : '' %>"
+          data-toggle="modal"
+          data-target="#recommend-modal"
+        >
         <a class="btn btn-primary text-white reload_button" onclick="window.location.reload();">
           <i class="fas fa-sync-alt"></i>
         </a>
         <a href="/recipes" class="btn btn-primary">別のレシピ</a>
+
+        <% if @recommend_recipe.present? %>
+          <%= erb :'_recommend_recipe_modal', locals: { recipe: @recommend_recipe, refrigerator_foods: @user_foods } %>
+        <% end %>
       </div>
 
     </div>
