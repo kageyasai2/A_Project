@@ -1,0 +1,94 @@
+<div class="modal fade" id="recommend-modal" tabindex="-1" role="dialog" aria-labelledby="recommend-modal-label" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="recipe-title"><%= recipe[:recipe_title] %></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="閉じる">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body container">
+
+        <div class="d-flex">
+          <div class="recipe-img-wrapper mr-4">
+            <img src="<%= recipe[:recipe_image] %>" class="recipe-img"/>
+          </div>
+
+          <%# 材料一覧 %>
+          <div>
+            <h3 class="recipe-sub-color">材料</h3>
+
+            <% recipe[:ingredients].each do |ingredient| %>
+              <% if ingredient.kind_of?(Hash) %>
+
+                <div>
+                  <a href="<%= 'https://www.amazon.co.jp/s?k=' + ingredient[:name] %>" class="btn  rounded-circle p-0">
+                    <i class="fas fa-shopping-cart"></i>
+                  </a>
+
+                <%= ingredient[:name] %> - <%= ingredient[:amount] %>
+                </div>
+              <% else %>
+                <%# 材料がカテゴリ分けされている時、ここでは「■食材A」のように表示される %>
+                <div class="mt-3"><%= ingredient %></div>
+
+              <% end %>
+            <% end %>
+          </div>
+
+        </div>
+
+        <%# 調理手順 %>
+        <div class="m-5 row">
+
+          <% recipe[:steps].each.with_index(1) do |step, num| %>
+            <div class="recipe-step-wrapper">
+              <dl>
+                <dt class="recipe-sub-color"><%= num %></dt>
+                <dd>
+                  <% if step[:photo_src] %>
+                    <img src="<%= step[:photo_src] %>" />
+                  <% end %>
+
+                  <p><%= step[:text] %></p>
+                </dd>
+              </dl>
+            </div>
+          <% end %>
+
+          <div class="clearfix"></div>
+        </div>
+
+      </div><!-- /.modal-body -->
+
+      <div class="modal-footer mx-auto">
+
+        <div>
+          <p>使用した食材を入力してください</p>
+          <% if refrigerator_foods.present? %>
+            <form action="/recipes/delete" method="POST">
+              <table>
+                <thead>
+                  <tr>
+                    <th>食材名</th>
+                    <th>グラム数</th>
+                  </tr>
+                </thead>
+
+                <tbody>
+                  <% refrigerator_foods.each do |refrigerator_food| %>
+                    <%= erb :'recipes/_show_select_foods', locals: { refrigerator_food: refrigerator_food } %>
+                  <% end %>
+                </tbody>
+              </table>
+              <input type="submit" value="料理を終了する"></input>
+            </form>
+          <% else %>
+            <p>冷蔵庫に食材がありません。</p>
+          <% end %>
+        </div>
+
+      </div><!-- /.modal-footer -->
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
