@@ -13,10 +13,10 @@ class DiscardedFoodsController < Base
   end
 
   post '/food_discard' do
-    DiscardedFood.transaction do
+    DiscardedFood.transaction(joinable: false, requires_new: true) do
       register_discarded_food!(items: params[:items], user_id: session[:user_id])
     rescue ActiveRecord::RecordInvalid
-      flash[:error] = '保存に失敗しました'
+      raise ActiveRecord::Rollback
     end
 
     return erb :'discarded_foods/food_discard'

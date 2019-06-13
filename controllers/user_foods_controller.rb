@@ -18,7 +18,7 @@ class UserFoodsController < Base
   end
 
   post '/register' do
-    UserFood.transaction do
+    UserFood.transaction(joinable: false, requires_new: true) do
       register_user_foods!(items: params[:items], user_id: session[:user_id])
     rescue ActiveRecord::RecordInvalid
       flash[:error] = '保存に失敗しました'

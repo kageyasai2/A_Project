@@ -68,11 +68,11 @@ class RecipesController < Base
       redirect '/home'
     end
 
-    UserFood.transaction do
+    UserFood.transaction(joinable: false, requires_new: true) do
       truncate_food_based_on(session[:user_id], params[:items])
     rescue ActiveRecord::RecordInvalid
       flash[:error] = '保存に失敗しました'
-      return erb :index
+      raise ActiveRecord::Rollback
     end
 
     redirect '/home'
@@ -101,6 +101,7 @@ class RecipesController < Base
 
       # 料理に使用した食材を冷蔵庫から削除する
       used_food.update_gram_in_user_foods!(item[:gram])
+      raise ActiveRecord::RecordInvalid
     end
   end
 
