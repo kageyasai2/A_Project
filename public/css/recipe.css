@@ -1,0 +1,28 @@
+.recipe-img-wrapper {
+  width: 280px;
+}
+
+img.recipe-img {
+  max-width: 280px;
+  max-height: 487px;
+  display: block;
+  margin: 0 auto;
+}
+
+.recipe-title-color {
+  color: #90A23C;
+}
+
+.recipe-sub-color {
+  color: #E0C784;
+}
+
+.recipe-step-wrapper {
+  width: 136px;
+  overflow: hidden;
+  word-wrap: break-word;
+  margin-right: 21px;
+  margin-bottom: 10px;
+  float: left;
+}
+
