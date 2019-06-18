@@ -57,7 +57,7 @@ class IndexController < Base
         total_kill_retio += LossHelper.calc_kill_retio(discarded_calorie: cal, day_or_month: day_or_month)
         [key, total_kill_retio]
       end
-    kill_retios_hash = kill_retios.to_h
+    kill_retios_hash = DateHelper.fill_calorie_as_total_kill_retio(kill_retios.to_h)
 
     filled_kill_retios_hash =
       case day_or_month
