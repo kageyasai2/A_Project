@@ -1,8 +1,8 @@
 google.charts.load('current', {packages: ['corechart', 'line']});
-if(document.getElementById('daily_contirbutes_graph') != null) {
+if(document.getElementById('daily_contributes_graph') != null) {
     google.charts.setOnLoadCallback(() => drawContributesGraph({ isDaily: true }));
 }
-if(document.getElementById('monthly_contirbutes_graph') != null) {
+if(document.getElementById('monthly_contributes_graph') != null) {
     google.charts.setOnLoadCallback(() => drawContributesGraph({ isDaily: false }));
 }
 
@@ -17,11 +17,11 @@ function drawContributesGraph({ isDaily }) {
     if(isDaily) {
         hTitle = '日';
         data.addRows(gon.daily_contributes)
-        chart = new google.visualization.LineChart(document.getElementById('daily_contirbutes_graph'));
+        chart = new google.visualization.LineChart(document.getElementById('daily_contributes_graph'));
     } else {
         hTitle = '月';
         data.addRows(gon.monthly_contributes)
-        chart = new google.visualization.LineChart(document.getElementById('monthly_contirbutes_graph'));
+        chart = new google.visualization.LineChart(document.getElementById('monthly_contributes_graph'));
     }
 
     var options = {

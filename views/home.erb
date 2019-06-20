@@ -1,119 +1,159 @@
+<div class="recipe">
+  <h4 class="recipe-title">今日のおすすめ</h4>
+  <div class="slider">
+    <div class="shadow">
+      <img 
+        class="recipe_image rounded border border-dark"
+        src="<%= @recommend_recipe.present? ? @recommend_recipe[:recipe_image] : '' %>"
+        data-toggle="modal"
+        data-target="#recommend-modal"
+      >
+    </div>
+    <div class="shadow">
+      <img 
+        class="recipe_image rounded border border-dark"
+        src="<%= @recommend_recipe.present? ? @recommend_recipe[:recipe_image] : '' %>"
+        data-toggle="modal"
+        data-target="#recommend-modal"
+      >
+    </div>
+    <div class="shadow">
+      <img 
+        class="recipe_image rounded border border-dark"
+        src="<%= @recommend_recipe.present? ? @recommend_recipe[:recipe_image] : '' %>"
+        data-toggle="modal"
+        data-target="#recommend-modal"
+      >
+    </div>
+    <div class="shadow">
+      <img 
+        class="recipe_image rounded border border-dark"
+        src="<%= @recommend_recipe.present? ? @recommend_recipe[:recipe_image] : '' %>"
+        data-toggle="modal"
+        data-target="#recommend-modal"
+      >
+    </div>
+  </div>
+  <a href="/recipes" class="btn btn-brown btn-block">
+    レシピをもっと見る&nbsp;<i class="fas fa-chevron-circle-right"></i>
+  </a>
+  <% if @recommend_recipe.present? %>
+    <%= erb :'_recommend_recipe_modal', locals: { recipe: @recommend_recipe, refrigerator_foods: @user_foods } %>
+  <% end %>
+</div>
 <div class="row">
-
-  <div class="col-md-7">
-    <div class="row">
-
-      <div class="graph">
-        <h4>貢献度</h4>
-      </div>
-
-      <div class="recipe">
-        <h4>おすすめのレシピ</h4>
-        <img
-          class="recipe_image"
-          src="<%= @recommend_recipe.present? ? @recommend_recipe[:recipe_image] : '' %>"
-          data-toggle="modal"
-          data-target="#recommend-modal"
-        >
-        <a class="btn btn-primary text-white reload_button" onclick="window.location.reload();">
-          <i class="fas fa-sync-alt"></i>
-        </a>
-        <a href="/recipes" class="btn btn-primary">別のレシピ</a>
-
-        <% if @recommend_recipe.present? %>
-          <%= erb :'_recommend_recipe_modal', locals: { recipe: @recommend_recipe, refrigerator_foods: @user_foods } %>
+  <div class="col-md-5">
+    <h4>冷蔵庫</h4>
+    <div class="show_food">
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th scope="col">食材名</th>
+            <th scope="col">g</th>
+            <th scope="col">期限</th>
+          </tr>
+        </thead>
+        <tbody>
+        <% @user_foods.each do |item|%>
+          <% if item.limit_date.present? %>
+            <% if Time.new.strftime("%Y-%m-%d") > item.limit_date.to_s %>
+              <tr class="table-danger">
+                <td><%= item.name %></td>
+                <td><%= "#{item.gram}g" if item.gram.present? %></td>
+                <td><%= item.limit_date %></td>
+              </tr>
+            <% elsif Time.new.strftime("%Y-%m-%d") > (item.limit_date - 3).to_s %>
+              <tr class="table-warning">
+                <td><%= item.name %></td>
+                <td><%= "#{item.gram}g" if item.gram.present? %></td>
+                <td><%= item.limit_date %></td>
+              </tr>
+            <% end %>
+          <% else %>
+            <tr>
+              <td><%= item.name %></td>
+              <td><%= "#{item.gram}g" if item.gram.present? %></td>
+              <td></td>
+            </tr>
+          <% end %>
         <% end %>
-      </div>
-
+        </tbody>
+      </table>
     </div>
   </div>
 
-  <div class="col-md-5">
-    <div class="row">
-
-      <div class="show_food">
-        <h4>冷蔵庫の食材一覧</h4>
-
-        <ul class="list-group" >
-          <% @user_foods.each do |item|%>
-            <li class="list-group-item">
-              <ul style="list-style: none; padding: 0;">
-                <li>
-                  <%= item.name %> <%= "#{item.gram}g" if item.gram.present? %>
-                </li>
-
-                <% if item.limit_date.present? %>
-                  <% if Time.new.strftime("%Y-%m-%d") > item.limit_date.to_s %>
-                    <li class="list-group-item list-group-item-danger">
-                      <%= item.limit_date %>
-                    </li>
-                  <% elsif Time.new.strftime("%Y-%m-%d") > (item.limit_date - 3).to_s %>
-                    <li class="list-group-item list-group-item-warning">
-                      <%= item.limit_date %>
-                    </li>
-                  <% else %>
-                    <li>
-                      <%= item.limit_date %>
-                    </li>
-                  <% end %>
-                <% end %>
-
-              </ul>
-            </li>
-
-          <% end %>
-        </ul>
+  <div class="col-md-7">
+    <% if gon.monthly_kill_retios.present? && gon.daily_kill_retios.present? %>
+      <ul class="nav nav-tabs">
+        <li class="nav-item">
+          <a
+            href="#monthly_kill_graph" 
+            class="btn page-link text-dark d-inline-block rounded-pill nav-link"
+            data-toggle="tab"
+          >年間
+          </a>
+        </li>
+        <li class="nav-item">
+          <a
+            href="#daily_kill_graph"
+            class="btn page-link text-dark d-inline-block rounded-pill nav-link"
+            data-toggle="tab"
+          >月間
+          </a>
+        </li>
+      </ul>
+      <div class="tab-content">
+        <div id="monthly_kill_graph" class="tab-pane active">
+          <div id="monthly_kill_retios_graph" style="width:100%;"></div>
+        </div>
+        <div id="daily_kill_graph" class="tab-pane">
+          <div id="daily_kill_retios_graph" style="width:100%;"></div>
+        </div>
       </div>
-
-      <div class="register">
-        <a href="/user_foods/food_upload" class="btn btn-primary">冷蔵庫に食材登録</a>
-        <a href="/discarded_foods/food_discard" class="btn btn-primary">廃棄した食材登録</a>
+    <% else %>
+      <div>
+        <p>Nothing data.</p>
       </div>
-    </div>
+    <% end %>
+
+    <% if gon.monthly_contributes.present? && gon.daily_contributes.present? %>
+      <ul class="nav nav-tabs">
+        <li class="nav-item">
+          <a
+            href="#monthly_contribute" 
+            class="btn page-link text-dark d-inline-block rounded-pill nav-link"
+            data-toggle="tab"
+          >年間
+          </a>
+        </li>
+        <li class="nav-item">
+          <a
+            href="#daily_contribute"
+            class="btn page-link text-dark d-inline-block rounded-pill nav-link"
+            data-toggle="tab"
+          >月間
+          </a>
+        </li>
+      </ul>
+      <div class="tab-content">
+        <div id="monthly_contribute" class="tab-pane active">
+          <div id="monthly_contributes_graph" style="width:100%;"></div>
+        </div>
+        <div id="daily_contribute" class="tab-pane">
+          <div id="daily_contributes_graph" style="width:100%;"></div>
+        </div>
+      </div>
+    <% else %>
+      <div>
+        <p>Nothing data.</p>
+      </div>
+    <% end %>
   </div>
 
 </div>
 
-<% if @current_user %>
-  <% if gon.monthly_kill_retios.present? %>
-    <div id="monthly_kill_retios_graph" style="width:100%;"></div>
-  <% else %>
-    <div >
-      <p>Nothing months data.</p>
-    </div>
-  <% end %>
-
-  <% if gon.daily_kill_retios.present? %>
-    <div id="daily_kill_retios_graph" style="width:100%;"></div>
-  <% else %>
-    <div>
-      <p>Nothing days data.</p>
-    </div>
-  <% end %>
-
-  <% if gon.monthly_contributes.present? %>
-    <div id="monthly_contirbutes_graph"></div>
-  <% else %>
-    <div>
-      <p>Nothing days data.</p>
-    </div>
-  <% end %>
-
-  <% if gon.daily_contributes.present? %>
-    <div id="daily_contirbutes_graph"></div>
-  <% else %>
-    <div>
-      <p>Nothing days data.</p>
-    </div>
-  <% end %>
-
-<% else %>
-  <div>
-    <p>Don't use, when not logged in.</p>
-  </div>
-
-<% end %>
-
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <script type="text/javascript" src="/js/make_kill_graph.js"></script>
 <script type="text/javascript" src="/js/make_contribute_graph.js"></script>
+<script type="text/javascript" src="/js/make_recipe_images_slider.js"></script>
