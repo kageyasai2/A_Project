@@ -34,9 +34,9 @@
       >
     </div>
   </div>
-  <button class="btn btn-brown btn-block" onclick="window.location.reload();">
+  <a href="/recipes" class="btn btn-brown btn-block">
     レシピをもっと見る&nbsp;<i class="fas fa-chevron-circle-right"></i>
-  </button>
+  </a>
   <% if @recommend_recipe.present? %>
     <%= erb :'_recommend_recipe_modal', locals: { recipe: @recommend_recipe, refrigerator_foods: @user_foods } %>
   <% end %>
@@ -83,82 +83,77 @@
   </div>
 
   <div class="col-md-7">
-    <% if @current_user %>
-        <% if gon.monthly_kill_retios.present? && gon.daily_kill_retios.present? %>
-          <div class="kill_button_group">
-            <button class="btn page-link text-dark d-inline-block rounded-pill monthly_kill_button">
-              年間
-            </button>
-            <button class="btn page-link text-dark d-inline-block rounded-pill daily_kill_button">
-              月間
-            </button>
-          </div>
-          <div class="kill_retios">
-            <div class="kill_retio_graph" id="monthly_kill_retios_graph" style="width:100%;"></div>
-            <div class="kill_retio_graph" id="daily_kill_retios_graph" style="width:100%;"></div>
-          </div>
-        <% else %>
-          <div>
-            <p>Nothing data.</p>
-          </div>
-        <% end %>
-
-        <% if gon.monthly_contributes.present? && gon.daily_contributes.present? %>
-          <div class="contributes_button_group">
-            <button class="btn page-link text-dark d-inline-block rounded-pill monthly_contributes_button">
-              年間
-            </button>
-            <button class="btn page-link text-dark d-inline-block rounded-pill daily_contributes_button">
-              月間
-            </button>
-          </div>
-          <div class="contributes">
-            <div class="contribute_graph" id="monthly_contirbutes_graph" style="width:100%;"></div>
-            <div class="contribute_graph" id="daily_contirbutes_graph" style="width:100%;"></div>
-          </div>
-        <% else %>
-          <div>
-            <p>Nothing data.</p>
-          </div>
-        <% end %>
-
+    <% if gon.monthly_kill_retios.present? && gon.daily_kill_retios.present? %>
+      <ul class="nav nav-tabs">
+        <li class="nav-item">
+          <a
+            href="#monthly_kill_graph" 
+            class="btn page-link text-dark d-inline-block rounded-pill nav-link"
+            data-toggle="tab"
+          >年間
+          </a>
+        </li>
+        <li class="nav-item">
+          <a
+            href="#daily_kill_graph"
+            class="btn page-link text-dark d-inline-block rounded-pill nav-link"
+            data-toggle="tab"
+          >月間
+          </a>
+        </li>
+      </ul>
+      <div class="tab-content">
+        <div id="monthly_kill_graph" class="tab-pane active">
+          <div id="monthly_kill_retios_graph" style="width:100%;"></div>
+        </div>
+        <div id="daily_kill_graph" class="tab-pane">
+          <div id="daily_kill_retios_graph" style="width:100%;"></div>
+        </div>
+      </div>
     <% else %>
       <div>
-        <p>Don't use, when not logged in.</p>
+        <p>Nothing data.</p>
+      </div>
+    <% end %>
+
+    <% if gon.monthly_contributes.present? && gon.daily_contributes.present? %>
+      <ul class="nav nav-tabs">
+        <li class="nav-item">
+          <a
+            href="#monthly_contribute" 
+            class="btn page-link text-dark d-inline-block rounded-pill nav-link"
+            data-toggle="tab"
+          >年間
+          </a>
+        </li>
+        <li class="nav-item">
+          <a
+            href="#daily_contribute"
+            class="btn page-link text-dark d-inline-block rounded-pill nav-link"
+            data-toggle="tab"
+          >月間
+          </a>
+        </li>
+      </ul>
+      <div class="tab-content">
+        <div id="monthly_contribute" class="tab-pane active">
+          <div id="monthly_contributes_graph" style="width:100%;"></div>
+        </div>
+        <div id="daily_contribute" class="tab-pane">
+          <div id="daily_contributes_graph" style="width:100%;"></div>
+        </div>
+      </div>
+    <% else %>
+      <div>
+        <p>Nothing data.</p>
       </div>
     <% end %>
   </div>
+
 </div>
 
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <script type="text/javascript" src="/js/make_kill_graph.js"></script>
 <script type="text/javascript" src="/js/make_contribute_graph.js"></script>
-<script type="text/javascript" src="/js/switch_graph_in_button.js"></script>
-<script type="text/javascript">
-$(function(){
-  $('.slider').slick({
-    infinite: true,
-    slidesToShow: 3,
-    slidesToScroll: 3,
-    prevArrow: '<span class="slide-arrow prev-arrow"><i class="fas fa-chevron-left"></i></span>',
-    nextArrow: '<span class="slide-arrow next-arrow"><i class="fas fa-chevron-right"></i></span>',
-    responsive: [
-    {
-      breakpoint: 768,
-      settings: {
-        slidesToShow: 2,
-        slidesToScroll: 2,
-      }
-    },
-    {
-      breakpoint: 480,
-      settings: {
-        slidesToShow: 1,
-        slidesToScroll: 1,
-      }
-    }
-    ]
-  });
-});
-</script>
+<script type="text/javascript" src="/js/make_recipe_images_slider.js"></script>
