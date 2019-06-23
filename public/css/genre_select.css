@@ -1,5 +1,72 @@
-.select_genre{
-  text-align: center;
-  position: relative;
-  top: 100%;
+.select-label {
+  width: 48%;
+  width: -webkit-calc(50% - 10px);
+  width: calc(50% - 10px);
+  min-height: 60px;
+  margin: 5px;
 }
+.select-cell {
+  width: 100%;
+  height: 100%;
+  padding: 10px;
+  background: white;
+  border: solid #EAEAEA;
+  border-radius: 10px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.select-input {
+  display: none;
+}
+.select-input:checked + .select-cell {
+  border: solid #F0AD4E;
+}
+
+/* チェックボックスの箱 */
+.checkbox-icon {
+  margin-right: 25px;
+  margin-top: -7px;
+  position: relative;
+}
+.checkbox-icon::before{
+  content: "";
+  display: block;
+  position: absolute;
+  top: -5px;
+  left: 0;
+  width: 17px;
+  height: 17px;
+  border: 2px solid #EAEAEA;
+  border-radius: 4px;
+}
+.select-input:checked + .select-cell > .checkbox-icon::before{
+  background: #F0AD4E;
+  border: none;
+}
+
+/* チェックボックスの中のやつ */
+.select-input + .select-cell > .checkbox-icon::after{
+  content: "";
+  display: block;
+  position: absolute;
+  top: -2px;
+  left: 6px;
+  width: 5px;
+  height: 10px;
+  transform: rotate(40deg);
+  border-bottom: 2px solid #D2D2D2;
+  border-right: 2px solid #D2D2D2;
+}
+.select-input:checked + .select-cell > .checkbox-icon::after{
+  border-bottom: 3px solid #FFF;
+  border-right: 3px solid #FFF;
+}
+
+.btn-accent {
+  color: white;
+  background-color: #F0AD4E;
+  border-color: #F0AD4E;
+}
+
