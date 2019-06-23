@@ -15,6 +15,7 @@ class RecipesController < Base
   end
 
   get '/' do
+    @user_foods = UserFood.where_my(@current_user.id)
     erb :'recipes/genre_select'
   end
 
