@@ -1,67 +1,39 @@
-<style type="text/css">
-.radio-cell {
-  width: 48%;
-  width: -webkit-calc(50% - 10px);
-  width: calc(50% - 10px);
-  height: 60px;
-  margin: 5px;
-  background: white;
-  border: solid #EAEAEA;
-  border-radius: 10px;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.radio-cell input {
-  display: none;
-}
-</style>
-
 <% if flash[:error] %>
   <%= flash[:error] %>
 <% end %>
-<div class="select_genre">
-  <h2>ジャンル選択</h2>
+<div>
+  <h1 class="h2"><i class="fas fa-search" style="width: 0.8em"></i> レシピを探す</h1>
 
   <form action="/recipes" method="post">
-  <!-- ジャンル選択はドロップダウン形式にする -->
-    <select name="genre"  class="form-control">
-    <option selected>--ジャンルを選択--</option>
-    <option value="和食">和食</option>
-    <option value="洋食">洋食</option>
-    <option value="中華">中華</option>
-    <option value="イタリアン">イタリアン</option>
-    <option value="おかず">おかず</option>
-    <option value="スイーツ">スイーツ</option>
 
-    </select>
-    <br>
-    <input class="btn btn-primary" type="submit" value="検索">
+    <h2 class="h5 mt-5">料理ジャンル</h2>
+    <div class="d-flex flex-wrap">
+      <label class="select-label">
+        <input type="radio" name="genre" class="select-input" checked>
+        <span class="select-cell">--ジャンルを選択--</span>
+      </label>
+      <% %w(和食 洋食 中華 イタリアン おかず スイーツ).each do |genre| %>
+        <label class="select-label">
+          <input type="radio" name="genre" value="<%= genre %>" class="select-input">
+          <span class="select-cell"><%= genre %></span>
+        </label>
+      <% end %>
+    </div>
+
+    <h2 class="h5 mt-5">使いたい食材(複数可)</h2>
+    <div class="d-flex flex-wrap">
+      <% @user_foods.each do |food| %>
+        <label class="select-label">
+          <input type="checkbox" name="genre" value="<%= food.name %>" class="select-input">
+          <span class="select-cell">
+            <span class="checkbox-icon"></span>
+            <%= food.name %>
+          </span>
+        </label>
+      <% end %>
+    </div>
+
+    <input class="btn btn-block btn-accent mt-5" type="submit" value="検索">
   </form>
-
-  <div class="d-flex flex-wrap">
-    <label class="radio-cell">
-      <input type="radio" name="genre" selected>--ジャンルを選択--
-    </label>
-    <label class="radio-cell">
-      <input type="radio" name="genre" value="和食">和食
-    </label>
-    <label class="radio-cell">
-      <input type="radio" name="genre" value="洋食">洋食
-    </label>
-    <label class="radio-cell">
-      <input type="radio" name="genre" value="中華">中華
-    </label>
-    <label class="radio-cell">
-      <input type="radio" name="genre" value="イタリアン">イタリアン
-    </label>
-    <label class="radio-cell">
-      <input type="radio" name="genre" value="おかず">おかず
-    </label>
-    <label class="radio-cell">
-      <input type="radio" name="genre" value="スイーツ">スイーツ
-    </label>
-  </div>
 
 </div>
