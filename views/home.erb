@@ -7,21 +7,23 @@
           <img
             class="recipe_image rounded border border-dark"
             src="<%= recipe.present? ? recipe[:thumbnail] : '' %>"
-            data-toggle="modal"
-            data-target="#recommend-modal"
           >
         </a>
       </div>
     <% end %>
   </div>
-  <a href="/recipes" class="btn btn-brown btn-block">
-    レシピをもっと見る&nbsp;<i class="fas fa-chevron-circle-right"></i>
-  </a>
-  <% if @recommend_recipe.present? %>
-    <%= erb :'_recommend_recipe_modal', locals: { recipe: @recommend_recipe, refrigerator_foods: @user_foods } %>
+  <% if @recommend_recipes.present? %>
+    <a href="/recipes" class="btn btn-brown btn-block">
+      レシピをもっと見る&nbsp;<i class="fas fa-chevron-circle-right"></i>
+    </a>
+  <% else %>
+    <a href="/user_foods/food_upload" class="btn btn-brown btn-block">
+      食材を登録する&nbsp;<i class="fas fa-chevron-circle-right"></i>
+    </a>
   <% end %>
 </div>
-<div class="row">
+
+<div class="row mt-5">
   <div class="col-md-5">
     <h4>冷蔵庫</h4>
     <div class="show_food">
