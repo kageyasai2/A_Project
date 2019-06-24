@@ -7,7 +7,10 @@ require_relative '../services/cookpad_list_scraper'
 require_relative '../services/cookpad_detail_scraper'
 require_relative '../services/fetch_doc_service'
 
+
 class RecipesController < Base
+  SEARCH_PATH = "https://cookpad.com/search/"
+
   before do
     if user_not_logged_in?
       redirect '/auth/login'
@@ -24,7 +27,7 @@ class RecipesController < Base
       redirect '/recipes'
     end
 
-    url = create_url
+    url = create_url(genre: params[:genre], foods: params[:foods])
 
     @recipes =
       begin
@@ -81,14 +84,19 @@ class RecipesController < Base
 
   private
 
-  def create_url
+  def create_url(genre: nil, foods: [])
     # ジャンル選択画面で選ばれた食材名・ジャンルをURL末尾に設定する
-    food = UserFood.where(user_id: session[:user_id]).order(limit_date: :asc).limit(1)
-    if params[:genre].blank?
-      Addressable::URI.encode "https://cookpad.com/search/#{food[0].name}"
+    path = SEARCH_PATH
+    path += " #{genre}" if genre.present?
+    if foods.present?
+      foods_name = foods.join(' ')
+      path += " #{foods_name}"
     else
-      Addressable::URI.encode "https://cookpad.com/search/#{params[:genre]} #{food[0].name}"
+      food = UserFood.where(user_id: session[:user_id]).order(limit_date: :asc).limit(1)
+      path += " #{food[0].name}"
     end
+
+    Addressable::URI.encode path
   end
 
   def truncate_food_based_on(user_id, items)
