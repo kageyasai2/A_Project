@@ -17,24 +17,3 @@
     </p>
   </div>
 <% end %>
-
-<% if flash[:failure_discarded_foods].present? %>
-  <div class="alert alert-danger alert-dismissible fade show" role="alert">
-    <h4 class="alert-heading">廃棄に失敗した食材
-        <button type="button" class="close" data-dismiss="alert" aria-label="閉じる">
-          <span aria-hidden="true">&times;</span>
-        </button>
-    </h4>
-    <p>
-      <ul class="text-center" style="list-style: none;">
-        <% flash[:failure_discarded_foods].each.with_index(1) do |failure_discarded_food, i| %>
-          <li><%= failure_discarded_food[:name] %></li>
-          <% unless flash[:failure_discarded_foods].size == i %>
-            <hr>
-          <% end %>
-        <% end %>
-      </ul>
-    </p>
-  </div>
-<% end %>
-

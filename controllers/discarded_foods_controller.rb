@@ -13,12 +13,7 @@ class DiscardedFoodsController < Base
   end
 
   post '/food_discard' do
-    DiscardedFood.transaction(joinable: false, requires_new: true) do
-      register_discarded_food!(items: params[:items], user_id: session[:user_id])
-    rescue ActiveRecord::RecordInvalid
-      raise ActiveRecord::Rollback
-    end
-
+    register_discarded_food(items: params[:items], user_id: session[:user_id])
     return erb :'discarded_foods/food_discard'
   end
 
@@ -30,35 +25,37 @@ class DiscardedFoodsController < Base
     end
   end
 
-  def register_discarded_food!(items:, user_id:)
+  def register_discarded_food(items:, user_id:)
     flash[:discarded_foods] = []
     flash[:failure_discarded_foods] = []
-    is_err = false
 
     items.each do |item|
-      discarded_food = DiscardedFood.new({
-        name: item[:food_name],
-        gram: item[:gram],
-        calorie: rand(100),
-        user_id: user_id,
-      })
+      DiscardedFood.transaction(joinable: false, requires_new: true) do
+        discarded_food = DiscardedFood.new({
+          name: item[:food_name],
+          gram: item[:gram],
+          calorie: rand(100),
+          user_id: user_id,
+        })
 
-      food = UserFood.find_from(user_id, item[:food_name])
-      if discarded_food.save && food
-        # 廃棄登録された食材を冷蔵庫から削除する
-        food.update_gram_in_user_foods!(item[:gram])
-        flash[:discarded_foods] << discarded_food
-      else
-        is_err = true
+        food = UserFood.find_from(user_id, item[:food_name])
+        if discarded_food.save && food
+          # 廃棄登録された食材を冷蔵庫から削除する
+          p "debug message2 "
+          food.update_gram_in_user_foods!(item[:gram])
+          flash[:discarded_foods] << discarded_food
+        else
 
-        if item[:food_name].present? && food.nil?
-          discarded_food.errors[:name] << 'は冷蔵庫から見つかりません。'
+          if item[:food_name].present? && food.nil?
+            discarded_food.errors[:name] << 'は冷蔵庫から見つかりません。'
+          end
+
+          flash[:failure_discarded_foods] << discarded_food
         end
-
-        flash[:failure_discarded_foods] << discarded_food
+      rescue ActiveRecord::RecordInvalid
+        p "debug_message"
+        raise ActiveRecord::Rollback
       end
     end
-
-    raise ActiveRecord::RecordInvalid if is_err
   end
 end
