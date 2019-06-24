@@ -1,1 +1,148 @@
+<style type="text/css">
+.btn-dark-brown {
+  color: white;
+  background-color: #A67555;
+  border-color: #A67555;
+}
+
+.refrigerator-btn {
+  display: block;
+  width: 30%;
+  height: 50px;
+  position: fixed;
+  bottom: 12%;
+}
+.bottom-left {
+  left: 20%;
+}
+.bottom-right {
+  left: calc(20% + 30%);
+}
+
+.table-column-title {
+  padding: 5px 2px 5px 2px;
+  background: #F8F3E7;
+  color: #A67555;
+  border-radius: 8px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.bottom-space {
+  margin-bottom: 100px;
+}
+</style>
 <h1>冷蔵庫</h1>
+
+<form action="/refrigerator/update" method="post">
+  <div class="rows bottom-space">
+    <div class="form-row mb-2">
+      <div class="col-4 table-column-title mr-2">食材名</div>
+      <div class="col-4 table-column-title mr-2">賞味期限</div>
+      <div class="col-3 table-column-title mr-2">グラム</div>
+      <div class="table-column-title">削除</div>
+    </div>
+
+    <% if @user_foods %>
+      <% @user_foods.each do |food| %>
+        <%= erb :'user_foods/_user_food_row', locals: { food: food, id: '' } %>
+
+        <div name="errors" class="row mb-2">
+          <%= erb :'shared/_field_errors', locals: { model: food, column: :name } %>
+          <%= erb :'shared/_field_errors', locals: { model: food, column: :limit_date } %>
+          <%= erb :'shared/_field_errors', locals: { model: food, column: :gram } %>
+        </div>
+      <% end %>
+
+    <% else %>
+      <p>冷蔵庫は空です</p>
+    <% end %>
+  </div>
+
+  <div class="d-flex justify-content-center">
+    <button
+      type="button"
+      id="food-add-button"
+      class="btn btn-dark-brown refrigerator-btn bottom-left"
+      data-toggle="modal"
+      data-target="#food-add-modal"
+      >
+      新しく追加する
+      <i class="fas fa-plus-circle"></i>
+    </button>
+    <span></span>
+    <button type="submit" class="btn btn-block btn-accent refrigerator-btn ml-4 bottom-right">
+      保存する
+      <i class="fas fa-chevron-circle-right"></i>
+    </button>
+  </div>
+</form>
+
+<div class="modal fade" id="food-add-modal" tabindex="-1" role="dialog" aria-labelledby="food-add-modal-label" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <h5 class="modal-title" id="food-add-title">食材を登録する</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="閉じる">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+        <%= erb :'user_foods/_user_food_row', locals: { food: nil, id: 'templateForm' } %>
+      <form action="/refrigerator" method="post">
+        <div class="modal-body container">
+
+          <div class="rows" id="displayArea">
+            <div class="form-row mb-2">
+              <div class="col-4">食材名</div>
+              <div class="col-4">賞味期限</div>
+              <div class="col-3">グラム</div>
+            </div>
+
+            <% if @posted_foods.present? %>
+              <% @posted_foods.each do |food| %>
+                <%= erb :'user_foods/_user_food_row', locals: { food: food, id: '' } %>
+
+                <div name="errors" class="row mb-2">
+                  <%= erb :'shared/_field_errors', locals: { model: food, column: :name } %>
+                  <%= erb :'shared/_field_errors', locals: { model: food, column: :limit_date } %>
+                  <%= erb :'shared/_field_errors', locals: { model: food, column: :gram } %>
+                </div>
+              <% end %>
+
+            <% else %>
+              <%= erb :'user_foods/_user_food_row', locals: { food: nil, id: '' } %>
+            <% end %>
+          </div>
+
+          <button
+            type="button"
+            id="addButton"
+            class="btn btn-lg btn-outline-success rounded-circle p-0 d-block mx-auto mb-4 mt-4"
+            style="width:3rem; height:3rem;"
+          >
+            <i class="fas fa-plus"></i>
+          </button>
+        </div><!-- /.modal-body -->
+
+        <div class="modal-footer mx-auto">
+          <button type="submit" class="btn btn-primary d-block ml-auto mb-2">
+            登録する
+          </button>
+        </div><!-- /.modal-footer -->
+      </form>
+
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+<script>
+  if (<%= @posted_foods.present? %>) {
+    $('#food-add-modal').modal('show');
+  }
+</script>
