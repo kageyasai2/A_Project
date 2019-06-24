@@ -31,5 +31,6 @@ class Main < Sinatra::Base
     '/user_foods' => UserFoodsController,
     '/discarded_foods' => DiscardedFoodsController,
     '/recipes' => RecipesController,
+    '/refrigerator' => RefrigeratorController,
   }.freeze
 end
