@@ -9,7 +9,8 @@
     <div class="ml-2">
       <a href="<%= "/recipes/show?recipe_path=#{recipe[:recipe_link]}" %>">
         <h4><%= recipe[:recipe_title] %></h4>
-      </a>
+        </a>
+      <h6 class="margin-top mt-4"> <%= recipe[:ingredients] %> </h6>
     </div>
   </div>
   <hr>

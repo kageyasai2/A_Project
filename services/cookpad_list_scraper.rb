@@ -22,6 +22,7 @@ class CookpadListScraper
         recipe_title: parse_recipe_title(node),
         recipe_link: parse_recipe_link(node),
         thumbnail: parse_recipe_thumbnail(node),
+        ingredients: parse_recipe_ingredients(node)
       }
     end
   end
