@@ -1,5 +1,5 @@
 div .recipe-title{
-  color: #E0C784;
+  color: #A67555;
   font-weight: bold;
 }
 
@@ -7,7 +7,6 @@ div .recipe-title{
   margin: 10px auto;
   width: 100%;
 }
-
 .slider img{
   width: 100%;
   max-height: 200px;
@@ -16,18 +15,16 @@ div .recipe-title{
 
 .slide-arrow{
   position: absolute;
-  top: 30%;
+  top: 40%;
 }
-
 .prev-arrow{
-  color: rgb(182, 182, 182);
-  font-size: 5vh;
+  color: #A67555;
+  font-size: 2rem;
   left: -90px;
 }
-
 .next-arrow{
-  color: rgb(182, 182, 182);
-  font-size: 5vh;
+  color: #A67555;
+  font-size: 2rem;
   right: -90px;
 }
 
@@ -36,7 +33,6 @@ div .recipe{
   position: relative;
   top: -20px;
 }
-
 div .recipe > .slider > .shadow > .recipe_image{
   width: 100%;
   height: 80%;
@@ -60,14 +56,14 @@ div .show_food{
 .btn-brown,
 .btn-brown.disabled, .btn-brown:disabled {
   font-weight: bold;
-  color: rgb(116, 68, 5);
-  background-color: rgb(253, 239, 218);
-  border-color: rgb(255, 239, 218);
+  color: #A67555;
+  background-color: #F8F3E7;
+  border-color: #F8F3E7;
 }
 
 /* focusされた時の枠線の色 */
 .btn-brown:focus, .btn-brown.focus,
-.btn-brown:not(:disabled):not(.disabled):active:focus, 
+.btn-brown:not(:disabled):not(.disabled):active:focus,
 .btn-brown:not(:disabled):not(.disabled).active:focus,
 .show > .btn-brown.dropdown-toggle:focus {
   box-shadow: 0 0 0 0.2rem rgba(207, 122, 11, 0.5);
@@ -76,8 +72,8 @@ div .show_food{
 /* hover時（マウスカーソルを重ねた時）の色（通常より濃いor暗めの色を指定）*/
 .btn-brown:hover {
   color: rgb(122, 69, 8);
-  background-color: rgb(250, 220, 174);
-  border-color: rgb(250, 220, 174);
+  background-color: #FDF1D5;
+  border-color: #FDF1D5;
 }
 
 /* active時の色（hover時と同等かさらに濃いor暗めの色を指定） */
@@ -85,6 +81,6 @@ div .show_food{
 .btn-brown:not(:disabled):not(.disabled).active,
 .show > .btn-brown.dropdown-toggle {
   color: rgb(122, 69, 8);
-  background-color: #f39e1e;
-  border-color: #f39e1e;
+  background-color: #FDF1D5;
+  border-color: #FDF1D5;
 }

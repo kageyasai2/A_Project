@@ -1,47 +1,29 @@
 <div class="recipe">
   <h4 class="recipe-title">今日のおすすめ</h4>
   <div class="slider">
-    <div class="shadow">
-      <img 
-        class="recipe_image rounded border border-dark"
-        src="<%= @recommend_recipe.present? ? @recommend_recipe[:recipe_image] : '' %>"
-        data-toggle="modal"
-        data-target="#recommend-modal"
-      >
-    </div>
-    <div class="shadow">
-      <img 
-        class="recipe_image rounded border border-dark"
-        src="<%= @recommend_recipe.present? ? @recommend_recipe[:recipe_image] : '' %>"
-        data-toggle="modal"
-        data-target="#recommend-modal"
-      >
-    </div>
-    <div class="shadow">
-      <img 
-        class="recipe_image rounded border border-dark"
-        src="<%= @recommend_recipe.present? ? @recommend_recipe[:recipe_image] : '' %>"
-        data-toggle="modal"
-        data-target="#recommend-modal"
-      >
-    </div>
-    <div class="shadow">
-      <img 
-        class="recipe_image rounded border border-dark"
-        src="<%= @recommend_recipe.present? ? @recommend_recipe[:recipe_image] : '' %>"
-        data-toggle="modal"
-        data-target="#recommend-modal"
-      >
-    </div>
+    <% @recommend_recipes.each do |recipe| %>
+      <div class="shadow">
+        <a href="<%= "/recipes/show?recipe_path=#{recipe[:recipe_link]}" %>">
+          <img
+            class="recipe_image rounded border border-dark"
+            src="<%= recipe.present? ? recipe[:thumbnail] : '' %>"
+          >
+        </a>
+      </div>
+    <% end %>
   </div>
-  <a href="/recipes" class="btn btn-brown btn-block">
-    レシピをもっと見る&nbsp;<i class="fas fa-chevron-circle-right"></i>
-  </a>
-  <% if @recommend_recipe.present? %>
-    <%= erb :'_recommend_recipe_modal', locals: { recipe: @recommend_recipe, refrigerator_foods: @user_foods } %>
+  <% if @recommend_recipes.present? %>
+    <a href="/recipes" class="btn btn-brown btn-block">
+      レシピをもっと見る&nbsp;<i class="fas fa-chevron-circle-right"></i>
+    </a>
+  <% else %>
+    <a href="/user_foods/food_upload" class="btn btn-brown btn-block">
+      食材を登録する&nbsp;<i class="fas fa-chevron-circle-right"></i>
+    </a>
   <% end %>
 </div>
-<div class="row">
+
+<div class="row mt-5">
   <div class="col-md-5">
     <h4>冷蔵庫</h4>
     <div class="show_food">
@@ -87,7 +69,7 @@
       <ul class="nav nav-tabs">
         <li class="nav-item">
           <a
-            href="#monthly_kill_graph" 
+            href="#monthly_kill_graph"
             class="btn page-link text-dark d-inline-block rounded-pill nav-link"
             data-toggle="tab"
           >年間
@@ -120,7 +102,7 @@
       <ul class="nav nav-tabs">
         <li class="nav-item">
           <a
-            href="#monthly_contribute" 
+            href="#monthly_contribute"
             class="btn page-link text-dark d-inline-block rounded-pill nav-link"
             data-toggle="tab"
           >年間

@@ -11,9 +11,7 @@ class IndexController < Base
   end
 
   get '/home' do
-    if user_not_logged_in?
-      redirect '/auth/login'
-    end
+    redirect '/auth/login' if user_not_logged_in?
 
     if session[:user_id]
       @user_foods = UserFood.where(user_id: session[:user_id]).order(limit_date: :asc)
@@ -21,30 +19,18 @@ class IndexController < Base
     @user_foods ||= []
 
     monthly_calories_hash = DiscardedFood.read_monthly_calories_by(session[:user_id])
-    gon.monthly_kill_retios = generate_loss_degrees_by(
-      calories_hash: monthly_calories_hash,
-      day_or_month: :month,
-    )
-    gon.monthly_contributes = generate_contribute_degrees_by(
-      calories_hash: monthly_calories_hash,
-      day_or_month: :month,
-    )
+    gon.monthly_kill_retios = generate_loss_degrees_by(calories_hash: monthly_calories_hash, day_or_month: :month)
+    gon.monthly_contributes = generate_contribute_degrees_by(calories_hash: monthly_calories_hash, day_or_month: :month)
 
     daily_calories_hash = DiscardedFood.read_daily_calories_by(session[:user_id])
-    gon.daily_kill_retios = generate_loss_degrees_by(
-      calories_hash: daily_calories_hash,
-      day_or_month: :day,
-    )
-    gon.daily_contributes = generate_contribute_degrees_by(
-      calories_hash: daily_calories_hash,
-      day_or_month: :day,
-    )
+    gon.daily_kill_retios = generate_loss_degrees_by(calories_hash: daily_calories_hash, day_or_month: :day)
+    gon.daily_contributes = generate_contribute_degrees_by(calories_hash: daily_calories_hash, day_or_month: :day)
 
     begin
       fetch_random_recipe
-    rescue => e
-      warn 'This error is known.'
-      warn e.backtrace
+    rescue OpenURI::HTTPError => e
+      p e.message # 404
+      @recommend_recipes = []
     end
 
     erb :home
@@ -108,15 +94,9 @@ class IndexController < Base
 
   def fetch_random_recipe
     food = UserFood.where(user_id: session[:user_id]).order(limit_date: :asc).limit(1)
-    return if food.blank?
+    raise OpenURI::HTTPError.new('food blank: 404 Not Found', STDOUT) if food.blank?
 
     url = Addressable::URI.encode "https://cookpad.com/search/#{food[0].name}"
-    recipes = CookpadListScraper.new(url).execute
-
-    return if recipes.blank?
-
-    recipe_path = recipes[rand(recipes.size)][:recipe_link]
-    url = Addressable::URI.encode("https://cookpad.com#{recipe_path}")
-    @recommend_recipe = CookpadDetailScraper.new(url).execute
+    @recommend_recipes = CookpadListScraper.new(url).execute
   end
 end
