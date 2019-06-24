@@ -1,0 +1,13 @@
+.custom-file {
+  overflow: hidden;
+}
+.custom-file-label {
+  white-space: nowrap;
+}
+h1,h3 {
+    text-align: center;
+}
+
+.button{
+    text-align:center;
+}
