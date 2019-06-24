@@ -7,9 +7,8 @@ require_relative '../services/cookpad_list_scraper'
 require_relative '../services/cookpad_detail_scraper'
 require_relative '../services/fetch_doc_service'
 
-
 class RecipesController < Base
-  SEARCH_PATH = "https://cookpad.com/search/"
+  SEARCH_PATH = 'https://cookpad.com/search/'.freeze
 
   before do
     if user_not_logged_in?
