@@ -9,7 +9,7 @@
     <h2 class="h5 mt-5">料理ジャンル</h2>
     <div class="d-flex flex-wrap">
       <label class="select-label">
-        <input type="radio" name="genre" class="select-input" checked>
+        <input type="radio" name="genre" value="" class="select-input" checked>
         <span class="select-cell">--ジャンルを選択--</span>
       </label>
       <% %w(和食 洋食 中華 イタリアン おかず スイーツ).each do |genre| %>
@@ -24,7 +24,7 @@
     <div class="d-flex flex-wrap">
       <% @user_foods.each do |food| %>
         <label class="select-label">
-          <input type="checkbox" name="genre" value="<%= food.name %>" class="select-input">
+          <input type="checkbox" name="foods[]" value="<%= food.name %>" class="select-input">
           <span class="select-cell">
             <span class="checkbox-icon"></span>
             <%= food.name %>
