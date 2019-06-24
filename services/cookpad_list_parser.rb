@@ -14,4 +14,9 @@ module CookpadListParser
   def parse_recipe_thumbnail(doc)
     doc.xpath('.//div[@class="recipe-image wide"]/a/img').attribute('src').value
   end
+
+  def parse_recipe_ingredients(doc)
+    doc.xpath('.//div[@class="recipe-text"]/div[@class="material ingredients"]').text
+  end
+  
 end
