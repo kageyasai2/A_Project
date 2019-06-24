@@ -1,0 +1,18 @@
+.btn-accent {
+  color: white;
+  background-color: #F0AD4E;
+  border-color: #F0AD4E;
+}
+.custom-file {
+  overflow: hidden;
+}
+.custom-file-label {
+  white-space: nowrap;
+}
+h1,h3 {
+    text-align: center;
+}
+
+.button{
+    text-align:center;
+}

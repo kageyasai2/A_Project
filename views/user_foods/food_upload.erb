@@ -1,20 +1,20 @@
-<h1>食材の画像アップロード</h1><br>
-<h3>食材を枠内に収めてください</h3>
-<form action="/user_foods/food_upload" method="POST">
-    <div class="card border-primary card-body bg-light p-5">
-        <img class="card-img-top" src="/image/food_picture.png" alt="撮影画面の画像">
+<div class="upload_image">
+  <h1>食材の画像アップロード</h1><br>
+  <h3>食材画像を選択してください</h3>
+  <form action="/user_foods/food_upload" method="POST">
+    <div class="input-group">
+      <div class="custom-file">
+        <input type="file" class="custom-file-input" id="upload_image_file">
+        <label class="custom-file-label" for="upload_image_file" data-browse="参照">ファイル選択...</label>
+      </div>
+      <div class="input-group-append">
+        <button type="button" class="btn btn-outline-secondary reset">取消</button>
+      </div>
     </div>
-    <div class="button">
-        <button type="submit" class="btn btn-outline-danger btn-lg rounded-pill">手入力</button>
-    </div>
-</form>
+    <br>
+    <input type="submit" class="btn btn-accent btn-block rounded-pill" value="手入力画面に進む">
+  </form>
+</div>
 
-<style>
- h1,h3 {
-    text-align: center;
-}
-
-.button{
-    text-align:center;
- }
-</style>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="/js/upload_food_image.js"></script>
