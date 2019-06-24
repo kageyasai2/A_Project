@@ -94,7 +94,7 @@ class IndexController < Base
 
   def fetch_random_recipe
     food = UserFood.where(user_id: session[:user_id]).order(limit_date: :asc).limit(1)
-    return if food.blank?
+    raise OpenURI::HTTPError.new('food blank: 404 Not Found', STDOUT) if food.blank?
 
     url = Addressable::URI.encode "https://cookpad.com/search/#{food[0].name}"
     @recommend_recipes = CookpadListScraper.new(url).execute
