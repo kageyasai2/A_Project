@@ -1,4 +1,6 @@
 <div class="form-row mb-1" id="<%= "#{id}" %>">
+  <input name="items[][id]" value="<%= food.id if food %>" class="d-none">
+
   <div class="col-4 mr-2">
     <input
       name="items[][food_name]"
