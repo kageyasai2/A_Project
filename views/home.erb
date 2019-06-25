@@ -50,6 +50,12 @@
                 <td><%= "#{item.gram}g" if item.gram.present? %></td>
                 <td><%= item.limit_date %></td>
               </tr>
+            <% else %>
+              <tr>
+                <td><%= item.name %></td>
+                <td><%= "#{item.gram}g" if item.gram.present? %></td>
+                <td><%= item.limit_date %></td>
+              </tr>
             <% end %>
           <% else %>
             <tr>
