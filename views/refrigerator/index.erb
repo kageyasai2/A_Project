@@ -4,6 +4,19 @@
   background-color: #A67555;
   border-color: #A67555;
 }
+.btn-outline-accent {
+  color: #F0AD4E;
+  border-color: #F0AD4E;
+}
+.btn-outline-accent:hover {
+  color: white;
+}
+.btn-outline-accent:active {
+  color: white;
+}
+.btn-outline-accent:not(:disabled):not(.disabled):active {
+  color: white;
+}
 
 .refrigerator-btn {
   display: block;
@@ -81,7 +94,7 @@
 </form>
 
 <div class="modal fade" id="food-add-modal" tabindex="-1" role="dialog" aria-labelledby="food-add-modal-label" aria-hidden="true">
-  <div class="modal-dialog modal-lg" role="document">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
     <div class="modal-content">
 
       <div class="modal-header">
@@ -97,9 +110,10 @@
 
           <div class="rows" id="displayArea">
             <div class="form-row mb-2">
-              <div class="col-4">食材名</div>
-              <div class="col-4">賞味期限</div>
-              <div class="col-3">グラム</div>
+              <div class="col-4 table-column-title mr-2">食材名</div>
+              <div class="col-4 table-column-title mr-2">賞味期限</div>
+              <div class="col-3 table-column-title mr-2">グラム</div>
+              <div class="table-column-title">削除</div>
             </div>
 
             <% if @posted_foods.present? %>
@@ -121,7 +135,7 @@
           <button
             type="button"
             id="addButton"
-            class="btn btn-lg btn-outline-success rounded-circle p-0 d-block mx-auto mb-4 mt-4"
+            class="btn btn-lg btn-outline-warning btn-outline-accent rounded-circle p-0 d-block mx-auto mb-4 mt-4"
             style="width:3rem; height:3rem;"
           >
             <i class="fas fa-plus"></i>
@@ -129,7 +143,7 @@
         </div><!-- /.modal-body -->
 
         <div class="modal-footer mx-auto">
-          <button type="submit" class="btn btn-primary d-block ml-auto mb-2">
+          <button type="submit" class="btn btn-accent ml-auto">
             登録する
           </button>
         </div><!-- /.modal-footer -->
