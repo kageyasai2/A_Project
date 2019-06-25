@@ -44,7 +44,8 @@
 }
 
 .bottom-space {
-  margin-bottom: 100px;
+  height: calc(100vh - 310px);
+  overflow: auto;
 }
 </style>
 <h1>冷蔵庫</h1>
@@ -104,7 +105,7 @@
         </button>
       </div>
 
-        <%= erb :'user_foods/_user_food_row', locals: { food: nil, id: 'templateForm' } %>
+      <%= erb :'user_foods/_user_food_row', locals: { food: nil, id: 'templateForm' } %>
       <form action="/refrigerator" method="post">
         <div class="modal-body container">
 
