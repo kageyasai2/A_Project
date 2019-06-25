@@ -29,24 +29,33 @@ class RefrigeratorController < Base
     @user_foods = UserFood.where_my(@current_user.id)
     user_food_ids = @user_foods.pluck(:id)
 
+    # バリデーションメッセージを返すために、updateやdestroyを実行したオブジェクトを入れる変数
+    return_user_foods = []
+
     # ポストされたfood_idsに存在しないものを削除
     items = params[:items]
     user_food_ids.each do |id|
       items_index = items.index { |item| item[:id].to_i == id }
-      unless items_index
-        @user_foods.find(id).destroy
+      next if items_index
+
+      finded_food = @user_foods.find(id)
+      unless finded_food.destroy
+        return_user_foods << finded_food
       end
     end
 
     # 存在するuser_foodsはポストされたデータで全て更新する
     items.each do |item|
-      @user_foods.find(item[:id].to_i).update(
+      finded_food = @user_foods.find(item[:id].to_i)
+      finded_food.update(
         name: item[:food_name],
         limit_date: item[:date],
         gram: item[:gram],
       )
+      return_user_foods << finded_food
     end
 
+    @user_foods = return_user_foods
     erb :'/refrigerator/index'
   end
 
