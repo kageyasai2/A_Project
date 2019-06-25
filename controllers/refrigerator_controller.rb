@@ -36,11 +36,11 @@ class RefrigeratorController < Base
     items = params[:items]
     user_food_ids.each do |id|
       items_index = items.index { |item| item[:id].to_i == id }
-      unless items_index
-        finded_food = @user_foods.find(id)
-        unless finded_food.destroy
-          return_user_foods << finded_food
-        end
+      next if items_index
+
+      finded_food = @user_foods.find(id)
+      unless finded_food.destroy
+        return_user_foods << finded_food
       end
     end
 
