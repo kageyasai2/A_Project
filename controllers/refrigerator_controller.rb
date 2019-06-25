@@ -15,7 +15,6 @@ class RefrigeratorController < Base
   end
 
   post '/' do
-    @user_foods = UserFood.where_my(@current_user.id)
     UserFood.transaction(joinable: false, requires_new: true) do
       register_user_foods!(items: params[:items], user_id: session[:user_id])
     rescue ActiveRecord::RecordInvalid
@@ -24,6 +23,31 @@ class RefrigeratorController < Base
     end
 
     redirect '/refrigerator'
+  end
+
+  post '/update' do
+    @user_foods = UserFood.where_my(@current_user.id)
+    user_food_ids = @user_foods.pluck(:id)
+
+    # ポストされたfood_idsに存在しないものを削除
+    items = params[:items]
+    user_food_ids.each do |id|
+      items_index = items.index { |item| item[:id].to_i == id }
+      unless items_index
+        @user_foods.find(id).destroy
+      end
+    end
+
+    # 存在するuser_foodsはポストされたデータで全て更新する
+    items.each do |item|
+      @user_foods.find(item[:id].to_i).update(
+        name: item[:food_name],
+        limit_date: item[:date],
+        gram: item[:gram],
+      )
+    end
+
+    erb :'/refrigerator/index'
   end
 
   private
