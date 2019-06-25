@@ -15,7 +15,6 @@ class RefrigeratorController < Base
   end
 
   post '/' do
-    @user_foods = UserFood.where_my(@current_user.id)
     UserFood.transaction(joinable: false, requires_new: true) do
       register_user_foods!(items: params[:items], user_id: session[:user_id])
     rescue ActiveRecord::RecordInvalid
