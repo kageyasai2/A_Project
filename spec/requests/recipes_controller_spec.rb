@@ -69,7 +69,7 @@ describe RecipesController, type: :request do
       get '/recipes/show'
       expect(last_response.status).to eq 302
       follow_redirect!
-      expect(last_response.body).to include 'ジャンル選択'
+      expect(last_response.body).to include 'レシピを探す'
     end
   end
 
