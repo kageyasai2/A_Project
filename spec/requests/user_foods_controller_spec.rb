@@ -29,7 +29,7 @@ describe UserFoodsController, type: :request do
 
   describe 'POST to /user_foods/food_upload' do
     it 'returns 200 status' do
-      post '/user_foods/food_upload'
+      post '/user_foods/food_upload', {}, 'rack.session' => { user_id: @user.id }
       expect(last_response.status).to eq 200
     end
   end

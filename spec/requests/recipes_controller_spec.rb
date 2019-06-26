@@ -17,7 +17,7 @@ describe RecipesController, type: :request do
 
   describe 'GET to /recipes/' do
     it 'returns 200 status' do
-      get '/recipes'
+      get '/recipes', {}, 'rack.session' => { user_id: @user.id }
       expect(last_response.status).to eq 200
     end
   end
@@ -61,7 +61,7 @@ describe RecipesController, type: :request do
   describe 'GET to /recipes/show' do
     it 'returns 200 status' do
       allow(RecipesController).to receive(:fetch_html_from).and_return(return_doc_mock(file_name: 'recipe_detail.html'))
-      get '/recipes/show?recipe_path=/recipe/5406617'
+      get '/recipes/show?recipe_path=/recipe/5406617', {}, 'rack.session' => { user_id: @user.id }
       expect(last_response.status).to eq 200
     end
 
@@ -69,7 +69,7 @@ describe RecipesController, type: :request do
       get '/recipes/show'
       expect(last_response.status).to eq 302
       follow_redirect!
-      expect(last_response.body).to include 'レシピを探す'
+      expect(last_response.body).to include 'ログイン'
     end
   end
 
