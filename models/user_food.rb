@@ -24,7 +24,12 @@ class UserFood < ActiveRecord::Base
     end
   end
 
-  def self.fetch_foods_into_refrigerator(user_id)
-    UserFood.where(user_id: user_id)
+  def self.find_by_ids(user_id:, food_id:)
+    food = UserFood.where(user_id: user_id, id: food_id).limit(1)
+    if food.blank?
+      nil
+    else
+      food.first
+    end
   end
 end

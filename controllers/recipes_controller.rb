@@ -101,11 +101,10 @@ class RecipesController < Base
   def truncate_food_based_on(user_id, items)
     items.each do |item|
       # 料理に使用した食材の廃棄
-      used_food = UserFood.find_from(user_id, item[:food_name])
+      next if item[:is_used_food].nil?
 
-      if used_food.nil?
-        next
-      end
+      used_food = UserFood.find_by_ids(user_id: user_id, food_id: item[:id])
+      next if used_food.nil?
 
       # 料理に使用した食材を冷蔵庫から削除する
       used_food.update_gram_in_user_foods!(item[:gram])
