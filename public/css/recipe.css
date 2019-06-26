@@ -1,28 +1,35 @@
 .recipe-img-wrapper {
   width: 280px;
 }
-
 img.recipe-img {
   max-width: 280px;
-  max-height: 487px;
+  max-height: 450px;
   display: block;
   margin: 0 auto;
 }
 
-.recipe-title-color {
-  color: #90A23C;
+.ingredients-wrapper {
+  width: calc(100% - 280px);
 }
 
+.recipe-title-color {
+  color: #A67555;
+}
 .recipe-sub-color {
   color: #E0C784;
 }
 
 .recipe-step-wrapper {
-  width: 136px;
+  width: 25%;
   overflow: hidden;
   word-wrap: break-word;
-  margin-right: 21px;
-  margin-bottom: 10px;
-  float: left;
+  padding-right: 1vw;
+}
+.recipe-step-wrapper .step-image {
+  width: 100%;
+  border-radius: 10px;
+  margin-bottom: 5px;
+  max-width: 200px;
+  max-height: 200px;
 }
 

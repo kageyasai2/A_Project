@@ -1,35 +1,42 @@
-<h1 class="h2 font-weight-bold recipe-title-color"><%= @recipe_title %></h1>
+<h1 class="h2 font-weight-bold recipe-title-color mb-4">
+  <%= @recipe_title %>
+</h1>
+
 <div class="d-flex">
   <div class="recipe-img-wrapper mr-4">
     <img src="<%= @recipe_image %>" class="recipe-img"/>
   </div>
 
   <%# 材料一覧 %>
-  <div>
-    <h3 class="recipe-sub-color">材料</h3>
+  <div class="ingredients-wrapper">
+    <h5 class="recipe-sub-color">材料</h5>
 
-    <% @ingredients.each do |ingredient| %>
-      <% if ingredient.kind_of?(Hash) %>
+    <div>
+      <% @ingredients.each do |ingredient| %>
 
-        <div>
-          <a href="<%= 'https://www.amazon.co.jp/s?k=' + ingredient[:name] %>" class="btn rounded-circle p-0">
-            <i class="fas fa-shopping-cart"></i>
-          </a>
-
-        <%= ingredient[:name] %> - <%= ingredient[:amount] %>
-        </div>
-      <% else %>
-        <%# 材料がカテゴリ分けされている時、ここでは「■食材A」のように表示される %>
-        <div class="mt-3"><%= ingredient %></div>
+        <% if ingredient.kind_of?(Hash) %>
+          <div class="d-flex mb-1">
+            <div><%= ingredient[:name] %></div>
+            <div class="ml-auto mr-5"><%= ingredient[:amount] %></div>
+            <a
+              href="<%= 'https://www.amazon.co.jp/s?k=' + ingredient[:name] %>"
+              class="btn rounded-circle p-0 d-block">
+              <i class="fas fa-shopping-cart"></i>
+            </a>
+          </div>
+        <% else %>
+          <%# 材料がカテゴリ分けされている時、ここでは「■食材A」のように表示される %>
+          <div class="mt-3"><%= ingredient %></div>
+        <% end %>
 
       <% end %>
-    <% end %>
+    </div>
   </div>
 
 </div>
 
 <%# 調理手順 %>
-<div class="mt-5 row">
+<div class="mt-5 d-flex flex-wrap">
 
   <% @steps.each.with_index(1) do |step, num| %>
     <div class="recipe-step-wrapper">
@@ -37,10 +44,10 @@
         <dt class="recipe-sub-color"><%= num %></dt>
         <dd>
           <% if step[:photo_src] %>
-            <img src="<%= step[:photo_src] %>" />
+            <img src="<%= step[:photo_src] %>" class="step-image" />
           <% end %>
 
-          <p><%= step[:text] %></p>
+          <span><%= step[:text] %></span>
         </dd>
       </dl>
     </div>
@@ -49,26 +56,27 @@
   <div class="clearfix"></div>
 </div>
 
-<div>
-  <h2>使用する食材</h2>
-  <% if @refrigerator_foods.present? %>
-    <form action="/recipes/delete" method="POST" class="mt-5">
-      <table>
-        <thead>
-          <tr>
-            <th>食材名</th>
-            <th>グラム数</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% @refrigerator_foods.each do |refrigerator_food| %>
-            <%= erb :'recipes/_show_select_foods', locals: { refrigerator_food: refrigerator_food } %>
-          <% end %>
-        </tbody>
-      </table>
-      <input type="submit" value="料理を終了する"></input>
-    </form>
-  <% else %>
-    <p>冷蔵庫に食材がありません。</p>
-  <% end %>
+<div class="card mt-5">
+  <h5 class="card-header">使用する食材を選んでください</h5>
+
+  <form action="/recipes/delete" method="POST">
+    <div class="card-body">
+      <% if @refrigerator_foods.present? %>
+        <div class="form-row">
+          <div class="col-3 table-column-title mr-2">食材名</div>
+          <div class="col table-column-title">グラム</div>
+        </div>
+
+        <% @refrigerator_foods.each do |refrigerator_food| %>
+          <%= erb :'recipes/_show_select_foods', locals: { refrigerator_food: refrigerator_food } %>
+        <% end %>
+      <% else %>
+        <p>冷蔵庫に食材がありません。</p>
+      <% end %>
+    </div>
+
+    <div class="card-footer clearfix">
+      <button type="submit" class="btn btn-accent float-right">料理を終了する</button>
+    </div>
+  </form>
 </div>
