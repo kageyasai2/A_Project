@@ -1,44 +1,69 @@
-<tr>
-<td>
-  <input 
-    type="checkbox"
-    name="items[][food_name]"
-    value="<%= refrigerator_food.name %>"
-  >
-  <%= refrigerator_food.name %>
-</td>
-<td>
-  <% if refrigerator_food.gram.present? %>
-    <input 
-      type="range"
-      name="items[][gram]"
+<div class="form-row mt-2">
+  <input name="items[][id]" value="<%= refrigerator_food.id %>" class="d-none">
+
+  <div class="col-3 mr-auto">
+    <label class="form-check">
+      <input
+        type="checkbox"
+        name="items[][is_used_food]"
+        class="form-check-input"
+      >
+      <%= refrigerator_food.name %>
+    </label>
+  </div>
+
+  <div class="col-6 pt-1 pb-1">
+    <% if refrigerator_food.gram.present? %>
+      <input
+        id="food_range_<%= refrigerator_food.id %>"
+        type="range"
+        name="items[][gram]"
+        class="form-control-range"
+        value="0"
+        min="0"
+        max="<%= refrigerator_food.gram %>"
+        step="1"
+        oninput="document.getElementById('food_input_<%= refrigerator_food.id %>').value=this.value"
+        disabled
+      >
+    <% else %>
+      <input
+        type="range"
+        class="form-control-range"
+        min = "0"
+        max = "0"
+        disabled
+      >
+    <% end %>
+  </div>
+
+  <div class="col-3 d-flex">
+    <input
+      id="food_input_<%= refrigerator_food.id %>"
+      name="gram-input"
+      class="form-control"
+      style="padding-right: 0; padding-left: 0.4rem;"
+      type="number"
+      placeholder="食材の重さ(g)"
       value="0"
-      min="0"
-      max="<%= refrigerator_food.gram %>"
-      step="1"
-      oninput="document.getElementById('<%= refrigerator_food.id %>').value=this.value"
+      oninput="document.getElementById('food_range_<%= refrigerator_food.id %>').value=this.value"
       disabled
-    >
-    <output id="<%= refrigerator_food.id %>" >0</output>g/<%= refrigerator_food.gram %>g
-  <% else %>
-    <input 
-      type="range"
-      name="items[][gram]"
-      min = "0"
-      max = "0"
-      disabled
-    >
-  <% end %>
-</td>
-</tr>
+      >
+    <span class="col-form-label">&nbsp;/&nbsp;<%= refrigerator_food.gram %>(g)</span>
+  </div>
+</div>
+
 
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script>
 $(function(){
-  $('input[name="items[][food_name]"').on('change',function(){
+  $('input[name="items[][is_used_food]"').on('change',function(){
     $('input[name="items[][gram]"')
-      .eq($('input[name="items[][food_name]"').index(this))
-      .prop('disabled',!$(this).prop('checked'));
+      .eq($('input[name="items[][is_used_food]"').index(this))
+      .prop('disabled', !$(this).prop('checked'));
+    $('input[name="gram-input"')
+      .eq($('input[name="items[][is_used_food]"').index(this))
+      .prop('disabled', !$(this).prop('checked'));
   }).trigger('change');
 });
 </script>
