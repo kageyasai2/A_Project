@@ -62,7 +62,7 @@ class RecipesController < Base
     @steps = recipe_info[:steps]
 
     # 冷蔵庫の食材一覧
-    @refrigerator_foods = UserFood.fetch_foods_into_refrigerator(session[:user_id])
+    @refrigerator_foods = UserFood.where_my(session[:user_id])
     erb :'recipes/recipe_detail'
   end
 
