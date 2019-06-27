@@ -6,7 +6,7 @@ class IndexController < Base
     if @current_user
       redirect 'home'
     else
-      erb :index
+      erb :index, layout: nil
     end
   end
 
