@@ -69,4 +69,9 @@
   background-color: #F0AD4E;
   border-color: #F0AD4E;
 }
+.btn-accent:hover {
+  color: white;
+  background-color: rgba(237, 142, 26);
+  border-color: rgba(237, 142, 26);
+}
 

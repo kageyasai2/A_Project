@@ -1,0 +1,64 @@
+.top-wrapper {
+  padding: 100px 0 200px 0;
+  background-image: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.2)), url("/image/top1.jpg");
+  background-size: cover;
+  color: white;
+  font-size: 1.3em;
+  text-shadow: 0px 0px 5px #000;
+}
+.top-wrapper h1 {
+  opacity: 0.9;
+  letter-spacing: 5px;
+}
+.top-wrapper p {
+  opacity: 0.9;
+}
+.top-wrapper .register-wrapper {
+  text-align: left;
+}
+.top-wrapper .register-wrapper a {
+  background: rgba(240, 173, 78, 0.7);
+}
+.top-wrapper .register-wrapper a:hover {
+  color: white;
+  background: rgba(237, 142, 26, 0.8);
+}
+
+.services-wrapper {
+  text-align: center;
+}
+.services-wrapper .service-heading h2 {
+  padding-top: 50px;
+  padding-bottom: 50px;
+  color: #5f5d60;
+}
+
+.services-wrapper .service-box {
+  float: left;
+  width: 50%;
+  margin-bottom: 50px;
+}
+.services-wrapper .service-box .service-icon {
+  color: rgba(240, 173, 78);
+}
+.services-wrapper .service-box .service-icon p {
+  margin-top: 5px;
+}
+.services-wrapper .service-box .service-text {
+  width: 60%;
+  margin: auto;
+}
+
+.register-wrapper {
+  text-align: center;
+}
+.register-wrapper a {
+  font-size: 1.4em;
+}
+
+img.index-image {
+  width: 50%;
+  height: 350px;
+  border-radius: 10px;
+  box-shadow: 0 .5rem 1rem rgba(0,0,0,.15);
+}

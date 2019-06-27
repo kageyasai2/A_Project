@@ -1,1 +1,212 @@
-<h1>Hello World</h1>
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css">
+    <link rel="stylesheet" href="/css/layout.css">
+    <link rel="stylesheet" href="/css/index.css">
+    <link rel="stylesheet" href="/css/genre_select.css">
+
+    <title><%= @title %></title>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <a class="navbar-brand" href="/"><%= @app_name %></a>
+      <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#Navber" aria-controls="Navber" aria-expanded="false" aria-label="ナビゲーションの切替">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="Navber">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link" href="/home">ホーム</a>
+          </li>
+        </ul>
+
+        <!-- Right Side Of Navbar -->
+        <ul class="navbar-nav ml-auto">
+          <% if @current_user %>
+            <li class="nav-item">
+              <a class="nav-link" href="/refrigerator">冷蔵庫</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                <span class="user-font"><%= @current_user.name %></span> <span class="caret"></span>
+              </a>
+
+              <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                <!-- Logout form -->
+                <a class="dropdown-item" href="/auth/logout">ログアウト</a>
+              </div>
+            </li>
+          <% else %>
+            <li class="nav-item">
+              <a class="nav-link" href="/auth/login">ログイン</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/signup">登録</a>
+            </li>
+          <% end %>
+        </ul>
+
+      </div><!-- /.navbar-collapse -->
+    </nav>
+
+    <div>
+      <div class="top-wrapper img-thumbnail">
+        <div class="container">
+          <h1>この世の飢餓を無くして笑顔を増やそう</h1>
+          <p>食材の管理とレシピを探せるサービスです。</p>
+          <p>美味しく無駄のない料理を楽しみましょう。</p>
+
+          <div class="register-wrapper mt-5">
+            <a href="/signup" class="btn btn-accent">
+              飢餓学割を始める
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="services-wrapper">
+        <div class="container">
+          <div class="service-heading">
+            <h2>飢餓学割には様々な仕組みがあります</h2>
+          </div>
+
+          <div class="services">
+            <div class="service-box">
+              <div class="service-icon">
+                <i class="fas fa-4x fa-utensils"></i>
+                <p>料理</p>
+              </div>
+              <p class="service-text">
+                レシピを検索して美味しい料理を作りましょう。
+              </p>
+            </div>
+
+            <div class="service-box">
+              <div class="service-icon">
+                <i class="fas fa-4x fa-star"></i>
+                <p>おすすめレシピ</p>
+              </div>
+              <p class="service-text">
+                おすすめレシピを見て楽しく料理しましょう。
+              </p>
+            </div>
+
+            <div class="service-box">
+              <div class="service-icon">
+                <i class="fas fa-4x fa-list-ul"></i>
+                <p>食材登録</p>
+              </div>
+              <p class="service-text">
+                冷蔵庫の食材を登録してシステムで管理しましょう。
+              </p>
+            </div>
+
+            <div class="service-box">
+              <div class="service-icon">
+                <i class="fas fa-4x fa-chart-line"></i>
+                <p>貢献度</p>
+              </div>
+              <p class="service-text">
+                自分が飢餓をなくす活動にどれだけ貢献できているのか確認しましょう。
+              </p>
+            </div>
+
+            <div class="service-box">
+              <div class="service-icon">
+                <i class="fas fa-4x fa-search"></i>
+                <p>検索</p>
+              </div>
+              <p class="service-text">
+                レシピを様々な条件で検索できます。
+              </p>
+            </div>
+
+            <div class="service-box">
+              <div class="service-icon">
+                <i class="far fa-4x fa-user"></i>
+                <p>アカウント</p>
+              </div>
+              <p class="service-text">
+                自分の冷蔵庫や貢献度をアカウントで管理できます。
+              </p>
+            </div>
+
+            <div class="clearfix"></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="container mt-5">
+      <div>
+        <div class="mt-5 mb-5 d-flex">
+          <img src="/image/index1.png" class="index-image d-block shadow">
+          <div class="ml-auto mt-3 p-5" style="width: 50%;">
+            <h3>飢餓学割では飢餓をなくすことに少しでも貢献したい思いで作成されました</h3>
+            <p>
+              飢餓をなくすために冷蔵庫の食材をシステムで管理し、食材から美味しい料理のレシピを提案します。
+              楽しく美味しい料理を食べながら飢餓に貢献しましょう。
+            </p>
+          </div>
+        </div>
+
+        <div class="mt-5 mb-5 d-flex">
+          <div class="mt-3 p-5" style="width: 50%;">
+            <h3>楽しく美味しい料理を食べることは大事です</h3>
+            <p>
+              そのためにも今日の気分にあったジャンルや食材を選んで好きなレシピを探しましょう。
+              探すための仕組みは作成されています。
+            </p>
+          </div>
+          <img src="/image/index2.png" class="index-image d-block ml-auto">
+        </div>
+
+        <div class="mt-5 mb-5 d-flex">
+          <img src="/image/index3.png" class="index-image d-block">
+          <div class="ml-auto mt-3 p-5" style="width: 50%;">
+            <h3>料理を作るために選んだレシピが見やすい形で表示できます</h3>
+            <p>
+              もし食材が足りなければレシピページから食材を購入する画面に遷移することもできます。
+              料理手順は文字と画像で一覧表示されるのでその通りに作れば美味しい料理が出来上がります。
+              料理に使った食材や購入した食材をシステムで管理する方法も完備されています。
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="register-wrapper mt-5">
+        <div class="container">
+          <a href="/signup" class="btn btn-accent">
+            飢餓学割を始める
+          </a>
+        </div>
+      </div>
+
+      <footer class="footer_items">
+        <hr>
+        <p>
+          <a href="/unsubscribed">退会について</a> ・
+          <a href="/terms_of_service">利用規約</a>
+        </p>
+        <small>Copyright (c) 飢餓学割運営 All Rights Reserved.</small>
+      </footer>
+    </div>
+
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS , fontawesome , slick.js-->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
+  </body>
+</html>
