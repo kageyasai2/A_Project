@@ -4,7 +4,7 @@ source 'https://rubygems.org'
 
 git_source(:github) { |repo_name| "https://github.com/#{repo_name}" }
 
-gem 'addressable', '~> 2.6'
+gem 'addressable', '~> 2.8'
 gem 'bcrypt', git: 'https://github.com/codahale/bcrypt-ruby.git'
 gem 'gon-sinatra'
 gem 'i18n'
